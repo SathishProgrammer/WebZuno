@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Webzuno builds modern, professional websites for local businesses — shops, restaurants, clinics, gyms and the teams behind them.">
+  <title>Webzuno — Your business. Built for the web.</title>
+  <link rel="icon" type="image/png" href="assets/logo-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    document.documentElement.dataset.theme = localStorage.getItem("webzuno-theme") || "dark";
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#home">Skip to content</a>
+
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="cursor-label">VIEW</div>
+  </div>
+
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <img class="loader-mark" src="assets/logo-mark.png" alt="">
+      <p class="loader-word">WEBZUNO</p>
+      <div class="loader-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span class="loader-bar-fill"></span>
+      </div>
+      <p class="loader-pct">0%</p>
+    </div>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="page-glow" aria-hidden="true"></div>
+  <div class="page-grid" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#home" data-scroll="#home" aria-label="Webzuno home">
+      <img src="assets/logo-mark.png" alt="" width="36" height="36">
+      <span>Webzuno</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#home" data-scroll="#home">Home</a>
+      <a href="#services" data-scroll="#services">Services</a>
+      <a href="#work" data-scroll="#work">Work</a>
+      <a href="#process" data-scroll="#process">Process</a>
+      <a href="#pricing" data-scroll="#pricing">Pricing</a>
+      <a href="#about" data-scroll="#about">About</a>
+    </nav>
+    <div class="nav-end">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">
+        <span class="theme-moon" aria-hidden="true"></span>
+        <span class="theme-sun" aria-hidden="true"></span>
+      </button>
+      <button class="btn btn-nav magnetic" type="button" data-open-contact data-plan="">Start a Project <span aria-hidden="true">→</span></button>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav class="mobile-menu-links" aria-label="Mobile">
+      <a href="#home" data-scroll="#home"><em>01</em> Home</a>
+      <a href="#services" data-scroll="#services"><em>02</em> Services</a>
+      <a href="#work" data-scroll="#work"><em>03</em> Work</a>
+      <a href="#process" data-scroll="#process"><em>04</em> Process</a>
+      <a href="#pricing" data-scroll="#pricing"><em>05</em> Pricing</a>
+      <a href="#about" data-scroll="#about"><em>06</em> About</a>
+    </nav>
+    <button class="btn btn-solid magnetic" type="button" data-open-contact>Start a Project →</button>
+  </div>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Web design for local businesses</p>
+          <h1>Your business.<br><span class="grad">Built for the web.</span></h1>
+          <p class="hero-lead">Modern websites for shops, clinics, restaurants and local teams who are ready to be found.</p>
+          <div class="hero-actions">
+            <button class="btn btn-solid magnetic" type="button" data-open-contact>Build My Website <span aria-hidden="true">→</span></button>
+            <a class="btn btn-ghost magnetic" href="#pricing" data-scroll="#pricing">See packages</a>
+          </div>
+        </div>
+        <div class="hero-stage">
+          <canvas id="orb" class="hero-orb-canvas" aria-hidden="true"></canvas>
+          <div class="hero-orb-fallback" aria-hidden="true"></div>
+          <div class="hero-stage-copy">
+            <p class="hero-stage-kicker" id="orb-kicker">WWW / Internet</p>
+            <p class="hero-stage-cap" id="orb-caption" aria-live="polite">Take your business worldwide</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem" id="problem">
+      <div class="problem-inner">
+        <p class="section-index">01 — The gap</p>
+        <h2 class="problem-title">
+          <span class="line drift-left"><span>Your customers are</span></span>
+          <span class="line drift-right"><span>already <em>online.</em></span></span>
+        </h2>
+        <p class="problem-sub">
+          <span class="line drift-left"><span>If they can’t find you,</span></span>
+          <span class="line drift-right"><span>they’ll find <em>someone else.</em></span></span>
+        </p>
+      </div>
+    </section>
+
+    <section class="do" id="services">
+      <p class="section-index do-index">02 — What we do</p>
+      <div class="do-pin">
+        <h2 class="do-words" aria-label="We build websites that work as hard as you do.">
+          <span class="bunch">We build</span>
+          <span class="bunch">websites that</span>
+          <span class="bunch">work as hard</span>
+          <span class="bunch">as you do.</span>
+        </h2>
+      </div>
+
+      <div class="orbit-wrap">
+        <div class="cylinder" aria-hidden="true">
+          <span class="cylinder-cap cylinder-cap-top"></span>
+          <span class="cylinder-wall"></span>
+          <span class="cylinder-cap cylinder-cap-bot"></span>
+        </div>
+        <div class="orbit-stage" id="orbit-stage">
+          <article class="svc-card" style="--i:0">
+            <p class="svc-num">01</p>
+            <h3>Business Websites</h3>
+            <p>A clear home for a shop, studio or practice.</p>
+          </article>
+          <article class="svc-card" style="--i:1">
+            <p class="svc-num">02</p>
+            <h3>E-Commerce</h3>
+            <p>Sell from your own site, not a chat catalog.</p>
+          </article>
+          <article class="svc-card" style="--i:2">
+            <p class="svc-num">03</p>
+            <h3>Restaurant Sites</h3>
+            <p>Menus, hours and a look that matches the room.</p>
+          </article>
+          <article class="svc-card" style="--i:3">
+            <p class="svc-num">04</p>
+            <h3>Healthcare</h3>
+            <p>Calm pages clinics and pharmacies can use.</p>
+          </article>
+          <article class="svc-card" style="--i:4">
+            <p class="svc-num">05</p>
+            <h3>Portfolios</h3>
+            <p>For work that should speak before the bio.</p>
+          </article>
+          <article class="svc-card" style="--i:5">
+            <p class="svc-num">06</p>
+            <h3>Custom Builds</h3>
+            <p>When a theme would flatten the difference.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="transform" id="transform">
+      <div class="transform-sticky">
+        <p class="section-index">03 — The shift</p>
+        <h2>From local business<br>to digital presence.</h2>
+        <div class="device-stage">
+          <div class="browser" data-device="desktop">
+            <div class="chrome"><i></i><i></i><i></i><span class="browser-url">yourbusiness.in</span></div>
+            <div class="browser-screen">
+              <div class="screen-state screen-a">
+                <p class="screen-label">Before</p>
+                <p class="screen-name">A storefront with no address online</p>
+              </div>
+              <div class="screen-state screen-b">
+                <p class="screen-label">After</p>
+                <p class="screen-name">A site people can find, trust and use</p>
+                <div class="screen-blocks"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="device tablet" data-device="tablet" aria-hidden="true">
+            <div class="tablet-screen"></div>
+          </div>
+          <div class="device phone" data-device="phone" aria-hidden="true">
+            <div class="phone-notch"></div>
+            <div class="phone-screen"></div>
+          </div>
+        </div>
+        <ul class="transform-caps">
+          <li>Desktop</li>
+          <li>Tablet</li>
+          <li>Mobile</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="industries" id="industries">
+      <div class="industries-head">
+        <p class="section-index">04 — Who it’s for</p>
+        <h2>Made for businesses like yours.</h2>
+      </div>
+      <div class="spiral-pin">
+        <div class="spiral-stage" id="spiral-stage">
+          <article class="kpi-card" data-i="0"><em>01</em><h3>Restaurants</h3><p>Menus, hours, bookings</p></article>
+          <article class="kpi-card" data-i="1"><em>02</em><h3>Retail</h3><p>Catalog after closing time</p></article>
+          <article class="kpi-card" data-i="2"><em>03</em><h3>Healthcare</h3><p>Hours, stock, a clear number</p></article>
+          <article class="kpi-card" data-i="3"><em>04</em><h3>Fitness</h3><p>Classes and join flows</p></article>
+          <article class="kpi-card" data-i="4"><em>05</em><h3>Beauty</h3><p>A chair booked before arrival</p></article>
+          <article class="kpi-card" data-i="5"><em>06</em><h3>Professionals</h3><p>Practices that read as inevitable</p></article>
+          <article class="kpi-card" data-i="6"><em>07</em><h3>Education</h3><p>Courses parents can find</p></article>
+          <article class="kpi-card" data-i="7"><em>08</em><h3>Local services</h3><p>Trades that look like finished work</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="work" id="work">
+      <div class="work-head">
+        <p class="section-index">05 — Sample directions</p>
+        <h2>What a Webzuno site<br>can look like.</h2>
+        <p class="work-note">These are sample layouts — not client work. We have not published case studies yet.</p>
+      </div>
+      <div class="sample-grid">
+        <article class="sample">
+          <p>Hospitality</p>
+          <h3>Café or restaurant</h3>
+          <p>Menu, hours, reserve a table, a page that feels like the room.</p>
+          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+        </article>
+        <article class="sample">
+          <p>Healthcare</p>
+          <h3>Clinic or pharmacy</h3>
+          <p>Services, timings, WhatsApp, directions — quiet and exact.</p>
+          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+        </article>
+        <article class="sample">
+          <p>Fitness</p>
+          <h3>Gym or studio</h3>
+          <p>Classes, trainers, a join path that works at 11pm.</p>
+          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+        </article>
+        <article class="sample">
+          <p>Retail</p>
+          <h3>Shop or boutique</h3>
+          <p>Catalog, sizes, collect in store or ship.</p>
+          <button class="text-link" type="button" data-open-contact data-plan="Pro">Build this type →</button>
+        </article>
+        <article class="sample">
+          <p>Professionals</p>
+          <h3>Studio or practice</h3>
+          <p>Work first, then the bio. A site that holds a reputation.</p>
+          <button class="text-link" type="button" data-open-contact data-plan="Starter">Build this type →</button>
+        </article>
+        <article class="sample">
+          <p>Trades</p>
+          <h3>Local service</h3>
+          <p>Finished jobs, a service list, a lead form that is not a PDF.</p>
+          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="process" id="process">
+      <div class="process-head">
+        <p class="section-index">06 — How we work</p>
+        <h2>Simple process.<br>Serious results.</h2>
+      </div>
+      <div class="process-rail">
+        <div class="process-line" aria-hidden="true"><span></span></div>
+        <ol class="process-steps">
+          <li>
+            <p class="step-num">01</p>
+            <h3>Discover</h3>
+            <p>We understand your business, audience and goals.</p>
+          </li>
+          <li>
+            <p class="step-num">02</p>
+            <h3>Design</h3>
+            <p>We create a modern visual direction built around your brand.</p>
+          </li>
+          <li>
+            <p class="step-num">03</p>
+            <h3>Build</h3>
+            <p>We develop a fast, responsive and scalable website.</p>
+          </li>
+          <li>
+            <p class="step-num">04</p>
+            <h3>Launch</h3>
+            <p>We test, optimize and launch your website.</p>
+          </li>
+          <li>
+            <p class="step-num">05</p>
+            <h3>Grow</h3>
+            <p>We help you improve your online presence.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-statement">
+        <p class="section-index">07 — Why Webzuno</p>
+        <h2>Good websites look good.<br><em>Great websites bring customers.</em></h2>
+        <p class="about-lead">A small studio with one job: give local businesses a site that works as hard as the people behind the counter.</p>
+      </div>
+      <ul class="benefit-words">
+        <li>Fast</li>
+        <li>Mobile-first</li>
+        <li>SEO-ready</li>
+        <li>Conversion-focused</li>
+        <li>Affordable</li>
+        <li>Easy to maintain</li>
+        <li>Professional</li>
+        <li>Built for growth</li>
+      </ul>
+      <dl class="stats">
+        <div>
+          <dt><span class="count" data-count="14">0</span><small> days</small></dt>
+          <dd>Typical time to a first design you can react to</dd>
+        </div>
+        <div>
+          <dt><span class="count" data-count="8">0</span></dt>
+          <dd>Industries we design for</dd>
+        </div>
+        <div>
+          <dt><span class="count" data-count="3">0</span></dt>
+          <dd>Clear packages. No proposal theatre</dd>
+        </div>
+        <div>
+          <dt><span class="count" data-count="1">0</span></dt>
+          <dd>Conversation to start</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="pricing-head">
+        <p class="section-index">08 — Investment</p>
+        <h2>Professional websites.<br>Without the agency price tag.</h2>
+        <p>You’ll get a number after a short conversation — not a public rate card that pretends every shop is the same.</p>
+      </div>
+      <div class="pricing-grid">
+        <article class="plan">
+          <p class="plan-name">Starter</p>
+          <p class="plan-for">For businesses getting online.</p>
+          <ul>
+            <li>1–5 pages</li>
+            <li>Responsive design</li>
+            <li>Contact form</li>
+            <li>WhatsApp integration</li>
+            <li>Basic SEO</li>
+          </ul>
+          <button class="btn btn-ghost magnetic" type="button" data-open-contact data-plan="Starter">Request Starter →</button>
+        </article>
+        <article class="plan plan-featured">
+          <p class="plan-flag">Most local businesses</p>
+          <p class="plan-name">Growth</p>
+          <p class="plan-for">For businesses ready to grow.</p>
+          <ul>
+            <li>Up to 10 pages</li>
+            <li>Advanced design</li>
+            <li>SEO</li>
+            <li>Analytics</li>
+            <li>WhatsApp</li>
+            <li>Google Maps</li>
+            <li>Business integrations</li>
+          </ul>
+          <button class="btn btn-solid magnetic" type="button" data-open-contact data-plan="Growth">Request Growth →</button>
+        </article>
+        <article class="plan">
+          <p class="plan-name">Pro</p>
+          <p class="plan-for">For businesses that want more.</p>
+          <ul>
+            <li>Custom design</li>
+            <li>Advanced animations</li>
+            <li>E-commerce</li>
+            <li>Custom integrations</li>
+            <li>Advanced SEO</li>
+            <li>Priority support</li>
+          </ul>
+          <button class="btn btn-ghost magnetic" type="button" data-open-contact data-plan="Pro">Request Pro →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="finale" id="cta">
+      <div class="finale-w" aria-hidden="true">
+        <img src="assets/logo-mark.png" alt="">
+      </div>
+      <div class="finale-light" aria-hidden="true"></div>
+      <p class="section-index">09 — Next</p>
+      <h2>Ready to put your business<br>on the map?</h2>
+      <p class="finale-sub">Let’s build something people remember.</p>
+      <div class="finale-actions">
+        <button class="btn btn-solid magnetic" type="button" data-open-contact>Start Your Project <span aria-hidden="true">→</span></button>
+        <button class="btn btn-ghost magnetic" type="button" data-open-contact>Talk to Webzuno</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="footer-brand">
+      <p class="footer-word">WEBZUNO</p>
+      <p>Websites that help local businesses grow.</p>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="#home" data-scroll="#home">Home</a>
+      <a href="#services" data-scroll="#services">Services</a>
+      <a href="#work" data-scroll="#work">Work</a>
+      <a href="#process" data-scroll="#process">Process</a>
+      <a href="#pricing" data-scroll="#pricing">Pricing</a>
+      <a href="#about" data-scroll="#about">About</a>
+      <button type="button" data-open-contact>Contact</button>
+    </nav>
+    <div class="footer-social">
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
+    </div>
+    <div class="footer-base">
+      <p>© 2026 Webzuno. All rights reserved.</p>
+      <button class="text-link" type="button" data-scroll="#home">Back to top ↑</button>
+    </div>
+  </footer>
+
+  <div class="overlay" id="contact-overlay" hidden>
+    <div class="overlay-panel contact-panel" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <button class="overlay-close" type="button" data-close-overlay aria-label="Close">&times;</button>
+      <p class="eyebrow">Start a project</p>
+      <h2 id="contact-title">Tell us about the business.</h2>
+      <p class="overlay-lead">One screen. We’ll reply with a clear next step.</p>
+      <form class="contact-form" id="contact-form">
+        <label>Your name
+          <input type="text" name="name" required autocomplete="name">
+        </label>
+        <label>Business name
+          <input type="text" name="business" required>
+        </label>
+        <label>Email
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label>Phone
+          <input type="tel" name="phone" required autocomplete="tel">
+        </label>
+        <label>What do you need?
+          <select name="plan" id="contact-plan">
+            <option value="Starter">Starter website</option>
+            <option value="Growth" selected>Growth website</option>
+            <option value="Pro">Pro / custom</option>
+            <option value="Not sure">Not sure yet</option>
+          </select>
+        </label>
+        <label>Anything we should know?
+          <input type="text" name="message" placeholder="Shop type, city, domain?">
+        </label>
+        <button class="btn btn-solid magnetic full-btn" type="submit">Send to Webzuno →</button>
+      </form>
+      <p class="form-success" id="form-success" hidden>Received. If mail did not open, write <a href="mailto:hello@webzuno.com">hello@webzuno.com</a>.</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
