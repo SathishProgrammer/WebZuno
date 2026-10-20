@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nest &amp; Form Interiors — Home interiors, Chennai (Webzuno demo)</title>
+  <meta name="description" content="Sample demo site by Webzuno: an interior design studio with before/after projects, services, process and packages.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo.css">
+  <style>
+    :root {
+      --brand: #b5532f;
+      --accent: #b5532f;
+      --bg: #f6f1ea;
+      --bg-alt: #efe7dc;
+      --card: #fffaf4;
+      --line: #e2d6c6;
+      --ink: #2b221c;
+      --dim: #77685c;
+      --display: "Playfair Display", Georgia, serif;
+      --body: "Manrope", sans-serif;
+      --radius: 14px;
+    }
+    .alt { border: 0; }
+    .hero h1 em { color: var(--brand); }
+    .room { width: 100%; height: auto; border-radius: 18px; }
+    .room-hero { box-shadow: 0 40px 80px rgba(43, 34, 28, 0.18); }
+    .hero-art { position: relative; }
+    .hero-art .chip { position: absolute; background: #fffaf4; border-radius: 12px; padding: 0.6rem 0.85rem; font-size: 0.8rem; box-shadow: 0 14px 30px rgba(43, 34, 28, 0.15); }
+    .hero-art .chip b { display: block; font-family: var(--display); font-size: 1.05rem; }
+    .chip-a { left: -16px; bottom: 18%; }
+    .chip-b { right: -10px; top: 10%; }
+
+    /* Palettes for the shared room illustration */
+    .p-before { --wall: #cfcac2; --floor: #a9a39a; --window: #e4e6e8; --frame: #b9b4ab; --art: #bfbab2; --rug: #9d978e; --sofa: #8e8a84; --sofa-2: #7d7974; --lamp: #8e8a84; --shade: #b8b3ab; --plant: #8f9a8a; --pot: #9a948c; --extras: 0.0; }
+    .p-terracotta { --wall: #efe2d2; --floor: #c99a6d; --window: #dcebf2; --frame: #fffaf4; --art: #b5532f; --rug: #e7c9a3; --sofa: #3f5a4c; --sofa-2: #35493e; --lamp: #2b221c; --shade: #e8b04b; --plant: #5f8b5a; --pot: #b5532f; --extras: 1; }
+    .p-sage { --wall: #dfe6dc; --floor: #b88b62; --window: #e2eef3; --frame: #fbfaf6; --art: #2f4858; --rug: #f1e6d4; --sofa: #e6d3b8; --sofa-2: #d6c09f; --lamp: #2f4858; --shade: #f2d68a; --plant: #4f7a4b; --pot: #f4f0e8; --extras: 1; }
+    .p-navy { --wall: #e9e4dc; --floor: #8a6447; --window: #dfe9ef; --frame: #2b3a55; --art: #d9a441; --rug: #c7cfdc; --sofa: #2b3a55; --sofa-2: #223047; --lamp: #b08d57; --shade: #f3e3bd; --plant: #557a52; --pot: #2b3a55; --extras: 1; }
+
+    .project { padding: 0; overflow: hidden; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; }
+    .pair figure { position: relative; }
+    .pair figcaption { position: absolute; left: 0.7rem; top: 0.7rem; background: rgba(255, 250, 244, 0.92); padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .pair figure:last-child figcaption { background: var(--brand); color: #fff; }
+    .pair .room { border-radius: 0; }
+    .project-body { padding: 1.3rem 1.5rem 1.5rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: end; }
+    .project-body h3 { margin: 0 0 0.3rem; font-size: 1.4rem; }
+    .project-meta { display: flex; gap: 1.2rem; font-size: 0.85rem; color: var(--dim); }
+    .project-meta b { color: var(--ink); display: block; font-size: 1rem; }
+    .projects { display: grid; gap: 1.4rem; }
+
+    .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; counter-reset: s; }
+    .step { border-top: 2px solid var(--brand); padding-top: 1rem; }
+    .step::before { counter-increment: s; content: "0" counter(s); font-family: var(--display); font-size: 1.8rem; color: var(--brand); }
+    .step h3 { font-size: 1.15rem; margin: 0.4rem 0 0.3rem; }
+    .step p { color: var(--dim); font-size: 0.88rem; }
+    .pack { display: flex; flex-direction: column; }
+    .pack .btn { margin-top: auto; }
+    .pack.hot { background: var(--ink); color: #f6f1ea; border-color: var(--ink); }
+    .pack.hot p, .pack.hot .ticks, .pack.hot .price small { color: #cbbcae; }
+    .pack:not(.hot) .btn { box-shadow: inset 0 0 0 1.5px var(--ink); }
+    @media (max-width: 960px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .steps { grid-template-columns: 1fr; } .chip-a, .chip-b { display: none; } }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="room" viewBox="0 0 400 260">
+      <rect width="400" height="182" style="fill:var(--wall)"/>
+      <rect y="182" width="400" height="78" style="fill:var(--floor)"/>
+      <rect x="0" y="178" width="400" height="6" style="fill:var(--frame)" opacity="0.7"/>
+      <rect x="34" y="34" width="96" height="92" rx="3" style="fill:var(--frame)"/>
+      <rect x="40" y="40" width="40" height="80" style="fill:var(--window)"/>
+      <rect x="84" y="40" width="40" height="80" style="fill:var(--window)"/>
+      <rect x="226" y="52" width="74" height="52" rx="2" style="fill:var(--art)"/>
+      <path d="M232 98l18-22 14 14 10-10 20 18z" style="fill:var(--wall);opacity:calc(var(--extras) * 0.5)"/>
+      <ellipse cx="236" cy="226" rx="140" ry="20" style="fill:var(--rug)"/>
+      <rect x="152" y="124" width="178" height="52" rx="12" style="fill:var(--sofa)"/>
+      <rect x="142" y="160" width="198" height="34" rx="9" style="fill:var(--sofa-2)"/>
+      <rect x="134" y="146" width="22" height="48" rx="8" style="fill:var(--sofa)"/>
+      <rect x="326" y="146" width="22" height="48" rx="8" style="fill:var(--sofa)"/>
+      <rect x="150" y="194" width="6" height="12" style="fill:var(--sofa-2)"/>
+      <rect x="326" y="194" width="6" height="12" style="fill:var(--sofa-2)"/>
+      <g style="opacity:var(--extras)">
+        <rect x="174" y="136" width="34" height="26" rx="6" style="fill:var(--art)"/>
+        <rect x="276" y="136" width="34" height="26" rx="6" style="fill:var(--shade)"/>
+        <rect x="200" y="208" width="72" height="8" rx="3" style="fill:var(--lamp)"/>
+        <rect x="206" y="214" width="4" height="16" style="fill:var(--lamp)"/>
+        <rect x="262" y="214" width="4" height="16" style="fill:var(--lamp)"/>
+        <rect x="370" y="98" width="3" height="98" style="fill:var(--lamp)"/>
+        <path d="M356 98h31l-7-26h-17z" style="fill:var(--shade)"/>
+        <rect x="56" y="176" width="30" height="28" rx="4" style="fill:var(--pot)"/>
+        <ellipse cx="62" cy="160" rx="10" ry="22" style="fill:var(--plant)" transform="rotate(-20 62 160)"/>
+        <ellipse cx="80" cy="156" rx="10" ry="24" style="fill:var(--plant)" transform="rotate(18 80 156)"/>
+        <ellipse cx="71" cy="148" rx="8" ry="24" style="fill:var(--plant)"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <div class="ribbon">Sample demo site by <a href="../index.html#work">Webzuno</a> — Nest &amp; Form is a fictional studio. <a href="../index.html#cta">Get a site like this →</a></div>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="#top"><span class="logo-mark" style="border-radius:50%">N</span>Nest &amp; Form</a>
+      <nav class="nav-links" aria-label="Main"><a href="#work">Projects</a><a href="#services">Services</a><a href="#process">Process</a><a href="#packages">Packages</a></nav>
+      <a class="btn btn-brand btn-hide" href="#consult">Free consultation</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="tag">Interior design studio · Chennai</span>
+          <h1>Homes that feel like <em>you</em>, finished on time.</h1>
+          <p class="lead">Full home interiors, modular kitchens and wardrobes — designed in 3D before a single cut, built in our own workshop and handed over in 45 days.</p>
+          <div class="btns">
+            <a class="btn btn-brand" href="#consult">Book a free consultation</a>
+            <a class="btn btn-line" href="#work">See projects</a>
+          </div>
+          <p class="facts"><span><b>320+</b> homes delivered</span><span><b>45-day</b> handover</span><span><b>10-year</b> warranty</span></p>
+        </div>
+        <div class="hero-art">
+          <svg class="room room-hero p-terracotta" viewBox="0 0 400 260" role="img" aria-label="Illustration of a finished living room"><use href="#room"/></svg>
+          <div class="chip chip-a"><b>3D first</b>See it before we build</div>
+          <div class="chip chip-b"><b>4.9★</b>210 Google reviews</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="work">
+      <div class="wrap">
+        <div class="head"><span class="tag">Before &amp; after</span><h2>Recent homes we’ve transformed.</h2><p>Same walls, same windows — a completely different way to live.</p></div>
+        <div class="projects">
+          <article class="card project">
+            <div class="pair">
+              <figure><svg class="room p-before" viewBox="0 0 400 260" role="img" aria-label="Living room before"><use href="#room"/></svg><figcaption>Before</figcaption></figure>
+              <figure><svg class="room p-terracotta" viewBox="0 0 400 260" role="img" aria-label="Living room after"><use href="#room"/></svg><figcaption>After</figcaption></figure>
+            </div>
+            <div class="project-body"><div><h3>Warm modern living · Adyar</h3><p>Terracotta accents, teak floor and a sage sofa for a young family.</p></div><div class="project-meta"><span><b>3 BHK</b>Full home</span><span><b>42 days</b>Handover</span><span><b>₹9.8 L</b>Budget</span></div></div>
+          </article>
+          <article class="card project">
+            <div class="pair">
+              <figure><svg class="room p-before" viewBox="0 0 400 260" role="img" aria-label="Apartment before"><use href="#room"/></svg><figcaption>Before</figcaption></figure>
+              <figure><svg class="room p-sage" viewBox="0 0 400 260" role="img" aria-label="Apartment after"><use href="#room"/></svg><figcaption>After</figcaption></figure>
+            </div>
+            <div class="project-body"><div><h3>Calm Scandinavian flat · Anna Nagar</h3><p>Light oak, linen and sage walls for a retired couple who love reading.</p></div><div class="project-meta"><span><b>2 BHK</b>Living + bedrooms</span><span><b>35 days</b>Handover</span><span><b>₹5.6 L</b>Budget</span></div></div>
+          </article>
+          <article class="card project">
+            <div class="pair">
+              <figure><svg class="room p-before" viewBox="0 0 400 260" role="img" aria-label="Villa lounge before"><use href="#room"/></svg><figcaption>Before</figcaption></figure>
+              <figure><svg class="room p-navy" viewBox="0 0 400 260" role="img" aria-label="Villa lounge after"><use href="#room"/></svg><figcaption>After</figcaption></figure>
+            </div>
+            <div class="project-body"><div><h3>Classic navy lounge · ECR villa</h3><p>Deep navy upholstery, brass details and walnut floors for entertaining.</p></div><div class="project-meta"><span><b>Villa</b>Lounge + dining</span><span><b>50 days</b>Handover</span><span><b>₹14 L</b>Budget</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="head"><span class="tag">Services</span><h2>Everything inside your four walls.</h2></div>
+        <div class="grid-3">
+          <article class="card"><span class="icon">🏠</span><h3>Full home interiors</h3><p>Living, bedrooms, kitchen and storage — one design language, one team.</p></article>
+          <article class="card"><span class="icon">🍳</span><h3>Modular kitchens</h3><p>BWP plywood, soft-close hardware and layouts planned around how you cook.</p></article>
+          <article class="card"><span class="icon">🚪</span><h3>Wardrobes &amp; storage</h3><p>Sliding, hinged and walk-in wardrobes with lofts that use every inch.</p></article>
+          <article class="card"><span class="icon">🛋️</span><h3>Living &amp; dining</h3><p>TV units, false ceilings, lighting and furniture styled to match.</p></article>
+          <article class="card"><span class="icon">🛏️</span><h3>Bedrooms &amp; kids’ rooms</h3><p>Calm, clutter-free bedrooms and rooms that grow with your children.</p></article>
+          <article class="card"><span class="icon">💼</span><h3>Offices &amp; clinics</h3><p>Small commercial spaces that look premium and work hard.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="process">
+      <div class="wrap">
+        <div class="head"><span class="tag">How we work</span><h2>From first chat to keys in 45 days.</h2></div>
+        <div class="steps">
+          <article class="step"><h3>Consultation</h3><p>We visit, measure and understand how you live — free.</p></article>
+          <article class="step"><h3>3D design</h3><p>Photo-real 3D views of every room, revised until you love it.</p></article>
+          <article class="step"><h3>Fixed quote</h3><p>Itemised quote with materials and brands. No surprises later.</p></article>
+          <article class="step"><h3>Build</h3><p>Made in our own workshop, installed by our own team.</p></article>
+          <article class="step"><h3>Handover</h3><p>Deep cleaned and styled — with a 10-year warranty.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="packages">
+      <div class="wrap">
+        <div class="head"><span class="tag">Packages</span><h2>Clear starting prices.</h2><p>Includes design, materials, installation and GST. Final price after the 3D design.</p></div>
+        <div class="grid-3">
+          <article class="card pack"><h3>Essential 2 BHK</h3><p>Kitchen, wardrobes, TV unit</p><p class="price">₹4.5 L <small>onwards</small></p><ul class="ticks"><li>Modular kitchen</li><li>2 wardrobes with lofts</li><li>TV unit &amp; shoe rack</li></ul><a class="btn" href="https://wa.me/919800000004?text=I%27m%20interested%20in%20the%20Essential%202%20BHK%20package" target="_blank" rel="noopener noreferrer">Enquire</a></article>
+          <article class="card pack hot"><h3>Complete 3 BHK</h3><p>Our most chosen package</p><p class="price">₹8.5 L <small>onwards</small></p><ul class="ticks"><li>Everything in Essential</li><li>False ceiling &amp; lighting</li><li>Dining, study &amp; pooja unit</li></ul><a class="btn btn-brand" href="https://wa.me/919800000004?text=I%27m%20interested%20in%20the%20Complete%203%20BHK%20package" target="_blank" rel="noopener noreferrer">Enquire</a></article>
+          <article class="card pack"><h3>Luxury villa</h3><p>Bespoke, end to end</p><p class="price">₹18 L <small>onwards</small></p><ul class="ticks"><li>Custom furniture &amp; veneers</li><li>Automation &amp; mood lighting</li><li>Dedicated project manager</li></ul><a class="btn" href="https://wa.me/919800000004?text=I%27m%20interested%20in%20the%20Luxury%20villa%20package" target="_blank" rel="noopener noreferrer">Enquire</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="wrap">
+        <div class="head"><span class="tag">Client stories</span><h2>Words from our homeowners.</h2></div>
+        <div class="grid-3">
+          <article class="card quote"><span class="stars">★★★★★</span><p>“The 3D design matched the final home exactly. Handed over two days early, spotless.”</p><p class="who">Aravind &amp; Kavya<span>3 BHK, Adyar</span></p></article>
+          <article class="card quote"><span class="stars">★★★★★</span><p>“No hidden costs — the quote was the bill. Our kitchen is a joy to cook in.”</p><p class="who">Lakshmi R.<span>2 BHK, Anna Nagar</span></p></article>
+          <article class="card quote"><span class="stars">★★★★★</span><p>“They understood our taste better than we did. Guests always ask who designed it.”</p><p class="who">Farhan K.<span>Villa, ECR</span></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="consult">
+      <div class="wrap">
+        <div class="cta-band">
+          <h2>Let’s design your home.</h2>
+          <p>Free consultation and measurement at your home. Studio: 8, Khader Nawaz Khan Road, Nungambakkam · Mon–Sat, 10 am – 7 pm</p>
+          <div class="btns"><a class="btn btn-light" href="https://wa.me/919800000004?text=Hi%20Nest%20%26%20Form%2C%20I%27d%20like%20a%20free%20consultation." target="_blank" rel="noopener noreferrer">Book on WhatsApp</a><a class="btn btn-line" href="tel:+919800000004">Call the studio</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>© 2026 Nest &amp; Form Interiors (fictional) · Chennai</span><span>Demo website designed by <a href="../index.html">Webzuno</a></span></div></footer>
+</body>
+</html>

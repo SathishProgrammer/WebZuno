@@ -1,0 +1,104 @@
+/* Shared base for Webzuno static demo sites. Each page sets its own palette in :root. */
+:root {
+  --brand: #1f6feb;
+  --brand-ink: #fff;
+  --accent: #f59e0b;
+  --bg: #f7f8fa;
+  --bg-alt: #ffffff;
+  --card: #ffffff;
+  --ink: #111827;
+  --dim: #5b6474;
+  --line: #e5e7eb;
+  --display: Georgia, serif;
+  --body: system-ui, sans-serif;
+  --radius: 18px;
+  --pad: clamp(1.1rem, 5vw, 4rem);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--body); color: var(--ink); background: var(--bg); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+svg { display: block; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; letter-spacing: -0.02em; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+.ribbon { background: #111; color: #ddd; font-size: 0.8rem; text-align: center; padding: 0.5rem var(--pad); }
+.ribbon a { color: #ffd166; font-weight: 700; text-decoration: underline; }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 var(--pad); }
+section { padding: clamp(3.2rem, 7vw, 5.5rem) 0; }
+.alt { background: var(--bg-alt); border-block: 1px solid var(--line); }
+.tag { display: inline-block; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.head { max-width: 640px; margin-bottom: 2.2rem; }
+.head h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); margin: 0.55rem 0 0.7rem; }
+.head p { color: var(--dim); font-size: 1.03rem; }
+.center { text-align: center; margin-inline: auto; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.85rem 1.35rem; border-radius: 12px; font-weight: 700; font-size: 0.95rem; white-space: nowrap; transition: transform 0.2s, box-shadow 0.2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn-brand { background: var(--brand); color: var(--brand-ink); box-shadow: 0 10px 24px color-mix(in srgb, var(--brand) 30%, transparent); }
+.btn-wa { background: #25d366; color: #fff; box-shadow: 0 10px 24px rgba(37, 211, 102, 0.28); }
+.btn-line { box-shadow: inset 0 0 0 1.5px currentColor; }
+.btn-light { background: #fff; color: var(--ink); }
+.btn svg { width: 18px; height: 18px; }
+.btns { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+
+.nav { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; height: 72px; }
+.logo { display: flex; align-items: center; gap: 0.55rem; font-family: var(--display); font-weight: 700; font-size: 1.3rem; white-space: nowrap; }
+.logo-mark { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--brand); color: var(--brand-ink); font-size: 1.1rem; }
+.nav-links { display: flex; gap: 1.6rem; color: var(--dim); font-weight: 500; font-size: 0.94rem; }
+.nav-links a:hover { color: var(--ink); }
+.nav .btn { padding: 0.6rem 1rem; font-size: 0.88rem; }
+
+.hero { padding-top: clamp(2rem, 5vw, 4rem); }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.hero h1 { font-size: clamp(2.5rem, 5.4vw, 4.2rem); margin: 0.8rem 0 1rem; }
+.lead { color: var(--dim); font-size: 1.1rem; max-width: 520px; margin-bottom: 1.8rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin-top: 1.5rem; font-size: 0.9rem; color: var(--dim); }
+.facts b { color: var(--ink); }
+
+.grid-2, .grid-3, .grid-4 { display: grid; gap: 1rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.card { padding: 1.5rem; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); }
+.card h3 { font-size: 1.2rem; margin: 0.6rem 0 0.4rem; }
+.card p { color: var(--dim); font-size: 0.92rem; }
+.icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.6rem; background: color-mix(in srgb, var(--brand) 12%, #fff); }
+.price, .card .price { font-family: var(--display); font-size: 2.1rem; font-weight: 700; letter-spacing: -0.03em; margin: 0.6rem 0 0.2rem; color: inherit; }
+.price small { font-family: var(--body); font-size: 0.85rem; font-weight: 500; color: var(--dim); letter-spacing: 0; }
+.ticks { list-style: none; display: grid; gap: 0.45rem; margin: 1rem 0 1.3rem; font-size: 0.9rem; color: var(--dim); }
+.ticks li::before { content: "✓"; color: var(--brand); font-weight: 800; margin-right: 0.55rem; }
+.stars { color: #f5a524; letter-spacing: 0.08em; }
+.quote p { margin: 0.6rem 0 1rem; color: var(--ink); }
+.who { font-size: 0.85rem; font-weight: 700; }
+.who span { display: block; font-weight: 400; color: var(--dim); }
+
+.info-list { list-style: none; display: grid; gap: 0.5rem; }
+.info-list li { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+.info-list li span { color: var(--dim); text-align: right; }
+
+.cta-band { padding: clamp(2rem, 5vw, 3.4rem) var(--pad); border-radius: 28px; background: var(--brand); color: var(--brand-ink); text-align: center; }
+.cta-band h2 { font-size: clamp(1.9rem, 3.8vw, 2.8rem); margin-bottom: 0.6rem; }
+.cta-band p { opacity: 0.88; margin-bottom: 1.5rem; }
+.cta-band .btns { justify-content: center; }
+
+footer { padding: 1.8rem 0 2.2rem; font-size: 0.85rem; color: var(--dim); }
+footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 1.4rem; }
+footer a { color: var(--brand); font-weight: 700; }
+
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .nav .btn-hide { display: none; }
+  .logo { font-size: 1.12rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn { transition: none; }
+}

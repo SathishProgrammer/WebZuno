@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IronPulse Fitness — Gym &amp; group classes, OMR (Webzuno demo)</title>
+  <meta name="description" content="Sample demo site by Webzuno: a neighbourhood gym with a class timetable, membership plans, trainers and a free trial pass.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo.css">
+  <style>
+    :root {
+      --brand: #c6ff3d;
+      --brand-ink: #0b0b0c;
+      --accent: #c6ff3d;
+      --bg: #0b0b0c;
+      --bg-alt: #131316;
+      --card: #17171b;
+      --ink: #f4f4f5;
+      --dim: #a1a1aa;
+      --line: #26262b;
+      --display: "Anton", Impact, sans-serif;
+      --body: "Inter", sans-serif;
+    }
+    h1, h2, h3 { font-weight: 400; letter-spacing: 0.01em; text-transform: uppercase; }
+    .card h3 { font-size: 1.35rem; }
+    .icon { background: rgba(198, 255, 61, 0.12); }
+    .hero { position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(600px 400px at 80% 30%, rgba(198, 255, 61, 0.14), transparent 70%); pointer-events: none; }
+    .hero h1 { font-size: clamp(3.2rem, 8vw, 6.6rem); line-height: 0.95; }
+    .hero h1 span { color: var(--brand); }
+    .stat-board { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat { padding: 1.6rem 1.4rem; border-radius: 20px; background: var(--card); border: 1px solid var(--line); }
+    .stat b { display: block; font-family: var(--display); font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: 1; color: var(--brand); }
+    .stat span { color: var(--dim); font-size: 0.9rem; }
+    .stat.big { grid-column: 1 / -1; background: var(--brand); color: var(--brand-ink); }
+    .stat.big b { color: var(--brand-ink); }
+    .stat.big span { color: #2a3311; font-weight: 600; }
+    .marquee { overflow: hidden; border-block: 1px solid var(--line); background: var(--brand); color: var(--brand-ink); padding: 0.9rem 0; font-family: var(--display); font-size: 1.4rem; text-transform: uppercase; white-space: nowrap; }
+    .marquee div { display: inline-block; animation: slide 22s linear infinite; }
+    @keyframes slide { to { transform: translateX(-50%); } }
+    .table-wrap { overflow-x: auto; border-radius: 20px; border: 1px solid var(--line); }
+    .timetable { width: 100%; min-width: 760px; border-collapse: collapse; background: var(--card); }
+    .timetable th, .timetable td { padding: 0.85rem 0.8rem; border-bottom: 1px solid var(--line); text-align: left; font-size: 0.86rem; }
+    .timetable thead th { background: #1e1e23; color: var(--dim); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .timetable tbody th { color: var(--brand); white-space: nowrap; font-weight: 700; }
+    .cls { display: inline-block; padding: 0.25rem 0.55rem; border-radius: 8px; font-weight: 600; font-size: 0.8rem; }
+    .c-hiit { background: rgba(239, 68, 68, 0.16); color: #fca5a5; }
+    .c-yoga { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; }
+    .c-zumba { background: rgba(236, 72, 153, 0.16); color: #f9a8d4; }
+    .c-str { background: rgba(198, 255, 61, 0.14); color: var(--brand); }
+    .c-spin { background: rgba(250, 204, 21, 0.15); color: #fde047; }
+    .legend { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; font-size: 0.82rem; color: var(--dim); }
+    .plan { display: flex; flex-direction: column; }
+    .plan .btn { margin-top: auto; }
+    .plan.hot { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+    .plan.hot p, .plan.hot .ticks, .plan.hot .price small { color: #2a3311; }
+    .plan.hot .ticks li::before { color: var(--brand-ink); }
+    .plan.hot .btn { background: var(--brand-ink); color: var(--brand); }
+    .plan:not(.hot) .btn { box-shadow: inset 0 0 0 1.5px var(--line); }
+    .trainer { overflow: hidden; padding: 0; }
+    .trainer .photo { height: 200px; display: grid; place-items: center; font-size: 4.4rem; background: linear-gradient(160deg, #24242b, #121215); }
+    .trainer div:last-child { padding: 1.2rem 1.4rem 1.4rem; }
+    .trainer h3 { margin-top: 0; }
+    .story b { display: block; font-family: var(--display); font-size: 2.2rem; color: var(--brand); line-height: 1; margin-bottom: 0.4rem; }
+    .trial { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: center; text-align: left; }
+    .trial .btns { justify-content: flex-start; }
+    .trial .info-list li { border-color: rgba(11, 11, 12, 0.18); }
+    .trial .info-list li span { color: #2a3311; }
+    @media (max-width: 960px) { .trial { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { .marquee div { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="ribbon">Sample demo site by <a href="../index.html#work">Webzuno</a> — IronPulse is a fictional gym. <a href="../index.html#cta">Get a site like this →</a></div>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="#top"><span class="logo-mark">⚡</span>IRONPULSE</a>
+      <nav class="nav-links" aria-label="Main"><a href="#classes">Classes</a><a href="#plans">Plans</a><a href="#trainers">Trainers</a><a href="#stories">Results</a></nav>
+      <a class="btn btn-brand" href="#trial">Free trial</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="tag">Gym · Classes · Personal training · OMR</span>
+          <h1>Stronger<br>every <span>week.</span></h1>
+          <p class="lead">A 12,000 sq ft gym with 40+ weekly classes, certified coaches and no contracts. Open 5 am to 11 pm — train when your day allows.</p>
+          <div class="btns">
+            <a class="btn btn-brand" href="#trial">Claim a free 3-day pass</a>
+            <a class="btn btn-line" href="#classes">See class timetable</a>
+          </div>
+        </div>
+        <div class="stat-board">
+          <div class="stat big"><b>3 days free</b><span>Full access to the gym and every class. No card needed.</span></div>
+          <div class="stat"><b>40+</b><span>Classes every week</span></div>
+          <div class="stat"><b>12</b><span>Certified coaches</span></div>
+          <div class="stat"><b>5–11</b><span>Open am to pm</span></div>
+          <div class="stat"><b>4.9★</b><span>860 Google reviews</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true"><div>HIIT ✦ STRENGTH ✦ YOGA ✦ ZUMBA ✦ SPIN ✦ CROSSFIT ✦ BOXING ✦ PERSONAL TRAINING ✦ HIIT ✦ STRENGTH ✦ YOGA ✦ ZUMBA ✦ SPIN ✦ CROSSFIT ✦ BOXING ✦ PERSONAL TRAINING ✦&nbsp;</div></div>
+
+    <section id="classes">
+      <div class="wrap">
+        <div class="head"><span class="tag">Weekly timetable</span><h2>Pick a class. Just show up.</h2><p>All group classes are included in every membership. 20 spots per class.</p></div>
+        <div class="table-wrap">
+          <table class="timetable">
+            <thead><tr><th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+            <tbody>
+              <tr><th>6:00 am</th><td><span class="cls c-hiit">HIIT</span></td><td><span class="cls c-yoga">Yoga</span></td><td><span class="cls c-hiit">HIIT</span></td><td><span class="cls c-yoga">Yoga</span></td><td><span class="cls c-hiit">HIIT</span></td><td><span class="cls c-str">Strength</span></td></tr>
+              <tr><th>7:30 am</th><td><span class="cls c-str">Strength</span></td><td><span class="cls c-spin">Spin</span></td><td><span class="cls c-str">Strength</span></td><td><span class="cls c-spin">Spin</span></td><td><span class="cls c-str">Strength</span></td><td><span class="cls c-zumba">Zumba</span></td></tr>
+              <tr><th>10:00 am</th><td><span class="cls c-yoga">Yoga</span></td><td><span class="cls c-zumba">Zumba</span></td><td><span class="cls c-yoga">Yoga</span></td><td><span class="cls c-zumba">Zumba</span></td><td><span class="cls c-yoga">Yoga</span></td><td><span class="cls c-yoga">Yoga</span></td></tr>
+              <tr><th>6:30 pm</th><td><span class="cls c-zumba">Zumba</span></td><td><span class="cls c-hiit">HIIT</span></td><td><span class="cls c-spin">Spin</span></td><td><span class="cls c-hiit">HIIT</span></td><td><span class="cls c-zumba">Zumba</span></td><td><span class="cls c-hiit">HIIT</span></td></tr>
+              <tr><th>8:00 pm</th><td><span class="cls c-str">Strength</span></td><td><span class="cls c-str">Strength</span></td><td><span class="cls c-hiit">HIIT</span></td><td><span class="cls c-str">Strength</span></td><td><span class="cls c-spin">Spin</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="legend"><span class="cls c-hiit">HIIT</span><span class="cls c-str">Strength</span><span class="cls c-yoga">Yoga</span><span class="cls c-zumba">Zumba</span><span class="cls c-spin">Spin</span> · Sunday: open gym only, 6 am – 1 pm</p>
+      </div>
+    </section>
+
+    <section class="alt" id="plans">
+      <div class="wrap">
+        <div class="head"><span class="tag">Membership</span><h2>No contracts. No joining fee.</h2><p>Every plan includes the gym floor, all group classes, lockers and a body composition scan.</p></div>
+        <div class="grid-4">
+          <article class="card plan"><h3>Monthly</h3><p>Try us out</p><p class="price">₹1,999 <small>/ month</small></p><ul class="ticks"><li>Gym + all classes</li><li>1 fitness assessment</li><li>Locker &amp; shower</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20the%20Monthly%20plan" target="_blank" rel="noopener noreferrer">Join monthly</a></article>
+          <article class="card plan hot"><h3>Quarterly</h3><p>Most popular</p><p class="price">₹4,999 <small>/ 3 months</small></p><ul class="ticks"><li>Everything in Monthly</li><li>Diet plan by our nutritionist</li><li>Monthly progress scan</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20the%20Quarterly%20plan" target="_blank" rel="noopener noreferrer">Join quarterly</a></article>
+          <article class="card plan"><h3>Yearly</h3><p>Best value</p><p class="price">₹14,999 <small>/ year</small></p><ul class="ticks"><li>Everything in Quarterly</li><li>2 months freeze</li><li>4 PT sessions free</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20the%20Yearly%20plan" target="_blank" rel="noopener noreferrer">Join yearly</a></article>
+          <article class="card plan"><h3>Personal training</h3><p>1-on-1 coaching</p><p class="price">₹7,999 <small>/ 12 sessions</small></p><ul class="ticks"><li>Custom workout plan</li><li>Weekly diet check-ins</li><li>Form &amp; injury guidance</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20personal%20training" target="_blank" rel="noopener noreferrer">Book a coach</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="trainers">
+      <div class="wrap">
+        <div class="head"><span class="tag">Coaches</span><h2>Coaches who actually coach.</h2></div>
+        <div class="grid-3">
+          <article class="card trainer"><div class="photo" aria-hidden="true">🏋️</div><div><h3>Arjun Prakash</h3><p>Head coach · Strength &amp; conditioning · ACE certified · 9 years</p></div></article>
+          <article class="card trainer"><div class="photo" aria-hidden="true">🧘‍♀️</div><div><h3>Nisha Varghese</h3><p>Yoga &amp; mobility · RYT-500 · Helps desk workers fix back pain</p></div></article>
+          <article class="card trainer"><div class="photo" aria-hidden="true">🥊</div><div><h3>Rahul Dev</h3><p>HIIT &amp; boxing · Former state-level boxer · Fat-loss specialist</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="stories">
+      <div class="wrap">
+        <div class="head"><span class="tag">Member results</span><h2>Real people. Real progress.</h2></div>
+        <div class="grid-3">
+          <article class="card story"><b>−14 kg</b><p>“Lost 14 kg in 6 months with the quarterly plan and diet coaching. The 6 am HIIT crew keeps me going.”</p><p class="who" style="margin-top:1rem">Priya M.<span>IT professional, 32</span></p></article>
+          <article class="card story"><b>2× deadlift</b><p>“Went from 50 kg to a 100 kg deadlift. Arjun’s strength programme is properly structured.”</p><p class="who" style="margin-top:1rem">Sanjay K.<span>Business owner, 41</span></p></article>
+          <article class="card story"><b>No back pain</b><p>“Three months of Nisha’s yoga and mobility classes fixed the back pain I had for years.”</p><p class="who" style="margin-top:1rem">Meena R.<span>Teacher, 47</span></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="trial">
+      <div class="wrap">
+        <div class="cta-band trial">
+          <div>
+            <h2>Your first 3 days are on us.</h2>
+            <p>Try the gym, join any class and meet the coaches. Bring a towel and water — we’ll handle the rest.</p>
+            <div class="btns"><a class="btn" style="background:#0b0b0c;color:#c6ff3d" href="https://wa.me/919800000002?text=Hi%20IronPulse%2C%20I%27d%20like%20my%20free%203-day%20pass." target="_blank" rel="noopener noreferrer">Claim on WhatsApp</a><a class="btn btn-line" href="tel:+919800000002">Call the front desk</a></div>
+          </div>
+          <ul class="info-list">
+            <li>Mon – Sat <span>5:00 am – 11:00 pm</span></li>
+            <li>Sunday <span>6:00 am – 1:00 pm</span></li>
+            <li>Address <span>3rd floor, OMR Plaza, Thoraipakkam</span></li>
+            <li>Parking <span>Free, basement</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>© 2026 IronPulse Fitness (fictional) · OMR, Chennai</span><span>Demo website designed by <a href="../index.html">Webzuno</a></span></div></footer>
+</body>
+</html>

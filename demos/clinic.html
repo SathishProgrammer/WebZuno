@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareFirst Clinic &amp; Pharmacy — Velachery (Webzuno demo)</title>
+  <meta name="description" content="Sample demo site by Webzuno: a neighbourhood clinic and pharmacy with doctor timings, appointment slots and prescription delivery.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo.css">
+  <style>
+    :root {
+      --brand: #0e7c86;
+      --accent: #0e7c86;
+      --bg: #f3f9f9;
+      --line: #dcebec;
+      --ink: #0f2a2e;
+      --dim: #557074;
+      --display: "Plus Jakarta Sans", sans-serif;
+      --body: "Plus Jakarta Sans", sans-serif;
+    }
+    h1, h2, h3 { letter-spacing: -0.03em; font-weight: 800; }
+    .hero h1 em { font-style: normal; color: var(--brand); }
+    .emergency { background: #fff1f1; color: #9b1c1c; font-size: 0.86rem; text-align: center; padding: 0.55rem var(--pad); font-weight: 600; }
+    .emergency a { text-decoration: underline; }
+    .today { padding: 1.5rem; border-radius: 24px; background: #fff; border: 1px solid var(--line); box-shadow: 0 30px 60px rgba(14, 124, 134, 0.12); }
+    .today-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .today-head h2 { font-size: 1.15rem; }
+    .today-head span { font-size: 0.78rem; font-weight: 700; color: #15803d; background: #e8f7ee; padding: 0.25rem 0.6rem; border-radius: 999px; }
+    .doc-row { display: grid; grid-template-columns: auto 1fr; gap: 0.9rem; padding: 0.9rem 0; border-top: 1px solid var(--line); }
+    .avatar { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--brand); }
+    .doc-row b { display: block; }
+    .doc-row small { color: var(--dim); }
+    .slots { grid-column: 2; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .slots a { padding: 0.35rem 0.7rem; border-radius: 9px; border: 1.5px solid var(--line); font-size: 0.8rem; font-weight: 700; color: var(--brand); }
+    .slots a:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+    .slots .full { color: #a0b2b4; text-decoration: line-through; border-style: dashed; pointer-events: none; }
+    .today-note { margin-top: 0.8rem; font-size: 0.78rem; color: var(--dim); }
+    .doctor { text-align: center; }
+    .doctor .avatar { width: 84px; height: 84px; font-size: 1.6rem; margin: 0 auto; }
+    .doctor .info-list { margin-top: 1rem; text-align: left; }
+    .doctor .info-list li { font-size: 0.86rem; }
+    .pharmacy { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+    .rx { padding: 1.6rem; border-radius: 24px; background: linear-gradient(150deg, #0e7c86, #12a3a1); color: #fff; }
+    .rx h3 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .rx ol { margin: 1rem 0 1.3rem 1.2rem; display: grid; gap: 0.4rem; }
+    .lab td, .lab th { padding: 0.8rem 1rem; text-align: left; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
+    .lab { width: 100%; border-collapse: collapse; background: #fff; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); }
+    .lab th { background: #e6f3f4; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--dim); }
+    .lab td:last-child { font-weight: 800; white-space: nowrap; }
+    .visit { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 960px) { .pharmacy, .visit { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="ribbon">Sample demo site by <a href="../index.html#work">Webzuno</a> — CareFirst is a fictional clinic. <a href="../index.html#cta">Get a site like this →</a></div>
+  <div class="emergency">Emergency? Call <a href="tel:+914400000000">044 0000 0000</a> — doctor on call 24/7</div>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="#top"><span class="logo-mark">✚</span>CareFirst</a>
+      <nav class="nav-links" aria-label="Main"><a href="#doctors">Doctors</a><a href="#services">Services</a><a href="#pharmacy">Pharmacy</a><a href="#lab">Lab tests</a><a href="#visit">Timings</a></nav>
+      <a class="btn btn-brand" href="#top">Book appointment</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="tag">Clinic &amp; pharmacy · Velachery</span>
+          <h1>Your family doctor, <em>without the wait.</em></h1>
+          <p class="lead">General physicians, a children’s specialist and a diabetes clinic under one roof — with an in-house pharmacy and lab. Pick a slot and walk straight in.</p>
+          <div class="btns">
+            <a class="btn btn-wa" href="https://wa.me/919800000001?text=Hi%20CareFirst%2C%20I%27d%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener noreferrer">Book on WhatsApp</a>
+            <a class="btn btn-line" href="tel:+914400000000">Call the clinic</a>
+          </div>
+          <p class="facts"><span><b>15 yrs</b> serving Velachery</span><span><b>4.8★</b> 620 Google reviews</span><span><b>Insurance</b> &amp; cashless accepted</span></p>
+        </div>
+
+        <div class="today">
+          <div class="today-head"><h2>Today’s available slots</h2><span>● Clinic open</span></div>
+          <div class="doc-row">
+            <span class="avatar">AR</span>
+            <div><b>Dr. Anitha Rao</b><small>General physician · MBBS, MD</small></div>
+            <div class="slots">
+              <a href="https://wa.me/919800000001?text=Book%20Dr.%20Anitha%20Rao%20at%2010%3A00%20am%20today" target="_blank" rel="noopener noreferrer">10:00</a>
+              <span class="full">10:30</span>
+              <a href="https://wa.me/919800000001?text=Book%20Dr.%20Anitha%20Rao%20at%2011%3A15%20am%20today" target="_blank" rel="noopener noreferrer">11:15</a>
+              <a href="https://wa.me/919800000001?text=Book%20Dr.%20Anitha%20Rao%20at%206%3A00%20pm%20today" target="_blank" rel="noopener noreferrer">18:00</a>
+            </div>
+          </div>
+          <div class="doc-row">
+            <span class="avatar" style="background:#f08a24">VK</span>
+            <div><b>Dr. Vikram Kumar</b><small>Paediatrician · MBBS, DCH</small></div>
+            <div class="slots">
+              <span class="full">09:30</span>
+              <a href="https://wa.me/919800000001?text=Book%20Dr.%20Vikram%20Kumar%20at%2012%3A00%20pm%20today" target="_blank" rel="noopener noreferrer">12:00</a>
+              <a href="https://wa.me/919800000001?text=Book%20Dr.%20Vikram%20Kumar%20at%205%3A30%20pm%20today" target="_blank" rel="noopener noreferrer">17:30</a>
+            </div>
+          </div>
+          <div class="doc-row">
+            <span class="avatar" style="background:#6d5bd0">SM</span>
+            <div><b>Dr. Shalini Menon</b><small>Diabetologist · MBBS, MD</small></div>
+            <div class="slots">
+              <a href="https://wa.me/919800000001?text=Book%20Dr.%20Shalini%20Menon%20at%204%3A00%20pm%20today" target="_blank" rel="noopener noreferrer">16:00</a>
+              <a href="https://wa.me/919800000001?text=Book%20Dr.%20Shalini%20Menon%20at%204%3A45%20pm%20today" target="_blank" rel="noopener noreferrer">16:45</a>
+              <span class="full">19:00</span>
+            </div>
+          </div>
+          <p class="today-note">Tap a time to book on WhatsApp. We confirm within 10 minutes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="services">
+      <div class="wrap">
+        <div class="head"><span class="tag">Services</span><h2>Everyday care, all in one place.</h2><p>From fevers to long-term conditions — no running between buildings.</p></div>
+        <div class="grid-3">
+          <article class="card"><span class="icon">🩺</span><h3>General medicine</h3><p>Fever, infections, BP checks and annual health check-ups for adults.</p></article>
+          <article class="card"><span class="icon">🧸</span><h3>Child care</h3><p>Paediatric consults, growth tracking and the full vaccination schedule.</p></article>
+          <article class="card"><span class="icon">🩸</span><h3>Diabetes clinic</h3><p>Sugar control plans, diet advice and quarterly HbA1c reviews.</p></article>
+          <article class="card"><span class="icon">💉</span><h3>Vaccinations</h3><p>Flu, travel, HPV and child vaccines — with digital records.</p></article>
+          <article class="card"><span class="icon">🧪</span><h3>In-house lab</h3><p>Blood tests with reports on WhatsApp the same evening.</p></article>
+          <article class="card"><span class="icon">🏠</span><h3>Home visits</h3><p>Doctor and sample collection at home for elders, within 5 km.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="doctors">
+      <div class="wrap">
+        <div class="head"><span class="tag">Our doctors</span><h2>Familiar faces who know your history.</h2></div>
+        <div class="grid-3">
+          <article class="card doctor"><span class="avatar">AR</span><h3>Dr. Anitha Rao</h3><p>General physician · 18 years</p><ul class="info-list"><li>Mon – Sat <span>9:30 am – 1 pm</span></li><li>Mon – Fri <span>5:30 – 8:30 pm</span></li><li>Fee <span>₹400</span></li></ul></article>
+          <article class="card doctor"><span class="avatar" style="background:#f08a24">VK</span><h3>Dr. Vikram Kumar</h3><p>Paediatrician · 12 years</p><ul class="info-list"><li>Mon – Sat <span>9 am – 12:30 pm</span></li><li>Tue, Thu, Sat <span>5 – 7:30 pm</span></li><li>Fee <span>₹500</span></li></ul></article>
+          <article class="card doctor"><span class="avatar" style="background:#6d5bd0">SM</span><h3>Dr. Shalini Menon</h3><p>Diabetologist · 14 years</p><ul class="info-list"><li>Mon, Wed, Fri <span>4 – 8 pm</span></li><li>Saturday <span>10 am – 1 pm</span></li><li>Fee <span>₹600</span></li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="pharmacy">
+      <div class="wrap pharmacy">
+        <div class="head" style="margin-bottom:0">
+          <span class="tag">Pharmacy</span>
+          <h2>Medicines ready before you reach the counter.</h2>
+          <p>All prescriptions filled in-house, genuine medicines from authorised distributors, and 10% off on monthly refills.</p>
+          <ul class="ticks"><li>Open 8 am – 10 pm, all days</li><li>Home delivery within 5 km — free above ₹500</li><li>Refill reminders for regular medicines</li></ul>
+        </div>
+        <div class="rx">
+          <h3>WhatsApp your prescription</h3>
+          <p>Skip the queue in three steps:</p>
+          <ol><li>Send a clear photo of your prescription</li><li>We confirm stock and the total price</li><li>Pick up in 15 minutes or get it delivered</li></ol>
+          <a class="btn btn-light" href="https://wa.me/919800000001?text=Hi%2C%20sending%20my%20prescription%20for%20medicines." target="_blank" rel="noopener noreferrer">Send prescription</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="lab">
+      <div class="wrap">
+        <div class="head"><span class="tag">Lab tests</span><h2>Health packages at honest prices.</h2><p>Fasting tests from 7 am. Free home sample collection on packages.</p></div>
+        <table class="lab">
+          <thead><tr><th>Package</th><th>Includes</th><th>Price</th></tr></thead>
+          <tbody>
+            <tr><td>Basic health check</td><td>CBC, blood sugar, urine routine</td><td>₹499</td></tr>
+            <tr><td>Diabetes panel</td><td>Fasting &amp; PP sugar, HbA1c, kidney function</td><td>₹899</td></tr>
+            <tr><td>Full body check-up</td><td>60+ tests incl. thyroid, liver, lipid, vitamin D &amp; B12</td><td>₹1,999</td></tr>
+            <tr><td>Senior citizen package</td><td>Full body + ECG + doctor consultation</td><td>₹2,499</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="wrap">
+        <div class="head"><span class="tag">Patient reviews</span><h2>Trusted by 8,000+ families.</h2></div>
+        <div class="grid-3">
+          <article class="card quote"><span class="stars">★★★★★</span><p>“Booked a slot on WhatsApp and was seen in 5 minutes. Medicines were packed by the time I finished.”</p><p class="who">Karthik S.<span>Velachery</span></p></article>
+          <article class="card quote"><span class="stars">★★★★★</span><p>“Dr. Vikram is wonderful with kids. Vaccination reminders come on WhatsApp — I never miss one.”</p><p class="who">Divya R.<span>Madipakkam</span></p></article>
+          <article class="card quote"><span class="stars">★★★★★</span><p>“The home sample collection for my father is a blessing. Reports arrive the same evening.”</p><p class="who">Lakshmi N.<span>Taramani</span></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="visit">
+      <div class="wrap visit">
+        <article class="card">
+          <span class="tag">Timings</span>
+          <h3 style="font-size:1.6rem;margin:0.5rem 0 1rem">When we’re open</h3>
+          <ul class="info-list"><li>Clinic · Mon – Sat <span>9 am – 1 pm, 5 – 9 pm</span></li><li>Clinic · Sunday <span>10 am – 1 pm</span></li><li>Pharmacy <span>8 am – 10 pm, all days</span></li><li>Lab <span>7 am – 7 pm</span></li><li>Emergency <span>24/7 on call</span></li></ul>
+        </article>
+        <article class="card">
+          <span class="tag">Find us</span>
+          <h3 style="font-size:1.6rem;margin:0.5rem 0 1rem">CareFirst Clinic &amp; Pharmacy</h3>
+          <p>22, 100 Feet Road, Velachery, Chennai 600042 · Above the bank, lift available · Parking at the back</p>
+          <div class="btns" style="margin-top:1.3rem">
+            <a class="btn btn-brand" href="https://maps.google.com/?q=Velachery+Chennai" target="_blank" rel="noopener noreferrer">Get directions</a>
+            <a class="btn btn-line" href="tel:+914400000000">044 0000 0000</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section style="padding-top:0">
+      <div class="wrap">
+        <div class="cta-band">
+          <h2>Feeling unwell? See a doctor today.</h2>
+          <p>Book a slot in seconds — or just walk in.</p>
+          <div class="btns"><a class="btn btn-wa" href="https://wa.me/919800000001?text=Hi%20CareFirst%2C%20I%27d%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener noreferrer">Book on WhatsApp</a><a class="btn btn-light" href="tel:+914400000000">Call now</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>© 2026 CareFirst Clinic (fictional) · Velachery, Chennai</span><span>Demo website designed by <a href="../index.html">Webzuno</a></span></div></footer>
+</body>
+</html>

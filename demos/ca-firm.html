@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R. Srinivasan &amp; Associates — Chartered Accountants, T. Nagar (Webzuno demo)</title>
+  <meta name="description" content="Sample demo site by Webzuno: a chartered accountancy firm with GST, income tax, company registration and audit services.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="demo.css">
+  <style>
+    :root {
+      --brand: #14284b;
+      --accent: #0f7b5f;
+      --bg: #f6f7f9;
+      --line: #e1e5ec;
+      --ink: #14213a;
+      --dim: #5a6577;
+      --display: "Libre Baskerville", Georgia, serif;
+      --body: "Source Sans 3", sans-serif;
+      --radius: 12px;
+    }
+    h1, h2, h3 { letter-spacing: -0.01em; }
+    .btn { border-radius: 8px; }
+    .btn-green { background: var(--accent); color: #fff; box-shadow: 0 10px 22px rgba(15, 123, 95, 0.25); }
+    .hero { background: linear-gradient(180deg, #fff, var(--bg)); border-bottom: 1px solid var(--line); }
+    .hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.5rem); line-height: 1.15; }
+    .hero h1 em { color: var(--accent); }
+    .creds { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem; }
+    .creds span { padding: 0.35rem 0.7rem; border-radius: 6px; background: #fff; border: 1px solid var(--line); font-size: 0.82rem; font-weight: 600; color: var(--dim); }
+    .deadlines { padding: 1.5rem; border-radius: 16px; background: var(--brand); color: #fff; box-shadow: 0 30px 60px rgba(20, 40, 75, 0.2); }
+    .deadlines h2 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .deadlines > p { color: #aab6cc; font-size: 0.86rem; margin-bottom: 1rem; }
+    .dl { list-style: none; display: grid; gap: 0.6rem; }
+    .dl li { display: grid; grid-template-columns: 58px 1fr; gap: 0.9rem; align-items: center; padding: 0.7rem; border-radius: 10px; background: rgba(255, 255, 255, 0.06); }
+    .dl .date { text-align: center; border-radius: 8px; background: #fff; color: var(--brand); padding: 0.3rem 0; line-height: 1.1; }
+    .dl .date b { display: block; font-family: var(--display); font-size: 1.25rem; }
+    .dl .date small { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .dl strong { display: block; font-size: 0.95rem; }
+    .dl span { color: #aab6cc; font-size: 0.82rem; }
+    .dl .soon { outline: 2px solid #f5b942; }
+    .dl-note { margin-top: 0.9rem; font-size: 0.75rem; color: #8d9bb4; }
+    .svc .from { display: block; margin-top: 0.8rem; font-size: 0.85rem; color: var(--dim); }
+    .svc .from b { color: var(--ink); font-size: 1rem; }
+    .icon { background: #e7f3ef; }
+    .who-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .who-item { padding: 1.3rem; border-radius: 12px; background: #fff; border-left: 3px solid var(--accent); }
+    .who-item h3 { font-size: 1.05rem; margin-bottom: 0.3rem; }
+    .who-item p { font-size: 0.9rem; color: var(--dim); }
+    .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+    .doc-box { padding: 1.6rem; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+    .doc-box h3 { font-size: 1.15rem; margin-bottom: 0.9rem; }
+    .team .avatar { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--brand); color: #fff; font-family: var(--display); font-size: 1.3rem; margin-bottom: 0.8rem; }
+    .cta-band { background: var(--brand); }
+    @media (max-width: 960px) { .who-grid { grid-template-columns: 1fr 1fr; } .checklist { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .who-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="ribbon">Sample demo site by <a href="../index.html#work">Webzuno</a> — this is a fictional CA firm. <a href="../index.html#cta">Get a site like this →</a></div>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="#top"><span class="logo-mark" style="font-size:0.95rem">CA</span>Srinivasan &amp; Associates</a>
+      <nav class="nav-links" aria-label="Main"><a href="#services">Services</a><a href="#deadlines">Deadlines</a><a href="#documents">ITR checklist</a><a href="#team">Team</a></nav>
+      <a class="btn btn-green btn-hide" href="#contact">Book a consultation</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="tag">Chartered Accountants · T. Nagar, Chennai</span>
+          <h1>Taxes, GST and compliance — <em>handled properly,</em> on time.</h1>
+          <p class="lead">For 22 years we’ve helped salaried professionals, shop owners, startups and SMEs stay compliant, save tax legally and never miss a deadline.</p>
+          <div class="creds"><span>ICAI registered firm</span><span>FRN 000000S</span><span>Since 2004</span><span>1,800+ clients</span></div>
+          <div class="btns">
+            <a class="btn btn-green" href="https://wa.me/919800000005?text=Hello%2C%20I%27d%20like%20to%20book%20a%20consultation." target="_blank" rel="noopener noreferrer">Book a consultation</a>
+            <a class="btn btn-line" href="tel:+914400000005">Call 044 0000 0005</a>
+          </div>
+        </div>
+
+        <aside class="deadlines" id="deadlines">
+          <h2>Upcoming due dates</h2>
+          <p>We send reminders to every client a week ahead.</p>
+          <ul class="dl">
+            <li class="soon"><span class="date"><b>11</b><small>Nov</small></span><div><strong>GSTR-1 (October)</strong><span>Monthly outward supplies</span></div></li>
+            <li><span class="date"><b>20</b><small>Nov</small></span><div><strong>GSTR-3B (October)</strong><span>Monthly GST payment &amp; return</span></div></li>
+            <li><span class="date"><b>15</b><small>Dec</small></span><div><strong>Advance tax — 3rd instalment</strong><span>75% of estimated tax</span></div></li>
+            <li><span class="date"><b>31</b><small>Dec</small></span><div><strong>Belated / revised ITR</strong><span>Last date for FY 2025-26</span></div></li>
+          </ul>
+          <p class="dl-note">Dates are indicative — always confirm with us, as the government may extend them.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="head"><span class="tag">Services</span><h2>One firm for every filing.</h2><p>Clear fees agreed upfront. Most work is done online — visit the office only if you want to.</p></div>
+        <div class="grid-3">
+          <article class="card svc"><span class="icon">🧾</span><h3>Income tax returns</h3><p>Salaried, business, capital gains and NRI returns, with tax planning.</p><span class="from">from <b>₹1,500</b> / return</span></article>
+          <article class="card svc"><span class="icon">📊</span><h3>GST registration &amp; filing</h3><p>New GSTIN, monthly/quarterly returns, reconciliation and notices.</p><span class="from">from <b>₹1,200</b> / month</span></article>
+          <article class="card svc"><span class="icon">🏢</span><h3>Company &amp; LLP registration</h3><p>Pvt Ltd, LLP, OPC and partnership — PAN, TAN and bank account ready.</p><span class="from">from <b>₹9,999</b> all-inclusive</span></article>
+          <article class="card svc"><span class="icon">🔍</span><h3>Audit &amp; assurance</h3><p>Statutory, tax audit and internal audits for SMEs and trusts.</p><span class="from">Quote on <b>scope</b></span></article>
+          <article class="card svc"><span class="icon">📒</span><h3>Accounting &amp; payroll</h3><p>Monthly books in Tally or Zoho, payroll, PF/ESI and TDS returns.</p><span class="from">from <b>₹3,500</b> / month</span></article>
+          <article class="card svc"><span class="icon">🚀</span><h3>Startup advisory</h3><p>DPIIT recognition, funding readiness, ESOPs and compliance calendar.</p><span class="from">from <b>₹5,000</b> / session</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="wrap">
+        <div class="head"><span class="tag">Who we help</span><h2>Advice that fits your situation.</h2></div>
+        <div class="who-grid">
+          <article class="who-item"><h3>Salaried &amp; pensioners</h3><p>Choose the right tax regime, claim every deduction, file in a day.</p></article>
+          <article class="who-item"><h3>Shops &amp; traders</h3><p>GST that matches your books, so notices never become a worry.</p></article>
+          <article class="who-item"><h3>Doctors &amp; professionals</h3><p>Presumptive taxation, advance tax and practice accounts.</p></article>
+          <article class="who-item"><h3>Startups &amp; SMEs</h3><p>Registration to audit — a compliance partner as you scale.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="documents">
+      <div class="wrap checklist">
+        <div class="head" style="margin-bottom:0">
+          <span class="tag">ITR checklist</span>
+          <h2>Filing your income tax return? Keep these ready.</h2>
+          <p>Send scans on WhatsApp or email — we’ll prepare the return, explain your refund or tax due, and file only after you approve.</p>
+          <div class="btns" style="margin-top:1.4rem"><a class="btn btn-green" href="https://wa.me/919800000005?text=Hello%2C%20I%27d%20like%20to%20file%20my%20ITR." target="_blank" rel="noopener noreferrer">Start my ITR on WhatsApp</a></div>
+        </div>
+        <div class="grid-2">
+          <div class="doc-box"><h3>Everyone</h3><ul class="ticks"><li>PAN &amp; Aadhaar</li><li>Form 16 from employer</li><li>Bank statements &amp; interest certificates</li><li>Form 26AS / AIS</li></ul></div>
+          <div class="doc-box"><h3>If applicable</h3><ul class="ticks"><li>80C / 80D investment proofs</li><li>Home loan interest certificate</li><li>Capital gains statements</li><li>Rent receipts (HRA)</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="team">
+      <div class="wrap">
+        <div class="head"><span class="tag">Our team</span><h2>Partners who pick up the phone.</h2></div>
+        <div class="grid-3">
+          <article class="card team"><span class="avatar">RS</span><h3>CA R. Srinivasan</h3><p>Founding partner · FCA · 28 years in direct tax and audit.</p></article>
+          <article class="card team"><span class="avatar" style="background:#0f7b5f">PL</span><h3>CA Priya Lakshmanan</h3><p>Partner · ACA, DISA · GST, indirect tax and litigation.</p></article>
+          <article class="card team"><span class="avatar" style="background:#7a5c2e">KN</span><h3>CA Karthik Narayan</h3><p>Partner · ACA · Startups, company law and virtual CFO services.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="head"><span class="tag">Client feedback</span><h2>Trusted for over two decades.</h2></div>
+        <div class="grid-3">
+          <article class="card quote"><span class="stars">★★★★★</span><p>“They spotted deductions my previous filer missed every year. Clear explanation, no jargon.”</p><p class="who">Suresh V.<span>IT professional</span></p></article>
+          <article class="card quote"><span class="stars">★★★★★</span><p>“Handled a GST notice for my shop calmly and closed it within weeks. Monthly filing is now stress-free.”</p><p class="who">Abdul R.<span>Electronics retailer</span></p></article>
+          <article class="card quote"><span class="stars">★★★★★</span><p>“Registered our startup and set up our accounts. Like having a CFO on call.”</p><p class="who">Divya &amp; Arun<span>Co-founders, SaaS startup</span></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="padding-top:0">
+      <div class="wrap">
+        <div class="cta-band">
+          <h2>Talk to a Chartered Accountant.</h2>
+          <p>First 20-minute consultation free. Office: 12, Thyagaraya Road, T. Nagar, Chennai 600017 · Mon–Sat, 10 am – 7 pm</p>
+          <div class="btns"><a class="btn btn-green" href="https://wa.me/919800000005?text=Hello%2C%20I%27d%20like%20to%20book%20a%20consultation." target="_blank" rel="noopener noreferrer">Book on WhatsApp</a><a class="btn btn-light" href="mailto:office@example.com">Email the office</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>© 2026 R. Srinivasan &amp; Associates (fictional) · Chennai</span><span>Demo website designed by <a href="../index.html">Webzuno</a></span></div></footer>
+</body>
+</html>
