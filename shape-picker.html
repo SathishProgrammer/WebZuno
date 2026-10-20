@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webzuno — Hero shape picker (prototype)</title>
+  <link rel="icon" type="image/png" href="assets/logo-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #04070c;
+      --panel: #0a1018;
+      --panel-2: #0e1621;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(110, 220, 255, 0.55);
+      --text: #e8f1f8;
+      --muted: #8597a8;
+      --accent: #6edcff;
+      --accent-ink: #04121a;
+      --glow: rgba(40, 120, 220, 0.28);
+    }
+    [data-theme="light"] {
+      --bg: #f3f6fa;
+      --panel: #ffffff;
+      --panel-2: #f7f9fc;
+      --line: rgba(10, 30, 60, 0.1);
+      --line-strong: rgba(21, 88, 224, 0.6);
+      --text: #0b1726;
+      --muted: #5a6b7d;
+      --accent: #1558e0;
+      --accent-ink: #ffffff;
+      --glow: rgba(21, 88, 224, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Manrope, system-ui, sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+    button { font: inherit; color: inherit; cursor: pointer; }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .top h1 { font-family: Syne, sans-serif; font-size: 20px; margin: 0; }
+    .top p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+    .btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn:hover { border-color: var(--line-strong); }
+    .btn.solid { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+    .app {
+      display: grid;
+      grid-template-columns: minmax(340px, 430px) 1fr;
+      gap: 28px;
+      padding: 24px 28px 60px;
+    }
+    .side {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .stage {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: radial-gradient(circle at 20% -10%, var(--glow), transparent 60%), var(--panel);
+      overflow: hidden;
+    }
+    .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .stage-copy { position: absolute; left: 0; right: 0; bottom: 22px; text-align: center; padding: 0 16px; }
+    .kicker {
+      margin: 0 0 6px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .cap { margin: 0; font-family: Syne, sans-serif; font-size: 22px; font-weight: 600; }
+    .stage-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: var(--panel-2);
+    }
+    .controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    .controls .btn { flex: 1; }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      padding: 14px;
+    }
+    .card h3 { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+    .card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .card-head .btn { padding: 5px 11px; font-size: 12px; }
+
+    .edit { display: grid; gap: 8px; }
+    .edit label { display: grid; gap: 4px; font-size: 12px; color: var(--muted); }
+    .edit input {
+      font: inherit;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+    .edit input:focus { outline: none; border-color: var(--line-strong); }
+
+    .order { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+    .order li {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      border-radius: 999px;
+      padding: 3px 4px 3px 10px;
+      font-size: 12px;
+    }
+    .order li.is-live { border-color: var(--line-strong); }
+    .order li b { color: var(--accent); font-weight: 700; }
+    .order li .name { cursor: pointer; }
+    .order li button {
+      border: 0;
+      background: transparent;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      color: var(--muted);
+      line-height: 1;
+    }
+    .order li button:hover { background: var(--line); color: var(--text); }
+    .empty { color: var(--muted); font-size: 13px; margin: 0; }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      font: 12px/1.5 ui-monospace, Consolas, monospace;
+      color: var(--text);
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .groups { display: flex; flex-direction: column; gap: 30px; }
+    .group-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+    .group-head h2 { font-family: Syne, sans-serif; font-size: 18px; margin: 0; }
+    .group-head p { margin: 0; color: var(--muted); font-size: 13px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(178px, 1fr)); gap: 12px; }
+
+    .tile {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .tile:hover { transform: translateY(-2px); }
+    .tile.is-picked { border-color: var(--line-strong); box-shadow: 0 0 0 1px var(--line-strong), 0 10px 30px var(--glow); }
+    .tile.is-preview { outline: 2px dashed var(--accent); outline-offset: 3px; }
+    .tile canvas { display: block; width: 100%; height: 150px; }
+    .tile .meta { padding: 2px 12px 12px; }
+    .tile .t-kicker { margin: 0; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+    .tile .t-cap { margin: 3px 0 0; font-size: 13px; font-weight: 600; line-height: 1.3; }
+    .pick {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      font-size: 16px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+    .tile.is-picked .pick { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 2px 8px;
+      background: var(--panel-2);
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .side { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Hero shape picker <span style="color:var(--muted);font-weight:500">· prototype</span></h1>
+      <p>Click a shape to preview it. Tick <b>+</b> to add it to your loop. Edit the label and caption on the left.</p>
+    </div>
+    <button class="btn" id="theme">Light mode</button>
+  </header>
+
+  <div class="app">
+    <aside class="side">
+      <div class="stage">
+        <canvas id="stage"></canvas>
+        <span class="stage-tag" id="s-tag"></span>
+        <div class="stage-copy">
+          <p class="kicker" id="s-kicker"></p>
+          <p class="cap" id="s-cap"></p>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="prev">‹ Prev</button>
+        <button class="btn" id="play">Pause</button>
+        <button class="btn" id="next">Next ›</button>
+        <button class="btn solid" id="toggle-sel">Add to loop</button>
+      </div>
+      <div class="card edit">
+        <label>Label (small text)
+          <input id="e-kicker" type="text">
+        </label>
+        <label>Caption
+          <input id="e-cap" type="text">
+        </label>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h3>Your loop <span id="count" style="color:var(--muted);font-weight:500"></span></h3>
+          <div>
+            <button class="btn" id="clear">Clear</button>
+            <button class="btn" id="reset">Reset to site</button>
+          </div>
+        </div>
+        <ol class="order" id="order"></ol>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h3>Your choice</h3>
+          <button class="btn solid" id="copy">Copy</button>
+        </div>
+        <textarea id="out" readonly></textarea>
+      </div>
+    </aside>
+
+    <main class="groups" id="groups"></main>
+  </div>
+
+  <div class="toast" id="toast">Copied — paste it in chat</div>
+
+  <script>
+  (() => {
+    const LIB = [
+      { id: "globe", group: "current", kicker: "WWW / Internet", caption: "Take your business worldwide" },
+      { id: "puzzle", group: "current", kicker: "Building", caption: "We build your website" },
+      { id: "blocks", group: "current", kicker: "Development", caption: "Building digital experiences" },
+      { id: "house", group: "current", kicker: "Business / home", caption: "Your business’s digital home" },
+      { id: "building", group: "current", kicker: "Company", caption: "Bring your company online" },
+      { id: "shop", group: "current", kicker: "Local business", caption: "Websites for local shops" },
+      { id: "cart", group: "current", kicker: "E-commerce", caption: "Sell online" },
+      { id: "chain", group: "current", kicker: "Hyperlink", caption: "Connect your customers" },
+      { id: "web", group: "current", kicker: "World Wide Web", caption: "World Wide Webzuno" },
+      { id: "bolt", group: "current", kicker: "Speed", caption: "Fast websites" },
+
+      { id: "cup", group: "industry", kicker: "Cafés & restaurants", caption: "Menus people can find" },
+      { id: "cross", group: "industry", kicker: "Healthcare", caption: "Clinics patients can trust" },
+      { id: "pill", group: "industry", kicker: "Pharmacy", caption: "Your pharmacy, open online" },
+      { id: "dumbbell", group: "industry", kicker: "Fitness", caption: "Gyms that sign up members at 11pm" },
+      { id: "bag", group: "industry", kicker: "Retail", caption: "Boutiques that sell beyond the street" },
+      { id: "hanger", group: "industry", kicker: "Fashion", caption: "Show the whole collection" },
+      { id: "hammer", group: "industry", kicker: "Trades", caption: "Local services that get the call" },
+      { id: "scissors", group: "industry", kicker: "Salons", caption: "Bookings while you sleep" },
+
+      { id: "phone", group: "feature", kicker: "Mobile-first", caption: "Looks right in every pocket" },
+      { id: "pin", group: "feature", kicker: "Google Maps", caption: "Put your business on the map" },
+      { id: "magnifier", group: "feature", kicker: "SEO", caption: "Get found on Google" },
+      { id: "chat", group: "feature", kicker: "WhatsApp", caption: "Customers message you in one tap" },
+      { id: "shield", group: "feature", kicker: "Secured", caption: "Protected from day one" },
+      { id: "chart", group: "feature", kicker: "Growth", caption: "Built to bring customers" },
+      { id: "calendar", group: "feature", kicker: "Bookings", caption: "Appointments, booked online" },
+      { id: "clock", group: "feature", kicker: "Open hours", caption: "Always open online" },
+      { id: "stars", group: "feature", kicker: "Reviews", caption: "Show off what customers say" },
+
+      { id: "bulb", group: "process", kicker: "Discover", caption: "We learn your business first" },
+      { id: "pen", group: "process", kicker: "Design", caption: "A look built around your brand" },
+      { id: "code", group: "process", kicker: "Build", caption: "Fast, clean, responsive code" },
+      { id: "rocket", group: "process", kicker: "Launch", caption: "Live in about 14 days" },
+
+      { id: "wlogo", group: "brand", kicker: "Webzuno", caption: "Your business. Built for the web." },
+      { id: "browser", group: "brand", kicker: "yourbusiness.in", caption: "Your name, your address online" }
+    ];
+    const GROUPS = [
+      { id: "current", title: "On your site now", note: "The 10 shapes the hero already cycles through" },
+      { id: "industry", title: "Industries", note: "Matches your “Sample directions” section" },
+      { id: "feature", title: "What clients get", note: "Features from your pricing plans" },
+      { id: "process", title: "How you work", note: "Your 5-step process" },
+      { id: "brand", title: "Brand moments", note: "Good as the first or last shape in the loop" }
+    ];
+    const DEFAULTS = Object.fromEntries(LIB.map((s) => [s.id, { kicker: s.kicker, caption: s.caption }]));
+    const byId = Object.fromEntries(LIB.map((s) => [s.id, s]));
+    const siteIds = LIB.filter((s) => s.group === "current").map((s) => s.id);
+
+    const KEY = "webzuno-shape-picker";
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { saved = {}; }
+    let selected = Array.isArray(saved.selected) ? saved.selected.filter((id) => byId[id]) : siteIds.slice();
+    Object.entries(saved.edits || {}).forEach(([id, v]) => { if (byId[id]) Object.assign(byId[id], v); });
+    const save = () => localStorage.setItem(KEY, JSON.stringify({
+      selected,
+      edits: Object.fromEntries(LIB.map((s) => [s.id, { kicker: s.kicker, caption: s.caption }]))
+    }));
+
+    /* ---------- geometry ---------- */
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    const walk = (path, closed = false) => {
+      const segs = [];
+      for (let i = 0; i < path.length - 1; i += 1) segs.push([path[i], path[i + 1]]);
+      if (closed && path.length > 2) segs.push([path[path.length - 1], path[0]]);
+      const lens = segs.map(([a, b]) => Math.hypot(b[0] - a[0], b[1] - a[1], (b[2] || 0) - (a[2] || 0)));
+      return { segs, lens, total: lens.reduce((s, v) => s + v, 0) || 1 };
+    };
+    const at = (path, closed, d) => {
+      const { segs, lens } = walk(path, closed);
+      let rest = d;
+      for (let s = 0; s < segs.length; s += 1) {
+        if (rest <= lens[s] || s === segs.length - 1) {
+          const [a, b] = segs[s];
+          const t = lens[s] ? rest / lens[s] : 0;
+          return { x: a[0] + (b[0] - a[0]) * t, y: a[1] + (b[1] - a[1]) * t, z: (a[2] || 0) + ((b[2] || 0) - (a[2] || 0)) * t };
+        }
+        rest -= lens[s];
+      }
+      const last = path[path.length - 1];
+      return { x: last[0], y: last[1], z: last[2] || 0 };
+    };
+    const line = (pts, path, count, closed = false) => {
+      const { total } = walk(path, closed);
+      for (let i = 0; i < count; i += 1) pts.push(at(path, closed, ((i + 0.5) / count) * total));
+    };
+    const ribbon = (pts, path, count, closed = false, layers = [-0.05, 0, 0.05]) => {
+      const each = Math.floor(count / layers.length);
+      layers.forEach((z) => line(pts, path.map((p) => [p[0], p[1], (p[2] || 0) + z]), each, closed));
+    };
+    const oval = (pts, cx, cy, rx, ry, count, z = 0) => {
+      const path = [];
+      for (let i = 0; i <= 48; i += 1) {
+        const a = (i / 48) * Math.PI * 2;
+        path.push([cx + Math.cos(a) * rx, cy + Math.sin(a) * ry, z]);
+      }
+      line(pts, path, count, true);
+    };
+    const rect = (pts, x, y, w, h, count, z = 0) => {
+      ribbon(pts, [[x, y, z], [x + w, y, z], [x + w, y + h, z], [x, y + h, z]], count, true);
+    };
+    const spans = (poly, y) => {
+      const xs = [];
+      for (let i = 0; i < poly.length; i += 1) {
+        const a = poly[i];
+        const b = poly[(i + 1) % poly.length];
+        if ((a[1] <= y && b[1] > y) || (b[1] <= y && a[1] > y)) {
+          const t = (y - a[1]) / ((b[1] - a[1]) || 1e-6);
+          xs.push(a[0] + (b[0] - a[0]) * t);
+        }
+      }
+      return xs.sort((u, v) => u - v);
+    };
+    const yRange = (poly) => poly.reduce(([lo, hi], p) => [Math.min(lo, p[1]), Math.max(hi, p[1])], [Infinity, -Infinity]);
+    const fill = (pts, poly, rows, perRow, z = 0) => {
+      const [minY, maxY] = yRange(poly);
+      for (let r = 0; r < rows; r += 1) {
+        const y = minY + ((r + 0.5) / rows) * (maxY - minY);
+        const xs = spans(poly, y);
+        for (let k = 0; k < xs.length - 1; k += 2) {
+          for (let p = 0; p < perRow; p += 1) pts.push({ x: xs[k] + (xs[k + 1] - xs[k]) * ((p + 0.5) / perRow), y, z });
+        }
+      }
+    };
+    const fillG = (pts, poly, gap = 0.065, z = 0) => {
+      const [minY, maxY] = yRange(poly);
+      for (let y = minY + gap / 2; y < maxY; y += gap) {
+        const xs = spans(poly, y);
+        for (let k = 0; k < xs.length - 1; k += 2) {
+          const w = xs[k + 1] - xs[k];
+          const c = Math.max(1, Math.round(w / gap));
+          for (let p = 0; p < c; p += 1) pts.push({ x: xs[k] + w * ((p + 0.5) / c), y, z });
+        }
+      }
+    };
+    const solid = (pts, poly, gap, edge) => { fillG(pts, poly, gap); ribbon(pts, poly, edge, true); };
+    const cube = (pts, cx, cy, s) => {
+      const top = [[cx, cy - s * 0.58, 0], [cx + s, cy - s * 0.28, 0.12], [cx, cy + 0.02, 0.22], [cx - s, cy - s * 0.28, 0.12]];
+      const left = [[cx - s, cy - s * 0.28, 0.12], [cx, cy + 0.02, 0.22], [cx, cy + s * 0.72, 0.22], [cx - s, cy + s * 0.42, 0.12]];
+      const right = [[cx + s, cy - s * 0.28, 0.12], [cx, cy + 0.02, 0.22], [cx, cy + s * 0.72, 0.22], [cx + s, cy + s * 0.42, 0.12]];
+      ribbon(pts, top, 70, true);
+      ribbon(pts, left, 70, true);
+      ribbon(pts, right, 70, true);
+    };
+    const arcPath = (cx, cy, rx, a0, a1, steps = 24, ry = rx) => {
+      const p = [];
+      for (let k = 0; k <= steps; k += 1) {
+        const a = ((a0 + ((a1 - a0) * k) / steps) * Math.PI) / 180;
+        p.push([cx + Math.cos(a) * rx, cy + Math.sin(a) * ry]);
+      }
+      return p;
+    };
+    const circ = (cx, cy, r, steps = 36) => arcPath(cx, cy, r, 0, 360, steps).slice(0, -1);
+    const rr = (x, y, w, h, r) => {
+      const p = [];
+      [[x + w - r, y + r, -90], [x + w - r, y + h - r, 0], [x + r, y + h - r, 90], [x + r, y + r, 180]].forEach(([cx, cy, s]) => {
+        for (let k = 0; k <= 6; k += 1) {
+          const a = ((s + k * 15) * Math.PI) / 180;
+          p.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+        }
+      });
+      return p;
+    };
+    const box = (x, y, w, h) => [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
+    const star = (cx, cy, R, r) => {
+      const p = [];
+      for (let k = 0; k < 10; k += 1) {
+        const a = ((-90 + k * 36) * Math.PI) / 180;
+        const rad = k % 2 ? r : R;
+        p.push([cx + Math.cos(a) * rad, cy + Math.sin(a) * rad]);
+      }
+      return p;
+    };
+    const inside = (poly, x, y) => {
+      let c = false;
+      for (let i = 0, j = poly.length - 1; i < poly.length; j = i, i += 1) {
+        const [xi, yi] = poly[i];
+        const [xj, yj] = poly[j];
+        if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) c = !c;
+      }
+      return c;
+    };
+    const keep = (pts, poly, gap, test) => {
+      const tmp = [];
+      fillG(tmp, poly, gap);
+      tmp.forEach((p) => { if (test(p)) pts.push(p); });
+    };
+    const turn = (pts, deg, s = 1) => {
+      const a = (deg * Math.PI) / 180;
+      const c = Math.cos(a);
+      const n = Math.sin(a);
+      return pts.map((p) => ({ x: (p.x * c - p.y * n) * s, y: (p.x * n + p.y * c) * s, z: p.z }));
+    };
+    const scaleP = (poly, cx, cy, s) => poly.map(([x, y]) => [cx + (x - cx) * s, cy + (y - cy) * s]);
+
+    /* ---------- shapes ---------- */
+    const makers = {
+      globe: () => {
+        const pts = [];
+        const count = 640;
+        for (let i = 0; i < count; i += 1) {
+          const y = 1 - (i / (count - 1)) * 2;
+          const rad = Math.sqrt(Math.max(0, 1 - y * y));
+          const th = golden * i;
+          pts.push({ x: Math.cos(th) * rad, y: y * 0.98, z: Math.sin(th) * rad });
+        }
+        [-0.66, -0.33, 0, 0.33, 0.66].forEach((lat) => {
+          const r = Math.sqrt(Math.max(0.06, 1 - lat * lat));
+          const path = [];
+          for (let k = 0; k <= 40; k += 1) {
+            const a = (k / 40) * Math.PI * 2;
+            path.push([Math.cos(a) * r, lat, Math.sin(a) * r]);
+          }
+          line(pts, path, 80, true);
+        });
+        for (let m = 0; m < 8; m += 1) {
+          const yaw = (m / 8) * Math.PI;
+          const path = [];
+          for (let k = 0; k <= 32; k += 1) {
+            const a = (k / 32) * Math.PI * 2;
+            path.push([Math.sin(a) * Math.cos(yaw), Math.cos(a), Math.sin(a) * Math.sin(yaw)]);
+          }
+          line(pts, path, 64, true);
+        }
+        return pts;
+      },
+      puzzle: () => {
+        const pts = [];
+        const piece = [
+          [-0.62, -0.36], [-0.16, -0.36], [-0.08, -0.56], [0.12, -0.7], [0.3, -0.5], [0.22, -0.36],
+          [0.62, -0.36], [0.62, 0.02], [0.82, 0.1], [0.9, 0.32], [0.66, 0.44], [0.62, 0.26],
+          [0.62, 0.62], [-0.1, 0.62], [-0.2, 0.42], [-0.42, 0.34], [-0.52, 0.56], [-0.2, 0.62],
+          [-0.62, 0.62], [-0.62, 0.16], [-0.4, 0.06], [-0.32, -0.16], [-0.58, -0.24], [-0.62, -0.02]
+        ];
+        fill(pts, piece, 28, 18, 0);
+        ribbon(pts, piece, 220, true);
+        return pts;
+      },
+      blocks: () => {
+        const pts = [];
+        cube(pts, -0.42, 0.2, 0.38);
+        cube(pts, 0.42, 0.2, 0.38);
+        cube(pts, 0, -0.42, 0.38);
+        return pts;
+      },
+      house: () => {
+        const pts = [];
+        fill(pts, [[-0.7, -0.08], [0.7, -0.08], [0.7, 0.88], [-0.7, 0.88]], 22, 16, 0);
+        fill(pts, [[-0.92, -0.08], [0, -0.92], [0.92, -0.08]], 16, 18, 0);
+        ribbon(pts, [[-0.92, -0.08], [0, -0.92], [0.92, -0.08]], 90, false);
+        ribbon(pts, [[-0.7, -0.08], [-0.7, 0.88], [0.7, 0.88], [0.7, -0.08]], 140, true);
+        rect(pts, -0.16, 0.32, 0.32, 0.56, 70);
+        rect(pts, -0.5, 0.08, 0.2, 0.2, 40);
+        rect(pts, 0.3, 0.08, 0.2, 0.2, 40);
+        ribbon(pts, [[0.42, -0.42], [0.42, -0.78], [0.58, -0.78], [0.58, -0.28]], 50, false);
+        return pts;
+      },
+      building: () => {
+        const pts = [];
+        fill(pts, box(-0.48, -0.82, 0.96, 1.68), 28, 14, 0);
+        ribbon(pts, box(-0.48, -0.82, 0.96, 1.68), 140, true);
+        ribbon(pts, [[-0.56, -0.82], [0, -1.06], [0.56, -0.82]], 70, false);
+        rect(pts, -0.12, 0.48, 0.24, 0.38, 50);
+        for (let r = 0; r < 4; r += 1) {
+          for (let c = 0; c < 3; c += 1) rect(pts, -0.34 + c * 0.24, -0.68 + r * 0.24, 0.14, 0.12, 22);
+        }
+        return pts;
+      },
+      shop: () => {
+        const pts = [];
+        fill(pts, box(-0.74, -0.08, 1.48, 0.94), 20, 16, 0);
+        ribbon(pts, box(-0.74, -0.08, 1.48, 0.94), 130, true);
+        const awn = [[-0.84, -0.42]];
+        for (let i = 0; i <= 8; i += 1) awn.push([-0.84 + i * 0.21, i % 2 ? -0.08 : 0.06]);
+        awn.push([0.84, -0.42], [-0.84, -0.42]);
+        ribbon(pts, awn, 160, true);
+        rect(pts, -0.28, -0.66, 0.56, 0.16, 50);
+        rect(pts, -0.4, 0.28, 0.26, 0.58, 55);
+        rect(pts, 0.08, 0.08, 0.46, 0.3, 55);
+        return pts;
+      },
+      cart: () => {
+        const pts = [];
+        ribbon(pts, [[-0.62, -0.48], [-0.18, -0.22], [-0.02, 0.26], [0.74, 0.26], [0.84, -0.22], [-0.12, -0.22]], 180, false);
+        ribbon(pts, [[-0.18, -0.22], [0.84, -0.22]], 40, false);
+        ribbon(pts, [[-0.02, 0.26], [0.74, 0.26]], 40, false);
+        oval(pts, -0.02, 0.56, 0.16, 0.16, 70);
+        oval(pts, 0.58, 0.56, 0.16, 0.16, 70);
+        oval(pts, -0.02, 0.56, 0.05, 0.05, 24);
+        oval(pts, 0.58, 0.56, 0.05, 0.05, 24);
+        return pts;
+      },
+      chain: () => {
+        const pts = [];
+        oval(pts, -0.32, 0.02, 0.44, 0.26, 140, 0.04);
+        oval(pts, -0.32, 0.02, 0.28, 0.12, 90, 0.04);
+        oval(pts, 0.32, -0.02, 0.44, 0.26, 140, -0.04);
+        oval(pts, 0.32, -0.02, 0.28, 0.12, 90, -0.04);
+        return pts;
+      },
+      web: () => {
+        const pts = [];
+        for (let r = 1; r <= 5; r += 1) oval(pts, 0, 0, r * 0.18, r * 0.18, 70 + r * 8);
+        for (let s = 0; s < 8; s += 1) {
+          const a = (s / 8) * Math.PI * 2 - Math.PI / 2;
+          line(pts, [[0, 0, 0], [Math.cos(a) * 0.95, Math.sin(a) * 0.95, 0]], 36, false);
+        }
+        return pts;
+      },
+      bolt: () => {
+        const pts = [];
+        const shape = [[-0.1, -0.95], [0.4, -0.95], [0.06, -0.08], [0.5, -0.08], [-0.24, 0.98], [0.04, 0.1], [-0.5, 0.1]];
+        fill(pts, shape, 36, 12, 0);
+        fill(pts, shape, 36, 8, 0.05);
+        fill(pts, shape, 36, 8, -0.05);
+        ribbon(pts, shape, 160, true);
+        for (let i = 0; i < 5; i += 1) {
+          const y = -0.7 + i * 0.32;
+          line(pts, [[0.58, y, 0], [0.92, y - 0.08, 0]], 16, false);
+        }
+        return pts;
+      },
+
+      cup: () => {
+        const pts = [];
+        const body = [[-0.55, -0.2], [0.45, -0.2], [0.36, 0.55], [0.2, 0.66], [-0.3, 0.66], [-0.46, 0.55]];
+        solid(pts, body, 0.06, 160);
+        ribbon(pts, arcPath(0.43, 0.15, 0.25, -80, 85, 18, 0.23), 80, false);
+        ribbon(pts, arcPath(0.43, 0.15, 0.15, -75, 80, 14, 0.13), 50, false, [0]);
+        oval(pts, -0.05, 0.76, 0.82, 0.09, 110);
+        [-0.32, -0.06, 0.2].forEach((x, i) => {
+          const path = [];
+          for (let k = 0; k <= 16; k += 1) path.push([x + Math.sin(k * 0.75 + i) * 0.06, -0.32 - k * 0.04]);
+          ribbon(pts, path, 54, false);
+        });
+        return pts;
+      },
+      cross: () => {
+        const pts = [];
+        const plus = [[-0.22, -0.7], [0.22, -0.7], [0.22, -0.22], [0.7, -0.22], [0.7, 0.22], [0.22, 0.22], [0.22, 0.7], [-0.22, 0.7], [-0.22, 0.22], [-0.7, 0.22], [-0.7, -0.22], [-0.22, -0.22]];
+        solid(pts, plus, 0.055, 240);
+        ribbon(pts, circ(0, 0, 0.95, 64), 220, true);
+        return pts;
+      },
+      pill: () => {
+        const pts = [];
+        const cap = rr(-0.82, -0.3, 1.64, 0.6, 0.3);
+        keep(pts, cap, 0.055, (p) => p.x < -0.02);
+        ribbon(pts, cap, 260, true);
+        ribbon(pts, [[0, -0.3], [0, 0.3]], 36, false);
+        const tab = [];
+        oval(tab, 0.45, 0.72, 0.22, 0.22, 80);
+        line(tab, [[0.3, 0.72], [0.6, 0.72]], 16);
+        return turn(pts, -35).concat(tab);
+      },
+      dumbbell: () => {
+        const pts = [];
+        solid(pts, rr(-0.5, -0.06, 1, 0.12, 0.04), 0.05, 70);
+        [[-0.68, 0.5], [-0.84, 0.7], [-0.92, 0.86]].forEach(([l, r], i) => {
+          const h = [0.84, 0.6, 0.14][i];
+          const w = [0.18, 0.14, 0.06][i];
+          solid(pts, rr(l, -h / 2, w, h, 0.03), 0.05, 90 - i * 25);
+          solid(pts, rr(r, -h / 2, w, h, 0.03), 0.05, 90 - i * 25);
+        });
+        return turn(pts, -20);
+      },
+      bag: () => {
+        const pts = [];
+        const body = [[-0.62, -0.3], [0.62, -0.3], [0.72, 0.88], [-0.72, 0.88]];
+        solid(pts, body, 0.07, 200);
+        ribbon(pts, arcPath(0, -0.3, 0.32, 180, 360, 26, 0.44), 100, false);
+        ribbon(pts, arcPath(0, -0.3, 0.24, 180, 360, 22, 0.34), 70, false, [0]);
+        oval(pts, -0.28, -0.18, 0.05, 0.05, 14, 0.08);
+        oval(pts, 0.28, -0.18, 0.05, 0.05, 14, 0.08);
+        return pts;
+      },
+      hanger: () => {
+        const pts = [];
+        ribbon(pts, [[0, -0.28], [0, -0.45]], 24, false);
+        ribbon(pts, arcPath(0, -0.6, 0.15, 90, -210, 26), 80, false);
+        const tri = [[0, -0.28], [0.92, 0.4], [0.88, 0.5], [-0.88, 0.5], [-0.92, 0.4]];
+        ribbon(pts, tri, 300, true);
+        ribbon(pts, scaleP(tri, 0, 0.3, 0.86), 220, true, [0]);
+        const tag = rr(0.3, 0.6, 0.3, 0.36, 0.05);
+        ribbon(pts, [[0.45, 0.5], [0.45, 0.6]], 10, false, [0]);
+        solid(pts, tag, 0.05, 70);
+        return pts;
+      },
+      hammer: () => {
+        const pts = [];
+        solid(pts, rr(-0.08, -0.36, 0.16, 1.3, 0.07), 0.05, 140);
+        const head = [[-0.62, -0.68], [0.3, -0.68], [0.44, -0.58], [0.44, -0.4], [0.3, -0.3], [-0.62, -0.3], [-0.68, -0.38], [-0.68, -0.6]];
+        solid(pts, head, 0.05, 180);
+        return turn(pts, 30, 0.95);
+      },
+      scissors: () => {
+        const pts = [];
+        [-0.32, 0.32].forEach((x) => {
+          oval(pts, x, 0.58, 0.21, 0.25, 100, 0.03);
+          oval(pts, x, 0.58, 0.13, 0.17, 60, -0.03);
+        });
+        solid(pts, [[-0.26, 0.36], [-0.12, 0.32], [0.44, -0.92], [0.34, -0.95]], 0.04, 130);
+        solid(pts, [[0.26, 0.36], [0.12, 0.32], [-0.44, -0.92], [-0.34, -0.95]], 0.04, 130);
+        keep(pts, circ(0, -0.13, 0.06, 16), 0.025, () => true);
+        return pts;
+      },
+      phone: () => {
+        const pts = [];
+        ribbon(pts, rr(-0.46, -0.95, 0.92, 1.9, 0.16), 260, true);
+        ribbon(pts, rr(-0.39, -0.82, 0.78, 1.62, 0.08), 170, true, [0]);
+        solid(pts, rr(-0.12, -0.91, 0.24, 0.05, 0.025), 0.03, 20);
+        solid(pts, rr(-0.3, -0.68, 0.6, 0.36, 0.04), 0.055, 70);
+        [0.3, 0.42, 0.24].forEach((w, i) => line(pts, [[-0.3, -0.2 + i * 0.1], [-0.3 + w, -0.2 + i * 0.1]], 22));
+        solid(pts, rr(-0.3, 0.12, 0.6, 0.14, 0.07), 0.045, 50);
+        ribbon(pts, rr(-0.3, 0.38, 0.28, 0.3, 0.03), 50, true, [0]);
+        ribbon(pts, rr(0.02, 0.38, 0.28, 0.3, 0.03), 50, true, [0]);
+        line(pts, [[-0.12, 0.89], [0.12, 0.89]], 14);
+        return pts;
+      },
+      pin: () => {
+        const pts = [];
+        const cy = -0.25;
+        const path = arcPath(0, cy, 0.6, 150, 390, 44);
+        path.push([0, 0.95]);
+        keep(pts, path, 0.055, (p) => Math.hypot(p.x, p.y - cy) > 0.3);
+        ribbon(pts, path, 260, true);
+        ribbon(pts, circ(0, cy, 0.26, 40), 110, true);
+        oval(pts, 0, 0.99, 0.4, 0.06, 70);
+        return pts;
+      },
+      magnifier: () => {
+        const pts = [];
+        const c = -0.15;
+        keep(pts, circ(c, c, 0.64, 48), 0.05, (p) => Math.hypot(p.x - c, p.y - c) > 0.5);
+        ribbon(pts, circ(c, c, 0.64, 48), 200, true);
+        ribbon(pts, circ(c, c, 0.5, 40), 140, true, [0]);
+        ribbon(pts, arcPath(c, c, 0.34, 195, 265, 12), 30, false, [0.05]);
+        solid(pts, [[0.24, 0.36], [0.36, 0.24], [0.9, 0.78], [0.78, 0.9]], 0.045, 110);
+        return pts;
+      },
+      chat: () => {
+        const pts = [];
+        const b = rr(-0.86, -0.72, 1.72, 1.12, 0.32);
+        ribbon(pts, b, 280, true);
+        ribbon(pts, [[-0.44, 0.4], [-0.64, 0.84], [-0.1, 0.4]], 80, false);
+        [-0.38, 0, 0.38].forEach((x) => keep(pts, circ(x, -0.16, 0.13, 24), 0.035, () => true));
+        return pts;
+      },
+      shield: () => {
+        const pts = [];
+        const sh = [[0, -0.95], [0.38, -0.8], [0.76, -0.72], [0.74, -0.1], [0.62, 0.3], [0.36, 0.66], [0, 0.94], [-0.36, 0.66], [-0.62, 0.3], [-0.74, -0.1], [-0.76, -0.72], [-0.38, -0.8]];
+        const inner = scaleP(sh, 0, -0.02, 0.82);
+        keep(pts, sh, 0.05, (p) => !inside(inner, p.x, p.y));
+        ribbon(pts, sh, 240, true);
+        ribbon(pts, inner, 180, true, [0]);
+        keep(pts, rr(-0.24, -0.08, 0.48, 0.42, 0.05), 0.045, (p) => Math.hypot(p.x, p.y - 0.08) > 0.06 && !(Math.abs(p.x) < 0.025 && p.y > 0.08 && p.y < 0.22));
+        ribbon(pts, rr(-0.24, -0.08, 0.48, 0.42, 0.05), 80, true);
+        ribbon(pts, [[-0.16, -0.08], ...arcPath(0, -0.22, 0.16, 180, 360, 16), [0.16, -0.08]], 70, false);
+        return pts;
+      },
+      chart: () => {
+        const pts = [];
+        ribbon(pts, [[-0.88, -0.88], [-0.88, 0.8], [0.92, 0.8]], 150, false);
+        [[-0.72, 0.32], [-0.34, 0.08], [0.04, -0.16], [0.42, -0.42]].forEach(([x, top]) => solid(pts, box(x, top, 0.26, 0.74 - top), 0.055, 60));
+        const trend = [[-0.66, -0.04, 0.08], [-0.26, -0.3, 0.08], [0.08, -0.18, 0.08], [0.62, -0.78, 0.08]];
+        ribbon(pts, trend, 110, false);
+        solid(pts, [[0.74, -0.92], [0.7, -0.6], [0.46, -0.8]], 0.035, 40);
+        return pts;
+      },
+      calendar: () => {
+        const pts = [];
+        ribbon(pts, rr(-0.82, -0.66, 1.64, 1.5, 0.1), 260, true);
+        solid(pts, rr(-0.82, -0.66, 1.64, 0.3, 0.1), 0.05, 90);
+        solid(pts, rr(-0.52, -0.88, 0.1, 0.34, 0.05), 0.035, 40);
+        solid(pts, rr(0.42, -0.88, 0.1, 0.34, 0.05), 0.035, 40);
+        for (let r = 0; r < 4; r += 1) {
+          for (let c = 0; c < 6; c += 1) {
+            const x = -0.62 + c * 0.248;
+            const y = -0.12 + r * 0.24;
+            if (r === 1 && c === 3) continue;
+            keep(pts, circ(x, y, 0.045, 12), 0.022, () => true);
+          }
+        }
+        const hx = -0.62 + 3 * 0.248;
+        ribbon(pts, circ(hx, 0.12, 0.11, 24), 50, true);
+        ribbon(pts, [[hx - 0.05, 0.12], [hx - 0.01, 0.17], [hx + 0.06, 0.07]], 24, false, [0.06]);
+        return pts;
+      },
+      clock: () => {
+        const pts = [];
+        keep(pts, circ(0, 0, 0.94, 60), 0.05, (p) => Math.hypot(p.x, p.y) > 0.82);
+        ribbon(pts, circ(0, 0, 0.94, 60), 260, true);
+        ribbon(pts, circ(0, 0, 0.82, 56), 180, true, [0]);
+        for (let k = 0; k < 12; k += 1) {
+          const a = (k * 30 * Math.PI) / 180;
+          const r0 = k % 3 ? 0.66 : 0.58;
+          ribbon(pts, [[Math.cos(a) * r0, Math.sin(a) * r0], [Math.cos(a) * 0.74, Math.sin(a) * 0.74]], 12, false);
+        }
+        [-0.02, 0, 0.02].forEach((d) => {
+          line(pts, [[d, 0, 0.06], [d, -0.52, 0.06]], 24);
+          line(pts, [[0, d, 0.06], [0.4, 0.18 + d, 0.06]], 20);
+        });
+        keep(pts, circ(0, 0, 0.07, 16), 0.025, () => true);
+        return pts;
+      },
+      stars: () => {
+        const pts = [];
+        const big = star(0, -0.2, 0.74, 0.31);
+        solid(pts, big, 0.055, 240);
+        [-0.56, -0.28, 0, 0.28, 0.56].forEach((x) => solid(pts, star(x, 0.78, 0.13, 0.055), 0.03, 34));
+        return pts;
+      },
+      bulb: () => {
+        const pts = [];
+        const glass = [...arcPath(0, -0.32, 0.56, 120, 420, 44), [0.2, 0.42], [-0.2, 0.42]];
+        ribbon(pts, glass, 260, true);
+        fillG(pts, glass, 0.12, -0.06);
+        ribbon(pts, [[-0.12, 0.42], [-0.12, 0.04], [-0.06, -0.12], [0, 0.0], [0.06, -0.12], [0.12, 0.04], [0.12, 0.42]], 80, false, [0.04]);
+        for (let i = 0; i < 3; i += 1) solid(pts, rr(-0.22, 0.48 + i * 0.13, 0.44, 0.09, 0.04), 0.035, 40);
+        solid(pts, rr(-0.1, 0.87, 0.2, 0.07, 0.03), 0.03, 16);
+        [-160, -125, -90, -55, -20].forEach((deg) => {
+          const a = (deg * Math.PI) / 180;
+          ribbon(pts, [[Math.cos(a) * 0.68, -0.32 + Math.sin(a) * 0.68], [Math.cos(a) * 0.86, -0.32 + Math.sin(a) * 0.86]], 18, false);
+        });
+        return pts;
+      },
+      pen: () => {
+        const pts = [];
+        const nib = [[-0.32, -0.45], [0.32, -0.45], [0.54, 0.12], [0, 0.95], [-0.54, 0.12]];
+        keep(pts, nib, 0.055, (p) => !(Math.abs(p.x) < 0.05 && p.y > 0.06) && Math.hypot(p.x, p.y - 0.02) > 0.13);
+        ribbon(pts, nib, 220, true);
+        oval(pts, 0, 0.02, 0.1, 0.1, 40, 0.04);
+        ribbon(pts, [[0, 0.12], [0, 0.95]], 40, false, [0.04]);
+        solid(pts, rr(-0.38, -0.72, 0.76, 0.22, 0.04), 0.05, 90);
+        ribbon(pts, rr(-0.3, -0.98, 0.6, 0.22, 0.05), 70, true, [0]);
+        return pts;
+      },
+      code: () => {
+        const pts = [];
+        const thick = (path, count) => [-0.035, 0, 0.035].forEach((d) => ribbon(pts, path.map(([x, y]) => [x + d, y]), count, false));
+        thick([[-0.38, -0.55], [-0.9, 0], [-0.38, 0.55]], 150);
+        thick([[0.38, -0.55], [0.9, 0], [0.38, 0.55]], 150);
+        thick([[0.2, -0.78], [-0.2, 0.78]], 130);
+        return pts;
+      },
+      rocket: () => {
+        const pts = [];
+        const body = [[0, -0.95], [0.14, -0.82], [0.24, -0.6], [0.28, -0.3], [0.28, 0.42], [-0.28, 0.42], [-0.28, -0.3], [-0.24, -0.6], [-0.14, -0.82]];
+        keep(pts, body, 0.05, (p) => Math.hypot(p.x, p.y + 0.3) > 0.17);
+        ribbon(pts, body, 200, true);
+        ribbon(pts, circ(0, -0.3, 0.15, 28), 60, true);
+        oval(pts, 0, -0.3, 0.09, 0.09, 24, 0.06);
+        solid(pts, [[0.28, 0.02], [0.56, 0.42], [0.56, 0.62], [0.28, 0.42]], 0.045, 60);
+        solid(pts, [[-0.28, 0.02], [-0.56, 0.42], [-0.56, 0.62], [-0.28, 0.42]], 0.045, 60);
+        solid(pts, rr(-0.18, 0.42, 0.36, 0.09, 0.03), 0.035, 30);
+        ribbon(pts, [[-0.16, 0.54], [-0.08, 0.78], [0, 0.98], [0.08, 0.78], [0.16, 0.54]], 80, false);
+        ribbon(pts, [[-0.07, 0.54], [0, 0.8], [0.07, 0.54]], 36, false, [0]);
+        return turn(pts, 35, 0.92);
+      },
+      wlogo: () => {
+        const pts = [];
+        const w = [[-0.95, -0.7], [-0.66, -0.7], [-0.43, 0.24], [-0.16, -0.5], [0.16, -0.5], [0.43, 0.24], [0.66, -0.7], [0.95, -0.7], [0.58, 0.74], [0.3, 0.74], [0, -0.08], [-0.3, 0.74], [-0.58, 0.74]];
+        solid(pts, w, 0.05, 320);
+        return pts;
+      },
+      browser: () => {
+        const pts = [];
+        ribbon(pts, rr(-0.92, -0.72, 1.84, 1.44, 0.08), 280, true);
+        line(pts, [[-0.92, -0.5], [0.92, -0.5]], 70);
+        [-0.82, -0.72, -0.62].forEach((x) => keep(pts, circ(x, -0.61, 0.035, 12), 0.02, () => true));
+        ribbon(pts, rr(-0.4, -0.66, 0.95, 0.1, 0.05), 60, true, [0]);
+        solid(pts, rr(-0.8, -0.38, 0.95, 0.42, 0.03), 0.05, 90);
+        [0.55, 0.45, 0.5].forEach((w, i) => line(pts, [[0.25, -0.34 + i * 0.1], [0.25 + w, -0.34 + i * 0.1]], 20));
+        solid(pts, rr(0.25, -0.06, 0.3, 0.1, 0.05), 0.035, 30);
+        for (let i = 0; i < 3; i += 1) {
+          const x = -0.8 + i * 0.55;
+          ribbon(pts, rr(x, 0.16, 0.48, 0.44, 0.03), 70, true, [0]);
+          keep(pts, box(x + 0.04, 0.2, 0.4, 0.18), 0.05, () => true);
+        }
+        return pts;
+      }
+    };
+
+    /* ---------- particle data ---------- */
+    const N_STAGE = 1100;
+    const N_TILE = 520;
+    const fit = (raw, n) => {
+      const len = raw.length;
+      const out = new Array(n);
+      for (let i = 0; i < n; i += 1) {
+        const p = raw[Math.floor((i * len) / n)];
+        const j = len >= n ? 0 : 0.012;
+        out[i] = { x: p.x + (Math.random() - 0.5) * j, y: p.y + (Math.random() - 0.5) * j, z: p.z + (Math.random() - 0.5) * j };
+      }
+      return out;
+    };
+    const stageShapes = {};
+    const tileShapes = {};
+    LIB.forEach((s) => {
+      const raw = makers[s.id]();
+      stageShapes[s.id] = fit(raw, N_STAGE);
+      tileShapes[s.id] = fit(raw, N_TILE);
+    });
+
+    const palettes = { dark: { r: 110, g: 220, b: 255 }, light: { r: 21, g: 88, b: 224 } };
+    const theme = () => (document.documentElement.dataset.theme === "light" ? "light" : "dark");
+    let color = { ...palettes[theme()] };
+    let colorTo = { ...color };
+
+    const sizeCanvas = (canvas) => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return { ctx, w, h };
+    };
+    const paint = (ctx, w, h, dots, col, rotY, rotX, globe, opts) => {
+      ctx.clearRect(0, 0, w, h);
+      const radius = Math.min(w, h) * opts.radius;
+      const cx = w * 0.5;
+      const cy = h * opts.cy;
+      const tiltY = globe ? rotY : rotY * 0.22;
+      const tiltX = globe ? rotX * 0.85 : rotX * 0.12;
+      const cosY = Math.cos(tiltY);
+      const sinY = Math.sin(tiltY);
+      const cosX = Math.cos(tiltX);
+      const sinX = Math.sin(tiltX);
+      const cr = Math.round(col.r);
+      const cg = Math.round(col.g);
+      const cb = Math.round(col.b);
+      for (let i = 0; i < dots.length; i += 1) {
+        const p = dots[i];
+        const x = p.x * cosY - p.z * sinY;
+        let z = p.z * cosY + p.x * sinY;
+        const y = p.y * cosX - z * sinX;
+        z = z * cosX + p.y * sinX;
+        const depth = (z + 1.35) / 2.3;
+        ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.22 + depth * 0.78})`;
+        ctx.beginPath();
+        ctx.arc(cx + x * radius, cy + y * radius, (1.25 + depth * 1.7) * opts.dot, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
+
+    /* ---------- DOM ---------- */
+    const $ = (id) => document.getElementById(id);
+    const groupsEl = $("groups");
+    const tiles = {};
+    GROUPS.forEach((g) => {
+      const sec = document.createElement("section");
+      sec.innerHTML = `<div class="group-head"><h2>${g.title}</h2><p>${g.note}</p></div><div class="grid"></div>`;
+      const grid = sec.querySelector(".grid");
+      LIB.filter((s) => s.group === g.id).forEach((s) => {
+        const el = document.createElement("article");
+        el.className = "tile";
+        el.dataset.id = s.id;
+        el.innerHTML = `
+          <canvas></canvas>
+          ${s.group === "current" ? '<span class="badge">ON SITE</span>' : ""}
+          <button class="pick" type="button" aria-label="Add to loop">+</button>
+          <div class="meta"><p class="t-kicker"></p><p class="t-cap"></p></div>`;
+        grid.appendChild(el);
+        tiles[s.id] = { el, canvas: el.querySelector("canvas"), ctx: null, w: 0, h: 0 };
+        el.addEventListener("click", (e) => {
+          if (e.target.closest(".pick")) togglePick(s.id);
+          else goTo(s.id);
+        });
+        el.addEventListener("mouseenter", () => { hoverId = s.id; hoverT = 0; });
+        el.addEventListener("mouseleave", () => { if (hoverId === s.id) { hoverId = null; drawTile(s.id); } });
+      });
+      groupsEl.appendChild(sec);
+    });
+
+    const tileOpts = { radius: 0.4, cy: 0.52, dot: 0.62 };
+    const drawTile = (id, rotY = 0.18, rotX = 0.1) => {
+      const t = tiles[id];
+      if (!t.ctx) return;
+      paint(t.ctx, t.w, t.h, tileShapes[id], color, rotY, rotX, id === "globe", tileOpts);
+    };
+    const layoutTiles = () => {
+      Object.keys(tiles).forEach((id) => {
+        Object.assign(tiles[id], sizeCanvas(tiles[id].canvas));
+        drawTile(id);
+      });
+    };
+
+    const renderTileText = (id) => {
+      const s = byId[id];
+      const el = tiles[id].el;
+      el.querySelector(".t-kicker").textContent = s.kicker;
+      el.querySelector(".t-cap").textContent = s.caption;
+    };
+    LIB.forEach((s) => renderTileText(s.id));
+
+    const nameOf = (id) => byId[id].kicker;
+    const renderOrder = () => {
+      const ol = $("order");
+      $("count").textContent = `(${selected.length})`;
+      if (!selected.length) {
+        ol.innerHTML = '<p class="empty">Nothing picked yet — the preview will cycle through every shape.</p>';
+      } else {
+        ol.innerHTML = selected.map((id, i) => `
+          <li data-id="${id}" class="${id === toId ? "is-live" : ""}">
+            <b>${i + 1}</b><span class="name">${nameOf(id)}</span>
+            <button type="button" data-move="-1" aria-label="Move earlier">‹</button>
+            <button type="button" data-move="1" aria-label="Move later">›</button>
+            <button type="button" data-remove aria-label="Remove">×</button>
+          </li>`).join("");
+      }
+      Object.keys(tiles).forEach((id) => {
+        const on = selected.includes(id);
+        tiles[id].el.classList.toggle("is-picked", on);
+        const pick = tiles[id].el.querySelector(".pick");
+        pick.textContent = on ? selected.indexOf(id) + 1 : "+";
+        pick.setAttribute("aria-label", on ? "Remove from loop" : "Add to loop");
+      });
+      $("toggle-sel").textContent = selected.includes(toId) ? "Remove from loop" : "Add to loop";
+      renderExport();
+      save();
+    };
+    $("order").addEventListener("click", (e) => {
+      const li = e.target.closest("li");
+      if (!li) return;
+      const id = li.dataset.id;
+      const i = selected.indexOf(id);
+      if (e.target.closest("[data-remove]")) {
+        selected.splice(i, 1);
+      } else if (e.target.closest("[data-move]")) {
+        const j = i + Number(e.target.closest("[data-move]").dataset.move);
+        if (j < 0 || j >= selected.length) return;
+        [selected[i], selected[j]] = [selected[j], selected[i]];
+      } else {
+        goTo(id);
+        return;
+      }
+      renderOrder();
+    });
+
+    const renderExport = () => {
+      const list = selected.length ? selected : [];
+      const lines = list.map((id) => `  { id: ${JSON.stringify(id)}, kicker: ${JSON.stringify(byId[id].kicker)}, caption: ${JSON.stringify(byId[id].caption)} }`);
+      $("out").value = list.length ? `const slides = [\n${lines.join(",\n")}\n];` : "// Pick some shapes first";
+    };
+
+    const togglePick = (id) => {
+      const i = selected.indexOf(id);
+      if (i >= 0) selected.splice(i, 1);
+      else selected.push(id);
+      renderOrder();
+    };
+
+    /* ---------- stage ---------- */
+    const stageCanvas = $("stage");
+    let stage = sizeCanvas(stageCanvas);
+    const stageOpts = { radius: 0.36, cy: 0.44, dot: 1 };
+    let toId = selected[0] || LIB[0].id;
+    const dots = stageShapes[toId].map((p) => ({ ...p }));
+    let fromPts = dots.map((p) => ({ ...p }));
+    let morph = 1;
+    let hold = 0;
+    let playing = true;
+    let copyShown = null;
+    let rotY = 0.18;
+    let rotX = 0.1;
+    let targetY = 0.18;
+    let targetX = 0.1;
+    let hoverId = null;
+    let hoverT = 0;
+
+    const setCopy = (id) => {
+      copyShown = id;
+      $("s-kicker").textContent = byId[id].kicker;
+      $("s-cap").textContent = byId[id].caption;
+    };
+    const syncPanel = () => {
+      $("e-kicker").value = byId[toId].kicker;
+      $("e-cap").value = byId[toId].caption;
+      const g = GROUPS.find((x) => x.id === byId[toId].group);
+      $("s-tag").textContent = `${g.title} · ${toId}`;
+      Object.keys(tiles).forEach((id) => tiles[id].el.classList.toggle("is-preview", id === toId));
+    };
+    const goTo = (id) => {
+      if (id === toId && morph >= 1) { hold = 0; return; }
+      fromPts = dots.map((p) => ({ ...p }));
+      toId = id;
+      morph = 0;
+      hold = 0;
+      syncPanel();
+      renderOrder();
+    };
+    const playlist = () => (selected.length ? selected : LIB.map((s) => s.id));
+    const step = (dir) => {
+      const list = playlist();
+      const i = list.indexOf(toId);
+      const next = i < 0 ? list[0] : list[(i + dir + list.length) % list.length];
+      goTo(next);
+    };
+
+    setCopy(toId);
+    syncPanel();
+
+    $("prev").addEventListener("click", () => step(-1));
+    $("next").addEventListener("click", () => step(1));
+    $("play").addEventListener("click", () => {
+      playing = !playing;
+      hold = 0;
+      $("play").textContent = playing ? "Pause" : "Play";
+    });
+    $("toggle-sel").addEventListener("click", () => togglePick(toId));
+    $("clear").addEventListener("click", () => { selected = []; renderOrder(); });
+    $("reset").addEventListener("click", () => {
+      selected = siteIds.slice();
+      LIB.forEach((s) => { Object.assign(s, DEFAULTS[s.id]); renderTileText(s.id); });
+      setCopy(toId);
+      syncPanel();
+      renderOrder();
+    });
+    const onEdit = () => {
+      byId[toId].kicker = $("e-kicker").value;
+      byId[toId].caption = $("e-cap").value;
+      renderTileText(toId);
+      if (copyShown === toId) setCopy(toId);
+      renderOrder();
+    };
+    $("e-kicker").addEventListener("input", onEdit);
+    $("e-cap").addEventListener("input", onEdit);
+
+    $("copy").addEventListener("click", async () => {
+      const text = $("out").value;
+      try { await navigator.clipboard.writeText(text); } catch (e) { $("out").select(); document.execCommand("copy"); }
+      const t = $("toast");
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 1600);
+    });
+
+    $("theme").addEventListener("click", () => {
+      const next = theme() === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      $("theme").textContent = next === "dark" ? "Light mode" : "Dark mode";
+      colorTo = { ...palettes[next] };
+      color = { ...colorTo };
+      Object.keys(tiles).forEach((id) => drawTile(id));
+    });
+
+    const stageWrap = stageCanvas.parentElement;
+    stageWrap.addEventListener("pointermove", (e) => {
+      const r = stageWrap.getBoundingClientRect();
+      targetY = 0.16 + ((e.clientX - r.left) / r.width - 0.5) * 0.32;
+      targetX = 0.08 + ((e.clientY - r.top) / r.height - 0.5) * 0.18;
+    });
+
+    window.addEventListener("resize", () => {
+      stage = sizeCanvas(stageCanvas);
+      layoutTiles();
+    });
+
+    let last = performance.now();
+    const frame = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      if (morph < 1) {
+        morph = Math.min(1, morph + dt / 1.15);
+        if (morph >= 0.55 && copyShown !== toId) setCopy(toId);
+      } else if (playing) {
+        hold += dt;
+        if (hold >= 4) step(1);
+      }
+      const t = morph * morph * (3 - 2 * morph);
+      const b = stageShapes[toId];
+      for (let i = 0; i < N_STAGE; i += 1) {
+        dots[i].x = fromPts[i].x + (b[i].x - fromPts[i].x) * t;
+        dots[i].y = fromPts[i].y + (b[i].y - fromPts[i].y) * t;
+        dots[i].z = fromPts[i].z + (b[i].z - fromPts[i].z) * t;
+      }
+      const globe = toId === "globe" && morph > 0.5;
+      rotY += (targetY - rotY) * 0.05 + (globe ? 0.007 : 0.0006);
+      rotX += (targetX - rotX) * 0.05;
+      paint(stage.ctx, stage.w, stage.h, dots, color, rotY, rotX, globe, stageOpts);
+
+      if (hoverId) {
+        hoverT += dt;
+        const g = hoverId === "globe";
+        drawTile(hoverId, g ? 0.18 + hoverT * 0.8 : 0.18 + Math.sin(hoverT * 2) * 0.9, 0.1 + Math.sin(hoverT * 1.3) * 0.4);
+      }
+      requestAnimationFrame(frame);
+    };
+
+    layoutTiles();
+    renderOrder();
+    requestAnimationFrame(frame);
+  })();
+  </script>
+</body>
+</html>

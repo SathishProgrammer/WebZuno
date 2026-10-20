@@ -1,4 +1,8 @@
 (() => {
+  // Free key from https://web3forms.com (sent to hello@webzuno.com). Empty = fall back to the visitor's mail app.
+  const WEB3FORMS_KEY = "";
+  const CONTACT_EMAIL = "hello@webzuno.com";
+
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const touch = matchMedia("(hover: none), (pointer: coarse)").matches;
   const mobile = () => window.innerWidth < 769;
@@ -10,14 +14,15 @@
   const nav = document.getElementById("nav");
   const menu = document.getElementById("mobile-menu");
   const toggle = document.querySelector(".nav-toggle");
-  const cursor = document.querySelector(".cursor");
   const glow = document.querySelector(".page-glow");
   const progress = document.querySelector(".scroll-progress span");
   const contactOverlay = document.getElementById("contact-overlay");
+  const legalOverlay = document.getElementById("legal-overlay");
   const planSelect = document.getElementById("contact-plan");
   const form = document.getElementById("contact-form");
   const formSuccess = document.getElementById("form-success");
   const themeBtn = document.getElementById("theme-toggle");
+  const waFloat = document.querySelector(".wa-float");
 
   let lenis;
 
@@ -36,6 +41,7 @@
     apply(root.dataset.theme || "dark");
     themeBtn?.addEventListener("click", () => {
       apply(root.dataset.theme === "dark" ? "light" : "dark");
+      window.dispatchEvent(new CustomEvent("webzuno-theme", { detail: root.dataset.theme }));
     });
   }
 
@@ -96,6 +102,7 @@
   function initNav() {
     const onScroll = () => {
       nav.classList.toggle("is-scrolled", window.scrollY > 24);
+      waFloat?.classList.toggle("is-shown", window.scrollY > window.innerHeight * 0.5);
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? window.scrollY / max : 0;
       if (progress) progress.style.transform = `scaleX(${p})`;
@@ -149,35 +156,6 @@
     }, 400);
   }
 
-  function initCursor() {
-    if (touch || reduce || !cursor) return;
-    cursor.classList.add("is-on");
-    document.body.classList.add("has-cursor");
-    let x = window.innerWidth / 2;
-    let y = window.innerHeight / 2;
-    let cx = x;
-    let cy = y;
-    window.addEventListener("pointermove", (e) => {
-      x = e.clientX;
-      y = e.clientY;
-      if (glow) {
-        glow.style.left = `${x}px`;
-        glow.style.top = `${y}px`;
-      }
-    }, { passive: true });
-    const loop = () => {
-      cx += (x - cx) * 0.22;
-      cy += (y - cy) * 0.22;
-      cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-      requestAnimationFrame(loop);
-    };
-    loop();
-    document.querySelectorAll("a, button, input, select").forEach((el) => {
-      el.addEventListener("mouseenter", () => cursor.classList.add("is-grow"));
-      el.addEventListener("mouseleave", () => cursor.classList.remove("is-grow"));
-    });
-  }
-
   function initMagnetic() {
     if (touch || reduce || typeof gsap === "undefined") return;
     document.querySelectorAll(".magnetic").forEach((btn) => {
@@ -209,16 +187,13 @@
     if (!canvas) return;
 
     const slides = [
-      { id: "globe", kicker: "WWW / Internet", caption: "Take your business worldwide" },
-      { id: "puzzle", kicker: "Building", caption: "We build your website" },
-      { id: "blocks", kicker: "Development", caption: "Building digital experiences" },
-      { id: "house", kicker: "Business / home", caption: "Your business’s digital home" },
-      { id: "building", kicker: "Company", caption: "Bring your company online" },
-      { id: "shop", kicker: "Local business", caption: "Websites for local shops" },
-      { id: "cart", kicker: "E-commerce", caption: "Sell online" },
-      { id: "chain", kicker: "Hyperlink", caption: "Connect your customers" },
-      { id: "web", kicker: "World Wide Web", caption: "World Wide Webzuno" },
-      { id: "bolt", kicker: "Speed", caption: "Fast websites" }
+      { id: "cube", kicker: "Modular", caption: "Websites built from solid blocks" },
+      { id: "wave", kicker: "Flow", caption: "Smooth on every screen" },
+      { id: "sphere", kicker: "Global", caption: "Take your business worldwide" },
+      { id: "helix", kicker: "Connected", caption: "Every part of your business, linked" },
+      { id: "infinity", kicker: "Infinite", caption: "Endless possibilities online" },
+      { id: "ripple", kicker: "Impact", caption: "Every visit makes a ripple" },
+      { id: "galaxy", kicker: "Stand out", caption: "Shine in a crowded market" }
     ];
 
     const setCopy = (i) => {
@@ -237,185 +212,152 @@
     }
 
     const ctx = canvas.getContext("2d");
-    const n = mobile() ? 360 : 720;
+    const n = mobile() ? 1331 : 2744;
+    const G = Math.round(Math.cbrt(n));
+    const TAU = Math.PI * 2;
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    const hash = (seed) => Float32Array.from({ length: n }, (_, i) => {
+      const s = Math.sin(i * 12.9898 + seed * 78.233) * 43758.5453;
+      return s - Math.floor(s);
+    });
+    const H1 = hash(1);
+    const H2 = hash(2);
+    const H3 = hash(3);
+    const rotX = (p, a) => { const c = Math.cos(a), s = Math.sin(a); const y = p[1] * c - p[2] * s; p[2] = p[1] * s + p[2] * c; p[1] = y; };
+    const rotY = (p, a) => { const c = Math.cos(a), s = Math.sin(a); const x = p[0] * c + p[2] * s; p[2] = -p[0] * s + p[2] * c; p[0] = x; };
+    const rotZ = (p, a) => { const c = Math.cos(a), s = Math.sin(a); const x = p[0] * c - p[1] * s; p[1] = p[0] * s + p[1] * c; p[0] = x; };
+    const set = (p, x, y, z) => { p[0] = x; p[1] = y; p[2] = z; };
+    const wCols = Math.ceil(Math.sqrt(n * 1.5));
+    const wRows = Math.ceil(n / wCols);
+    const iRows = 18;
+    const iCols = Math.ceil(n / iRows);
+    const lemniscate = (q) => {
+      const d = 1 + Math.sin(q) * Math.sin(q);
+      return [(1.2 * Math.cos(q)) / d, (1.2 * Math.sin(q) * Math.cos(q)) / d];
+    };
 
-    const sample = (segs) => {
-      const lens = segs.map(([a, b]) => Math.hypot(b[0] - a[0], b[1] - a[1], (b[2] || 0) - (a[2] || 0)));
-      const total = lens.reduce((s, v) => s + v, 0) || 1;
-      const pts = [];
-      for (let i = 0; i < n; i += 1) {
-        let d = (i / n) * total;
-        for (let s = 0; s < segs.length; s += 1) {
-          if (d <= lens[s] || s === segs.length - 1) {
-            const t = lens[s] ? d / lens[s] : 0;
-            const [a, b] = segs[s];
-            pts.push({
-              x: a[0] + (b[0] - a[0]) * t,
-              y: a[1] + (b[1] - a[1]) * t,
-              z: (a[2] || 0) + ((b[2] || 0) - (a[2] || 0)) * t
-            });
-            break;
-          }
-          d -= lens[s];
+    const effects = {
+      cube: (i, t, p) => {
+        const a = i % G, b = Math.floor(i / G) % G, c = Math.floor(i / (G * G)) % G;
+        const s = 1.35 / (G - 1);
+        set(p, (a - (G - 1) / 2) * s, (b - (G - 1) / 2) * s, (c - (G - 1) / 2) * s);
+        rotY(p, t * 0.28 + 0.6);
+        rotX(p, 0.42 + Math.sin(t * 0.3) * 0.12);
+      },
+      wave: (i, t, p) => {
+        const a = i % wCols, b = Math.floor(i / wCols);
+        const x = (a / (wCols - 1) - 0.5) * 3.4;
+        const z = (b / (wRows - 1) - 0.5) * 2.2;
+        const y = 0.24 * Math.sin(x * 1.7 + t) + 0.16 * Math.sin(z * 2.4 + t * 0.75 + x * 0.6) + 0.07 * Math.sin((x - z) * 3.4 - t * 1.5);
+        set(p, x, -y, z);
+        rotY(p, Math.sin(t * 0.12) * 0.25 - 0.18);
+        rotX(p, 0.52);
+      },
+      sphere: (i, t, p) => {
+        const yy = 1 - (2 * (i + 0.5)) / n;
+        const r = Math.sqrt(1 - yy * yy);
+        const th = golden * i;
+        const bump = (1 + 0.045 * Math.sin(yy * 9 + t * 2.2)) * 1.05;
+        set(p, Math.cos(th) * r * bump, yy * bump, Math.sin(th) * r * bump);
+        rotY(p, t * 0.22);
+        rotX(p, 0.28);
+      },
+      helix: (i, t, p) => {
+        const turns = 3;
+        if (H1[i] < 0.7) {
+          const u = H2[i];
+          const ang = u * TAU * turns + (i % 2) * Math.PI + t * 0.8;
+          const rad = 0.42 + (H3[i] - 0.5) * 0.07;
+          set(p, Math.cos(ang) * rad, (u - 0.5) * 2.2 + (H3[i] - 0.5) * 0.04, Math.sin(ang) * rad);
+        } else {
+          const rungs = 30;
+          const u = (Math.floor(H2[i] * rungs) + 0.5) / rungs;
+          const ang = u * TAU * turns + t * 0.8;
+          const f = H3[i] * 2 - 1;
+          set(p, Math.cos(ang) * 0.42 * f, (u - 0.5) * 2.2, Math.sin(ang) * 0.42 * f);
         }
+        rotZ(p, 0.55);
+        rotX(p, 0.25);
+      },
+      infinity: (i, t, p) => {
+        const a = i % iCols, b = Math.floor(i / iCols);
+        const u = (a / iCols) * TAU + t * 0.35;
+        const v = (b / iRows) * TAU;
+        const [x, y] = lemniscate(u);
+        const [x2, y2] = lemniscate(u + 0.002);
+        const l = Math.hypot(x2 - x, y2 - y) || 1;
+        const nx = -(y2 - y) / l;
+        const ny = (x2 - x) / l;
+        const r = 0.16;
+        set(p, x + nx * r * Math.cos(v), y + ny * r * Math.cos(v), r * Math.sin(v) + 0.2 * Math.sin(u));
+        rotX(p, 0.45 + Math.sin(t * 0.25) * 0.15);
+        rotY(p, Math.sin(t * 0.2) * 0.45);
+      },
+      ripple: (i, t, p) => {
+        const a = i % wCols, b = Math.floor(i / wCols);
+        const x = (a / (wCols - 1) - 0.5) * 3.0;
+        const z = (b / (wRows - 1) - 0.5) * 2.2;
+        const d = Math.hypot(x, z);
+        set(p, x, -0.26 * Math.sin(d * 6 - t * 2.6) * Math.exp(-d * 0.85), z);
+        rotY(p, t * 0.08);
+        rotX(p, 0.6);
+      },
+      galaxy: (i, t, p) => {
+        const arms = 4;
+        const r = 0.08 + Math.pow(H1[i], 0.75) * 1.2;
+        const ang = (i % arms) * (TAU / arms) + r * 2.8 + (H2[i] - 0.5) * 0.45 * (1.4 - r) - t * 0.18;
+        const rr = r + (H3[i] - 0.5) * 0.08;
+        set(p, Math.cos(ang) * rr, (H3[i] - 0.5) * 0.12 * (1.4 - r), Math.sin(ang) * rr);
+        rotX(p, 0.95);
+        rotZ(p, 0.22);
       }
-      return pts;
     };
-    const loop = (pts, closed = true) => {
-      const segs = [];
-      for (let i = 0; i < pts.length - 1; i += 1) segs.push([pts[i], pts[i + 1]]);
-      if (closed && pts.length > 2) segs.push([pts[pts.length - 1], pts[0]]);
-      return segs;
-    };
-    const oval = (cx, cy, rx, ry, count, rot = 0) => {
-      const segs = [];
-      for (let i = 0; i < count; i += 1) {
-        const a0 = (i / count) * Math.PI * 2 + rot;
-        const a1 = ((i + 1) / count) * Math.PI * 2 + rot;
-        segs.push([
-          [cx + Math.cos(a0) * rx, cy + Math.sin(a0) * ry, 0],
-          [cx + Math.cos(a1) * rx, cy + Math.sin(a1) * ry, 0]
-        ]);
-      }
-      return segs;
-    };
-    const rect = (x, y, w, h) => loop([
-      [x, y, 0], [x + w, y, 0], [x + w, y + h, 0], [x, y + h, 0]
-    ]);
+    const fns = slides.map((s) => effects[s.id]);
 
-    const makers = {
-      globe: () => {
-        const segs = [];
-        const lats = [-0.72, -0.4, 0, 0.4, 0.72];
-        lats.forEach((y) => {
-          const r = Math.sqrt(Math.max(0.04, 1 - y * y));
-          for (let i = 0; i < 48; i += 1) {
-            const a0 = (i / 48) * Math.PI * 2;
-            const a1 = ((i + 1) / 48) * Math.PI * 2;
-            segs.push([
-              [Math.cos(a0) * r, y, Math.sin(a0) * r],
-              [Math.cos(a1) * r, y, Math.sin(a1) * r]
-            ]);
-          }
-        });
-        for (let m = 0; m < 8; m += 1) {
-          const yaw = (m / 8) * Math.PI;
-          for (let i = 0; i < 40; i += 1) {
-            const a0 = (i / 40) * Math.PI * 2;
-            const a1 = ((i + 1) / 40) * Math.PI * 2;
-            segs.push([
-              [Math.sin(a0) * Math.cos(yaw), Math.cos(a0), Math.sin(a0) * Math.sin(yaw)],
-              [Math.sin(a1) * Math.cos(yaw), Math.cos(a1), Math.sin(a1) * Math.sin(yaw)]
-            ]);
-          }
-        }
-        return sample(segs);
-      },
-      puzzle: () => sample(loop([
-        [-0.55, 0.18], [-0.55, -0.12],
-        [-0.42, -0.12], [-0.38, -0.28], [-0.22, -0.34], [-0.08, -0.22], [-0.08, -0.42],
-        [-0.22, -0.55], [0.08, -0.62], [0.32, -0.48], [0.32, -0.22],
-        [0.48, -0.28], [0.62, -0.12], [0.55, 0.12], [0.38, 0.22],
-        [0.38, 0.38], [0.18, 0.55], [-0.12, 0.52], [-0.22, 0.32], [-0.22, 0.18]
-      ])),
-      blocks: () => {
-        const cube = (cx, cy, s) => {
-          const top = [[cx, cy - s * 0.58], [cx + s, cy - s * 0.28], [cx, cy + 0.02], [cx - s, cy - s * 0.28]];
-          const left = [[cx - s, cy - s * 0.28], [cx, cy + 0.02], [cx, cy + s * 0.72], [cx - s, cy + s * 0.42]];
-          const right = [[cx + s, cy - s * 0.28], [cx, cy + 0.02], [cx, cy + s * 0.72], [cx + s, cy + s * 0.42]];
-          return [...loop(top), ...loop(left), ...loop(right)];
-        };
-        return sample([
-          ...cube(-0.42, 0.18, 0.38),
-          ...cube(0.42, 0.18, 0.38),
-          ...cube(0, -0.42, 0.38)
-        ]);
-      },
-      house: () => sample([
-        ...loop([[-0.92, -0.02], [0, -0.88], [0.92, -0.02]], false),
-        ...loop([[-0.7, -0.02], [-0.7, 0.88], [0.7, 0.88], [0.7, -0.02]]),
-        ...rect(-0.18, 0.32, 0.36, 0.56),
-        ...rect(-0.52, 0.08, 0.22, 0.22),
-        ...rect(0.3, 0.08, 0.22, 0.22),
-        ...loop([[0.4, -0.42], [0.4, -0.78], [0.58, -0.78], [0.58, -0.28]], false)
-      ]),
-      building: () => {
-        const segs = [
-          ...rect(-0.48, -0.82, 0.96, 1.64),
-          ...loop([[-0.56, -0.82], [0, -1.02], [0.56, -0.82]], false),
-          ...rect(-0.14, 0.42, 0.28, 0.4)
-        ];
-        for (let r = 0; r < 4; r += 1) {
-          for (let c = 0; c < 3; c += 1) {
-            segs.push(...rect(-0.36 + c * 0.26, -0.66 + r * 0.24, 0.16, 0.14));
-          }
-        }
-        return sample(segs);
-      },
-      shop: () => {
-        const segs = [
-          ...rect(-0.72, -0.08, 1.44, 0.96),
-          ...rect(-0.38, 0.28, 0.28, 0.6),
-          ...rect(0.08, 0.08, 0.48, 0.32)
-        ];
-        const awn = [];
-        for (let i = 0; i <= 8; i += 1) {
-          const x = -0.82 + i * 0.205;
-          awn.push([x, i % 2 === 0 ? -0.08 : 0.08]);
-        }
-        segs.push(...loop([[-0.82, -0.28], ...awn, [0.82, -0.28], [0.82, -0.42], [-0.82, -0.42]]));
-        segs.push(...rect(-0.28, -0.62, 0.56, 0.16));
-        return sample(segs);
-      },
-      cart: () => sample([
-        ...loop([[-0.62, -0.42], [-0.18, -0.22], [-0.02, 0.28], [0.72, 0.28], [0.82, -0.22], [-0.12, -0.22]], false),
-        ...loop([[-0.18, -0.22], [0.82, -0.22]], false),
-        ...loop([[-0.02, 0.28], [0.72, 0.28]], false),
-        ...oval(-0.02, 0.58, 0.16, 0.16, 28),
-        ...oval(0.58, 0.58, 0.16, 0.16, 28)
-      ]),
-      chain: () => sample([
-        ...oval(-0.32, 0.02, 0.42, 0.26, 40, 0.35),
-        ...oval(-0.32, 0.02, 0.28, 0.14, 32, 0.35),
-        ...oval(0.32, -0.02, 0.42, 0.26, 40, -0.35),
-        ...oval(0.32, -0.02, 0.28, 0.14, 32, -0.35)
-      ]),
-      web: () => {
-        const segs = [];
-        for (let r = 1; r <= 4; r += 1) segs.push(...oval(0, 0, r * 0.22, r * 0.22, 8 + r * 4));
-        for (let s = 0; s < 8; s += 1) {
-          const a = (s / 8) * Math.PI * 2 - Math.PI / 2;
-          segs.push([[0, 0, 0], [Math.cos(a) * 0.92, Math.sin(a) * 0.92, 0]]);
-        }
-        return sample(segs);
-      },
-      bolt: () => sample(loop([
-        [-0.08, -0.95], [0.42, -0.95], [0.08, -0.08], [0.52, -0.08],
-        [-0.18, 0.95], [0.08, 0.08], [-0.48, 0.08]
-      ]))
+    const palettes = {
+      dark: { rgb: [196, 222, 255], core: "255,255,255", blend: "lighter" },
+      light: { rgb: [21, 88, 224], core: "21,88,224", blend: "source-over" }
     };
-
-    const shapes = slides.map((s) => makers[s.id]());
-    const dots = shapes[0].map((p) => ({ x: p.x, y: p.y, z: p.z }));
-    let from = 0;
-    let to = 1;
-    let morph = 1;
-    let hold = 0;
-    let rotY = 0.15;
-    let rotX = 0.08;
-    let targetY = 0.15;
-    let targetX = 0.08;
-    const stage = canvas.parentElement;
-    stage.addEventListener("pointermove", (e) => {
-      const r = stage.getBoundingClientRect();
-      targetY = 0.12 + ((e.clientX - r.left) / r.width - 0.5) * 0.28;
-      targetX = 0.06 + ((e.clientY - r.top) / r.height - 0.5) * 0.16;
+    const themeKey = () => (document.documentElement.dataset.theme === "light" ? "light" : "dark");
+    let palette = palettes[themeKey()];
+    const sprite = document.createElement("canvas");
+    const makeSprite = () => {
+      const [r, g, b] = palette.rgb;
+      sprite.width = sprite.height = 64;
+      const s = sprite.getContext("2d");
+      const grd = s.createRadialGradient(32, 32, 0, 32, 32, 32);
+      grd.addColorStop(0, `rgba(${palette.core},1)`);
+      grd.addColorStop(0.16, `rgba(${r},${g},${b},1)`);
+      grd.addColorStop(0.4, `rgba(${r},${g},${b},0.22)`);
+      grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      s.clearRect(0, 0, 64, 64);
+      s.fillStyle = grd;
+      s.fillRect(0, 0, 64, 64);
+    };
+    makeSprite();
+    window.addEventListener("webzuno-theme", (e) => {
+      palette = palettes[e.detail === "light" ? "light" : "dark"];
+      makeSprite();
     });
 
+    const stage = canvas.parentElement;
+    let mx = 0;
+    let my = 0;
+    let tmx = 0;
+    let tmy = 0;
+    stage.addEventListener("pointermove", (e) => {
+      const r = stage.getBoundingClientRect();
+      tmx = (e.clientX - r.left) / r.width - 0.5;
+      tmy = (e.clientY - r.top) / r.height - 0.5;
+    });
+    stage.addEventListener("pointerleave", () => { tmx = 0; tmy = 0; });
+
+    let w = 0;
+    let h = 0;
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = stage.clientWidth;
-      const h = stage.clientHeight;
+      w = stage.clientWidth;
+      h = stage.clientHeight;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.width = `${w}px`;
@@ -425,65 +367,73 @@
     resize();
     window.addEventListener("resize", resize);
 
+    let visible = true;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(stage);
+    }
+
+    const A = [0, 0, 0];
+    const B = [0, 0, 0];
+    const D = 3.6;
+    const HOLD = 6;
+    const MORPH = 2.2;
+    let from = 0;
+    let to = 0;
+    let morph = 1;
+    let hold = 0;
+    let t = 0;
     let last = performance.now();
     const draw = (now) => {
+      requestAnimationFrame(draw);
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
+      if (!visible) return;
+      t += dt;
       if (morph < 1) {
-        morph = Math.min(1, morph + dt / 1.15);
-        if (morph >= 1) {
-          from = to;
-          setCopy(from);
-        }
+        morph = Math.min(1, morph + dt / MORPH);
+        if (morph >= 0.5) setCopy(to);
+        if (morph >= 1) from = to;
       } else {
         hold += dt;
-        if (hold >= 5) {
+        if (hold >= HOLD) {
           hold = 0;
           morph = 0;
-          to = (from + 1) % shapes.length;
-          setCopy(to);
+          to = (from + 1) % slides.length;
         }
       }
-      const t = morph * morph * (3 - 2 * morph);
-      const a = shapes[from];
-      const b = shapes[to];
-      for (let i = 0; i < n; i += 1) {
-        dots[i].x = a[i].x + (b[i].x - a[i].x) * t;
-        dots[i].y = a[i].y + (b[i].y - a[i].y) * t;
-        dots[i].z = a[i].z + (b[i].z - a[i].z) * t;
-      }
+      mx += (tmx - mx) * 0.05;
+      my += (tmy - my) * 0.05;
 
-      const isGlobe = slides[morph < 0.5 ? from : to].id === "globe";
-      rotY += (targetY - rotY) * 0.05 + (isGlobe ? 0.004 : 0.0008);
-      rotX += (targetX - rotX) * 0.05;
-      const w = stage.clientWidth;
-      const h = stage.clientHeight;
       ctx.clearRect(0, 0, w, h);
-      const radius = Math.min(w, h) * 0.4;
+      ctx.globalCompositeOperation = palette.blend;
+      const f = Math.min(w * 0.78, h * 0.95);
       const cx = w * 0.5;
-      const cy = h * 0.44;
-      const light = document.documentElement.dataset.theme === "light";
-      const tiltY = isGlobe ? rotY : rotY * 0.18;
-      const tiltX = isGlobe ? rotX : rotX * 0.12;
-      const cosY = Math.cos(tiltY);
-      const sinY = Math.sin(tiltY);
-      const cosX = Math.cos(tiltX);
-      const sinX = Math.sin(tiltX);
+      const cy = h * 0.45;
+      const fa = fns[from];
+      const fb = fns[to];
+      const morphing = morph < 1;
       for (let i = 0; i < n; i += 1) {
-        const p = dots[i];
-        let x = p.x * cosY - p.z * sinY;
-        let z = p.z * cosY + p.x * sinY;
-        const y = p.y * cosX - z * sinX;
-        z = z * cosX + p.y * sinX;
-        const depth = (z + 1.35) / 2.3;
-        ctx.fillStyle = light
-          ? `rgba(21, 88, 224, ${0.35 + depth * 0.65})`
-          : `rgba(110, 220, 255, ${0.28 + depth * 0.72})`;
-        ctx.beginPath();
-        ctx.arc(cx + x * radius, cy + y * radius, 1.15 + depth * 1.35, 0, Math.PI * 2);
-        ctx.fill();
+        fa(i, t, A);
+        if (morphing) {
+          fb(i, t, B);
+          let k = Math.min(1, Math.max(0, morph * 1.45 - H1[i] * 0.45));
+          k = k * k * (3 - 2 * k);
+          A[0] += (B[0] - A[0]) * k;
+          A[1] += (B[1] - A[1]) * k;
+          A[2] += (B[2] - A[2]) * k;
+        }
+        rotY(A, mx * 0.5);
+        rotX(A, my * 0.3);
+        const zz = A[2] + D;
+        if (zz < 0.3) continue;
+        const s = f / zz;
+        const depth = Math.min(1, Math.max(0, (D + 1.3 - zz) / 2.6));
+        const size = (1.1 + depth * 2.8) * 2.3;
+        ctx.globalAlpha = 0.12 + depth * 0.78;
+        ctx.drawImage(sprite, cx + A[0] * s - size / 2, cy + A[1] * s - size / 2, size, size);
       }
-      requestAnimationFrame(draw);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
     };
     requestAnimationFrame(draw);
   }
@@ -498,6 +448,22 @@
         scrollTrigger: { trigger: span.closest(".line"), start: "top 86%" }
       });
     });
+    const typed = document.getElementById("pb-typed");
+    if (typed) {
+      const query = typed.textContent;
+      const state = { n: 0 };
+      typed.textContent = "";
+      gsap.timeline({ scrollTrigger: { trigger: ".problem-art", start: "top 80%", once: true } })
+        .from(".pb-phone, .pb-notch, .pb-search", { opacity: 0, y: 20, duration: 0.6, ease: "power2.out" })
+        .to(state, {
+          n: query.length,
+          duration: query.length * 0.07,
+          ease: "none",
+          onUpdate: () => { typed.textContent = query.slice(0, Math.round(state.n)); }
+        })
+        .from(".pb-result", { opacity: 0, x: 24, duration: 0.5, stagger: 0.18, ease: "power3.out" }, "+=0.15")
+        .from(".pb-missing > *", { opacity: 0, duration: 0.5, stagger: 0.05, ease: "power2.out" }, "+=0.1");
+    }
     gsap.to(".drift-left", {
       xPercent: 6,
       ease: "none",
@@ -512,80 +478,45 @@
 
   function initWordBunches() {
     const bunches = gsap.utils.toArray(".do-words .bunch");
+    const icons = gsap.utils.toArray(".do-icons li");
     if (!bunches.length) return;
     if (reduce) {
       bunches.forEach((b) => b.classList.add("is-on"));
+      icons.forEach((icon) => icon.classList.add("is-on"));
       return;
     }
     const mm = gsap.matchMedia();
     mm.add("(min-width: 769px)", () => {
       ScrollTrigger.create({
         trigger: ".do-pin",
-        start: "top top",
-        end: "+=160%",
+        start: "top 18%",
+        end: "+=90%",
         pin: true,
-        scrub: 0.6,
+        scrub: 0.55,
         onUpdate: (self) => {
           bunches.forEach((bunch, i) => {
-            bunch.classList.toggle("is-on", self.progress > (i + 0.08) / bunches.length);
+            if (i === 0) {
+              bunch.classList.add("is-on");
+              return;
+            }
+            bunch.classList.toggle("is-on", self.progress > (i - 1) / (bunches.length - 1) + 0.06);
+          });
+          icons.forEach((icon, i) => {
+            icon.classList.toggle("is-on", self.progress > 0.04 + (i / icons.length) * 0.9);
           });
         }
       });
     });
     mm.add("(max-width: 768px)", () => {
-      bunches.forEach((bunch) => {
+      bunches[0]?.classList.add("is-on");
+      icons.forEach((icon) => icon.classList.add("is-on"));
+      bunches.slice(1).forEach((bunch) => {
         ScrollTrigger.create({
           trigger: bunch,
           start: "top 82%",
           onEnter: () => bunch.classList.add("is-on")
         });
       });
-    });
-  }
-
-  function initOrbit() {
-    const cards = gsap.utils.toArray(".svc-card");
-    const stage = document.getElementById("orbit-stage");
-    if (!cards.length || !stage) return;
-    if (reduce || mobile()) return;
-    const pairs = 3;
-    const radius = 168;
-    const place = (progress) => {
-      cards.forEach((card, i) => {
-        const col = i % 2;
-        const ring = Math.floor(i / 2);
-        const theta = (ring / pairs) * Math.PI * 2 - progress * Math.PI * 2;
-        const y = Math.sin(theta) * radius;
-        const z = Math.cos(theta) * radius;
-        const x = col === 0 ? -120 : 120;
-        const depth = (z + radius) / (2 * radius);
-        const front = depth > 0.62;
-        gsap.set(card, {
-          x,
-          y,
-          z,
-          xPercent: -50,
-          yPercent: -50,
-          rotateX: 0,
-          rotateY: 0,
-          rotateZ: 0,
-          scale: 0.78 + depth * 0.28,
-          opacity: front ? 1 : gsap.utils.clamp(0.1, 0.38, depth * 0.7),
-          zIndex: Math.round(z + 400),
-          filter: front ? "none" : `blur(${((1 - depth) * 3).toFixed(2)}px)`,
-          force3D: true
-        });
-      });
-    };
-    place(0);
-    ScrollTrigger.create({
-      trigger: ".orbit-wrap",
-      start: "top 12%",
-      end: "+=240%",
-      pin: true,
-      scrub: 0.75,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => place(self.progress)
     });
   }
 
@@ -596,91 +527,49 @@
       gsap.set(".screen-b, .tablet, .phone", { opacity: 1, y: 0 });
       return;
     }
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    gsap.set(".browser", { scale: 1 });
+    gsap.set(".screen-a", { opacity: 1, filter: "blur(0px)" });
+    gsap.set(".screen-b", { opacity: 0 });
+    gsap.set(".tablet, .phone", { opacity: 0, y: 40 });
+    const tl = gsap.timeline({ repeat: -1, paused: true, defaults: { ease: "power2.inOut" } });
+    tl.to({}, { duration: 1.8 })
+      .to(".screen-a", { opacity: 0, filter: "blur(8px)", duration: 0.8 })
+      .to(".screen-b", { opacity: 1, duration: 0.8 }, "<0.15")
+      .fromTo(".screen-b .mx", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: "power3.out" }, "<0.1")
+      .to(".tablet", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.3")
+      .to(".phone", { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.45")
+      .to({}, { duration: 3 })
+      .to(".tablet, .phone", { opacity: 0, y: 40, duration: 0.6 })
+      .to(".screen-b", { opacity: 0, duration: 0.7 }, "<0.2")
+      .to(".screen-a", { opacity: 1, filter: "blur(0px)", duration: 0.7 }, "<0.15");
+    if (window.ScrollTrigger) {
+      ScrollTrigger.create({
         trigger: ".transform",
-        start: "top top",
-        end: "+=220%",
-        pin: true,
-        scrub: 0.8
-      }
-    });
-    tl.to(".browser", { scale: 1, duration: 1, ease: "power2.out" }, 0)
-      .to(".screen-a", { opacity: 0, filter: "blur(8px)", duration: 0.45 }, 0.45)
-      .to(".screen-b", { opacity: 1, duration: 0.45 }, 0.5)
-      .to(".tablet", { opacity: 1, y: 0, duration: 0.5 }, 0.7)
-      .to(".phone", { opacity: 1, y: 0, duration: 0.5 }, 0.82);
+        start: "top 85%",
+        end: "bottom 15%",
+        onToggle: (self) => (self.isActive ? tl.play() : tl.pause())
+      });
+    } else {
+      tl.play();
+    }
   }
 
   function initSpiral() {
-    const cards = gsap.utils.toArray(".kpi-card");
-    const stage = document.querySelector(".spiral-pin");
+    const cards = gsap.utils.toArray(".sample");
+    const stage = document.querySelector(".sample-pin");
     if (!cards.length || !stage) return;
-    if (reduce || mobile()) {
-      cards.forEach((card) => gsap.set(card, { opacity: 1, xPercent: -50, yPercent: -50, rotation: 0 }));
-      return;
-    }
-    const layout = () => {
-      const w = stage.clientWidth / 2;
-      const h = stage.clientHeight / 2;
-      const origins = [
-        { x: -w, y: -h },
-        { x: w, y: -h },
-        { x: -w, y: h },
-        { x: w, y: h },
-        { x: 0, y: -h },
-        { x: 0, y: h },
-        { x: -w, y: 0 },
-        { x: w, y: 0 }
-      ];
-      const gapX = Math.min(220, w * 0.48);
-      const gapY = Math.min(92, h * 0.38);
-      return { origins, gapX, gapY };
-    };
-    const { origins, gapX, gapY } = layout();
-    const dest = [
-      { x: -gapX * 1.5, y: -gapY },
-      { x: -gapX * 0.5, y: -gapY },
-      { x: gapX * 0.5, y: -gapY },
-      { x: gapX * 1.5, y: -gapY },
-      { x: -gapX * 1.5, y: gapY },
-      { x: -gapX * 0.5, y: gapY },
-      { x: gapX * 0.5, y: gapY },
-      { x: gapX * 1.5, y: gapY }
-    ];
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".spiral-pin",
-        start: "top 14%",
-        end: "+=170%",
-        pin: true,
-        scrub: 0.65,
-        invalidateOnRefresh: true
-      }
-    });
-    cards.forEach((card, i) => {
-      const from = origins[i];
-      const to = dest[i];
-      gsap.set(card, {
-        x: from.x,
-        y: from.y,
-        xPercent: -50,
-        yPercent: -50,
-        scale: 0.42,
-        opacity: 0,
-        rotation: 0,
-        rotateX: 0,
-        rotateY: 0
-      });
-      tl.to(card, {
-        x: to.x,
-        y: to.y,
-        scale: 1,
-        opacity: 1,
-        rotation: 0,
-        duration: 0.55,
-        ease: "power3.out"
-      }, i * 0.14);
+    if (reduce || mobile()) return;
+    const cols = window.innerWidth <= 1024 ? 2 : 3;
+    gsap.from(cards, {
+      x: (i) => [-120, 0, 120][cols === 3 ? i % 3 : (i % 2) * 2],
+      y: (i) => (Math.floor(i / cols) === 0 ? -60 : 60),
+      scale: 0.82,
+      opacity: 0,
+      duration: 0.9,
+      ease: "power3.out",
+      stagger: 0.09,
+      clearProps: "transform,opacity",
+      scrollTrigger: { trigger: stage, start: "top 78%", once: true }
     });
   }
 
@@ -695,6 +584,17 @@
       ease: "none",
       scrollTrigger: { trigger: ".process-rail", start: "top 75%", end: "bottom 40%", scrub: true }
     });
+    const artPath = document.querySelector(".pa-path");
+    if (artPath) {
+      const len = artPath.getTotalLength();
+      gsap.set(artPath, { strokeDasharray: len, strokeDashoffset: len });
+      gsap.timeline({ scrollTrigger: { trigger: ".process-art", start: "top 80%", once: true } })
+        .from(".pa-start", { opacity: 0, y: 16, duration: 0.6, ease: "power2.out" })
+        .to(artPath, { strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut" }, "-=0.2")
+        .from(".pa-node", { scale: 0, opacity: 0, duration: 0.45, stagger: 0.24, ease: "back.out(2.4)" }, "<0.15")
+        .from(".pa-end", { opacity: 0, y: 24, duration: 0.7, ease: "power3.out" }, "-=0.35")
+        .from(".pa-bars", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.6, stagger: 0.08, ease: "power3.out" }, "-=0.4");
+    }
     document.querySelectorAll(".process-steps li").forEach((li) => {
       ScrollTrigger.create({
         trigger: li,
@@ -756,13 +656,36 @@
       ease: "none",
       scrollTrigger: { trigger: ".finale", start: "top 70%", end: "bottom 40%", scrub: true }
     });
-    gsap.from(".finale h2, .finale-sub, .finale-actions", {
+    gsap.from(".finale h2, .finale-sub, .finale-actions, .finale-card", {
       y: 28,
       opacity: 0,
       stagger: 0.12,
       duration: 0.9,
       ease: "power3.out",
       scrollTrigger: { trigger: ".finale h2", start: "top 80%" }
+    });
+  }
+
+  function initTrust() {
+    const section = document.querySelector(".trust");
+    if (!section || reduce) return;
+    const counts = section.querySelectorAll(".trust-count");
+    const tl = gsap.timeline({ scrollTrigger: { trigger: section, start: "top 75%", once: true } });
+    tl.from(".trust-card", { y: 34, opacity: 0, duration: 0.7, stagger: 0.12, ease: "power3.out" })
+      .from(".tg-arc", { strokeDasharray: "0 100", duration: 1.4, ease: "power2.out" }, 0.2)
+      .from(".trust-checks li", { x: -14, opacity: 0, duration: 0.4, stagger: 0.14, ease: "power2.out" }, 0.4)
+      .from(".trust-bars i", { scaleY: 0, duration: 0.5, stagger: 0.025, ease: "power2.out" }, 0.4);
+    counts.forEach((el) => {
+      const to = Number(el.dataset.to);
+      const decimals = Number(el.dataset.decimals || 0);
+      const state = { v: 0 };
+      el.textContent = (0).toFixed(decimals);
+      tl.to(state, {
+        v: to,
+        duration: 1.4,
+        ease: "power2.out",
+        onUpdate: () => { el.textContent = state.v.toFixed(decimals); }
+      }, 0.2);
     });
   }
 
@@ -776,6 +699,7 @@
 
   function closeOverlays() {
     contactOverlay.hidden = true;
+    if (legalOverlay) legalOverlay.hidden = true;
     lock(false);
   }
 
@@ -783,24 +707,80 @@
     document.querySelectorAll("[data-open-contact]").forEach((btn) => {
       btn.addEventListener("click", () => openContact(btn.dataset.plan || ""));
     });
+    document.querySelectorAll("[data-open-legal]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const which = btn.dataset.openLegal;
+        document.getElementById("legal-privacy").hidden = which !== "privacy";
+        document.getElementById("legal-terms").hidden = which !== "terms";
+        legalOverlay.hidden = false;
+        lock(true);
+      });
+    });
     document.querySelectorAll("[data-close-overlay]").forEach((btn) => {
       btn.addEventListener("click", closeOverlays);
     });
     contactOverlay.addEventListener("click", (e) => {
       if (e.target === contactOverlay) closeOverlays();
     });
+    legalOverlay?.addEventListener("click", (e) => {
+      if (e.target === legalOverlay) closeOverlays();
+    });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeOverlays();
     });
-    form?.addEventListener("submit", (e) => {
+    document.querySelectorAll(".faq-item").forEach((item) => {
+      item.addEventListener("toggle", () => window.ScrollTrigger?.refresh());
+    });
+    bindEnquiryForm(form, formSuccess, "New Webzuno project");
+    bindEnquiryForm(document.getElementById("quick-form"), document.getElementById("quick-success"), "New Webzuno enquiry");
+  }
+
+  function bindEnquiryForm(el, success, subjectPrefix) {
+    if (!el || !success) return;
+    const button = el.querySelector('button[type="submit"]');
+    const status = el.querySelector(".form-status");
+    el.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const data = new FormData(form);
-      const body = encodeURIComponent(
-        `Name: ${data.get("name")}\nBusiness: ${data.get("business")}\nEmail: ${data.get("email")}\nPhone: ${data.get("phone")}\nPlan: ${data.get("plan")}\n\n${data.get("message") || ""}`
-      );
-      window.location.href = `mailto:hello@webzuno.com?subject=${encodeURIComponent("New Webzuno project — " + data.get("business"))}&body=${body}`;
-      form.hidden = true;
-      formSuccess.hidden = false;
+      const data = new FormData(el);
+      if (data.get("botcheck")) return;
+      const subject = `${subjectPrefix} — ${data.get("business")}`;
+      const done = (sent) => {
+        if (sent) success.textContent = "Thanks — your enquiry is in. We’ll reply within one working day.";
+        el.hidden = true;
+        success.hidden = false;
+      };
+
+      if (!WEB3FORMS_KEY) {
+        const body = encodeURIComponent(
+          `Name: ${data.get("name")}\nBusiness: ${data.get("business")}\nEmail: ${data.get("email")}\nPhone: ${data.get("phone")}\nPlan: ${data.get("plan")}\n\n${data.get("message") || ""}`
+        );
+        window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        done();
+        return;
+      }
+
+      data.append("access_key", WEB3FORMS_KEY);
+      data.append("subject", subject);
+      data.append("from_name", "Webzuno website");
+      const label = button ? button.innerHTML : "";
+      if (button) {
+        button.disabled = true;
+        button.textContent = "Sending…";
+      }
+      if (status) status.textContent = "";
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data, headers: { Accept: "application/json" } });
+        const json = await res.json();
+        if (!res.ok || !json.success) throw new Error(json.message || "Send failed");
+        done(true);
+      } catch {
+        if (status) status.innerHTML = `Couldn’t send just now. Please try again or email <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>.`;
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.innerHTML = label;
+        }
+      }
     });
   }
 
@@ -815,18 +795,17 @@
     initOrb();
     if (!hasGsap) return;
     initSmooth();
-    initCursor();
     initMagnetic();
     heroIntro();
     revealLines();
     initWordBunches();
-    initOrbit();
     initTransform();
     initSpiral();
     initProcess();
     initBenefits();
     initCounters();
     initFinale();
+    initTrust();
     if (window.ScrollTrigger) {
       ScrollTrigger.refresh();
       window.addEventListener("resize", () => ScrollTrigger.refresh());

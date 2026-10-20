@@ -5,7 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Webzuno builds modern, professional websites for local businesses — shops, restaurants, clinics, gyms and the teams behind them.">
   <title>Webzuno — Your business. Built for the web.</title>
-  <link rel="icon" type="image/png" href="assets/logo-mark.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#1a73ff">
+  <link rel="canonical" href="https://webzuno.com/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Webzuno">
+  <meta property="og:url" content="https://webzuno.com/">
+  <meta property="og:title" content="Webzuno — Websites built for local businesses">
+  <meta property="og:description" content="Fast, secured, modern websites for shops, restaurants, clinics and gyms. Get a free website plan.">
+  <meta property="og:image" content="https://webzuno.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Webzuno — Websites built for local businesses">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Webzuno — Websites built for local businesses">
+  <meta name="twitter:description" content="Fast, secured, modern websites for shops, restaurants, clinics and gyms.">
+  <meta name="twitter:image" content="https://webzuno.com/assets/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://webzuno.com/#business",
+        "name": "Webzuno",
+        "url": "https://webzuno.com/",
+        "logo": "https://webzuno.com/assets/logo-mark-clear.png",
+        "image": "https://webzuno.com/assets/og-image.png",
+        "description": "Webzuno builds modern, professional websites for local businesses — shops, restaurants, clinics, gyms and the teams behind them.",
+        "email": "hello@webzuno.com",
+        "areaServed": "IN",
+        "priceRange": "₹₹",
+        "serviceType": ["Website design", "Website development", "E-commerce websites", "Local SEO"]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "How long does a website take?", "acceptedAnswer": { "@type": "Answer", "text": "Most Starter sites go live in 1–2 weeks and Growth sites in 2–4 weeks, once we have your content. Pro builds depend on scope — we agree a timeline before we start." } },
+          { "@type": "Question", "name": "Do I own the website?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Once the project is paid, the site, its files and your domain are yours. You’re never locked in to us." } },
+          { "@type": "Question", "name": "What about domain and hosting?", "acceptedAnswer": { "@type": "Answer", "text": "We can register your domain and set up fast, secure hosting for you — or use the ones you already have. We explain every yearly cost up front." } },
+          { "@type": "Question", "name": "Can I update the site myself?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We can set up simple editing for things like prices, timings and photos, and show you how. Or just WhatsApp us the change and we’ll do it." } },
+          { "@type": "Question", "name": "Will people find me on Google?", "acceptedAnswer": { "@type": "Answer", "text": "Every site ships with the SEO basics — fast pages, proper titles, Google Maps and Business Profile linking. Growth and Pro plans go further with local SEO." } },
+          { "@type": "Question", "name": "What do I need to get started?", "acceptedAnswer": { "@type": "Answer", "text": "Just a short chat about your business. Logo, photos and text help, but if you don’t have them yet we’ll guide you through it." } }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -16,11 +65,6 @@
 </head>
 <body>
   <a class="skip-link" href="#home">Skip to content</a>
-
-  <div class="cursor" aria-hidden="true">
-    <div class="cursor-dot"></div>
-    <div class="cursor-label">VIEW</div>
-  </div>
 
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader-inner">
@@ -39,8 +83,8 @@
 
   <header class="nav" id="nav">
     <a class="nav-logo" href="#home" data-scroll="#home" aria-label="Webzuno home">
-      <img src="assets/logo-mark.png" alt="" width="36" height="36">
-      <span>Webzuno</span>
+      <img src="assets/logo-mark-clear.png" alt="" width="238" height="165">
+      <span aria-hidden="true">ebzuno</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#home" data-scroll="#home">Home</a>
@@ -90,8 +134,8 @@
           <canvas id="orb" class="hero-orb-canvas" aria-hidden="true"></canvas>
           <div class="hero-orb-fallback" aria-hidden="true"></div>
           <div class="hero-stage-copy">
-            <p class="hero-stage-kicker" id="orb-kicker">WWW / Internet</p>
-            <p class="hero-stage-cap" id="orb-caption" aria-live="polite">Take your business worldwide</p>
+            <p class="hero-stage-kicker" id="orb-kicker">Modular</p>
+            <p class="hero-stage-cap" id="orb-caption" aria-live="polite">Websites built from solid blocks</p>
           </div>
         </div>
       </div>
@@ -99,15 +143,69 @@
 
     <section class="problem" id="problem">
       <div class="problem-inner">
-        <p class="section-index">01 — The gap</p>
-        <h2 class="problem-title">
-          <span class="line drift-left"><span>Your customers are</span></span>
-          <span class="line drift-right"><span>already <em>online.</em></span></span>
-        </h2>
-        <p class="problem-sub">
-          <span class="line drift-left"><span>If they can’t find you,</span></span>
-          <span class="line drift-right"><span>they’ll find <em>someone else.</em></span></span>
-        </p>
+        <div class="problem-copy">
+          <p class="section-index">01 — The gap</p>
+          <h2 class="problem-title">
+            <span class="line drift-left"><span>Your customers are</span></span>
+            <span class="line drift-right"><span>already <em>online.</em></span></span>
+          </h2>
+          <p class="problem-sub">
+            <span class="line drift-left"><span>If they can’t find you,</span></span>
+            <span class="line drift-right"><span>they’ll find <em>someone else.</em></span></span>
+          </p>
+        </div>
+        <figure class="problem-art" aria-hidden="true">
+          <svg viewBox="0 0 320 420" role="presentation">
+            <defs>
+              <linearGradient id="pb-grad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#5ad4ff"/>
+                <stop offset="0.55" stop-color="#1a73ff"/>
+                <stop offset="1" stop-color="#4f7cff"/>
+              </linearGradient>
+            </defs>
+
+            <g class="pb-pin pb-pin-a"><path d="M298 118c0-9-7-16-16-16s-16 7-16 16c0 12 16 26 16 26s16-14 16-26z" fill="url(#pb-grad)"/><circle cx="282" cy="118" r="5.5" fill="#fff"/></g>
+            <g class="pb-pin pb-pin-b"><path d="M42 196c0-8-6-14-14-14s-14 6-14 14c0 10 14 23 14 23s14-13 14-23z" fill="url(#pb-grad)"/><circle cx="28" cy="196" r="4.8" fill="#fff"/></g>
+            <g class="pb-pin pb-pin-c"><path d="M310 236c0-8-6-14-14-14s-14 6-14 14c0 10 14 23 14 23s14-13 14-23z" fill="url(#pb-grad)"/><circle cx="296" cy="236" r="4.8" fill="#fff"/></g>
+            <g class="pb-pin pb-pin-ghost"><path class="pb-ghost-pin" d="M38 318c0-8-6-14-14-14s-14 6-14 14c0 10 14 23 14 23s14-13 14-23z"/><text class="pb-ghost-q" x="24" y="322" text-anchor="middle">?</text></g>
+
+            <rect class="pb-phone" x="40" y="10" width="240" height="400" rx="34"/>
+            <rect class="pb-notch" x="130" y="22" width="60" height="8" rx="4"/>
+
+            <rect class="pb-search" x="58" y="46" width="204" height="34" rx="17"/>
+            <circle class="pb-mag" cx="78" cy="62" r="6"/>
+            <line class="pb-mag" x1="82.5" y1="66.5" x2="87" y2="71"/>
+            <text class="pb-typed" id="pb-typed" x="94" y="67.5">café near me</text>
+            <text class="pb-meta" x="60" y="104">TOP RESULTS NEARBY</text>
+
+            <g class="pb-result">
+              <rect class="pb-card" x="58" y="114" width="204" height="52" rx="12"/>
+              <rect x="68" y="124" width="32" height="32" rx="9" fill="url(#pb-grad)"/>
+              <text class="pb-name" x="110" y="137">Blue Bean Café</text>
+              <text class="pb-stars" x="110" y="153">★★★★★ 4.8 · Open</text>
+            </g>
+            <g class="pb-result">
+              <rect class="pb-card" x="58" y="174" width="204" height="52" rx="12"/>
+              <rect x="68" y="184" width="32" height="32" rx="9" fill="url(#pb-grad)" opacity="0.75"/>
+              <text class="pb-name" x="110" y="197">The Daily Grind</text>
+              <text class="pb-stars" x="110" y="213">★★★★★ 4.6 · Open</text>
+            </g>
+            <g class="pb-result">
+              <rect class="pb-card" x="58" y="234" width="204" height="52" rx="12"/>
+              <rect x="68" y="244" width="32" height="32" rx="9" fill="url(#pb-grad)" opacity="0.55"/>
+              <text class="pb-name" x="110" y="257">Café Mocha</text>
+              <text class="pb-stars" x="110" y="273">★★★★☆ 4.5 · Open</text>
+            </g>
+            <g class="pb-missing">
+              <rect class="pb-empty" x="58" y="300" width="204" height="62" rx="12"/>
+              <circle class="pb-empty-icon" cx="84" cy="331" r="13"/>
+              <text class="pb-empty-q" x="84" y="336" text-anchor="middle">?</text>
+              <text class="pb-name pb-name-missing" x="108" y="326">Your business</text>
+              <text class="pb-not-found" x="108" y="343">Not found online</text>
+            </g>
+            <rect class="pb-home" x="130" y="388" width="60" height="5" rx="2.5"/>
+          </svg>
+        </figure>
       </div>
     </section>
 
@@ -115,51 +213,19 @@
       <p class="section-index do-index">02 — What we do</p>
       <div class="do-pin">
         <h2 class="do-words" aria-label="We build websites that work as hard as you do.">
-          <span class="bunch">We build</span>
+          <span class="bunch is-on">We build</span>
           <span class="bunch">websites that</span>
           <span class="bunch">work as hard</span>
           <span class="bunch">as you do.</span>
         </h2>
-      </div>
-
-      <div class="orbit-wrap">
-        <div class="cylinder" aria-hidden="true">
-          <span class="cylinder-cap cylinder-cap-top"></span>
-          <span class="cylinder-wall"></span>
-          <span class="cylinder-cap cylinder-cap-bot"></span>
-        </div>
-        <div class="orbit-stage" id="orbit-stage">
-          <article class="svc-card" style="--i:0">
-            <p class="svc-num">01</p>
-            <h3>Business Websites</h3>
-            <p>A clear home for a shop, studio or practice.</p>
-          </article>
-          <article class="svc-card" style="--i:1">
-            <p class="svc-num">02</p>
-            <h3>E-Commerce</h3>
-            <p>Sell from your own site, not a chat catalog.</p>
-          </article>
-          <article class="svc-card" style="--i:2">
-            <p class="svc-num">03</p>
-            <h3>Restaurant Sites</h3>
-            <p>Menus, hours and a look that matches the room.</p>
-          </article>
-          <article class="svc-card" style="--i:3">
-            <p class="svc-num">04</p>
-            <h3>Healthcare</h3>
-            <p>Calm pages clinics and pharmacies can use.</p>
-          </article>
-          <article class="svc-card" style="--i:4">
-            <p class="svc-num">05</p>
-            <h3>Portfolios</h3>
-            <p>For work that should speak before the bio.</p>
-          </article>
-          <article class="svc-card" style="--i:5">
-            <p class="svc-num">06</p>
-            <h3>Custom Builds</h3>
-            <p>When a theme would flatten the difference.</p>
-          </article>
-        </div>
+        <ul class="do-icons">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg><span>Business sites</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11h11l2-8H6.2"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg><span>E-commerce</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8a2 2 0 0 0 2 2v8M11 3v8M7 7h4M17 3c-2 2-2 6 0 8v10"/></svg><span>Restaurants</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span>Healthcare</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg><span>Portfolios</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13 6l-2 12"/></svg><span>Custom builds</span></li>
+        </ul>
       </div>
     </section>
 
@@ -176,18 +242,60 @@
                 <p class="screen-name">A storefront with no address online</p>
               </div>
               <div class="screen-state screen-b">
-                <p class="screen-label">After</p>
-                <p class="screen-name">A site people can find, trust and use</p>
-                <div class="screen-blocks"><span></span><span></span><span></span></div>
+                <div class="mini-site" aria-hidden="true">
+                  <div class="ms-nav mx">
+                    <span class="ms-logo"><i></i>Blue Bean Café</span>
+                    <span class="ms-links"><span>Menu</span><span>Visit</span><span>Reviews</span></span>
+                    <span class="ms-btn">Order on WhatsApp</span>
+                  </div>
+                  <div class="ms-hero">
+                    <div class="ms-copy">
+                      <p class="ms-open mx"><i></i>Open now · until 10 pm</p>
+                      <p class="ms-title mx">Fresh coffee,<br>five minutes away.</p>
+                      <p class="ms-sub mx">Specialty brews &amp; fresh bakes in Anna Nagar.</p>
+                      <div class="ms-ctas mx"><span class="ms-btn">Order on WhatsApp</span><span class="ms-btn ms-ghost">Get directions</span></div>
+                      <p class="ms-rating mx"><b>★★★★★</b> 4.8 · 320 Google reviews</p>
+                    </div>
+                    <div class="ms-media mx">
+                      <div class="ms-photo">
+                        <svg viewBox="0 0 120 100"><path class="ms-steam" d="M50 30c-6-7 6-11 0-18M62 30c-6-7 6-11 0-18M74 30c-6-7 6-11 0-18"/><path class="ms-cup" d="M38 38h48v20a22 22 0 0 1-22 22h-4a22 22 0 0 1-22-22z"/><path class="ms-handle" d="M86 44h5a9 9 0 0 1 0 18h-6"/><ellipse class="ms-saucer" cx="62" cy="84" rx="38" ry="6"/></svg>
+                      </div>
+                      <div class="ms-map"><i class="ms-pin"></i><span>2 min drive</span></div>
+                    </div>
+                  </div>
+                  <div class="ms-menu mx">
+                    <span><b>Cappuccino</b>₹180</span>
+                    <span><b>Cold brew</b>₹220</span>
+                    <span><b>Butter croissant</b>₹150</span>
+                  </div>
+                </div>
+                <p class="screen-tag"><span class="screen-label">After</span><span class="screen-tag-text">A site people can find, trust and use</span></p>
               </div>
             </div>
           </div>
           <div class="device tablet" data-device="tablet" aria-hidden="true">
-            <div class="tablet-screen"></div>
+            <div class="tablet-screen mini-site mini-tab">
+              <div class="ms-nav"><span class="ms-logo"><i></i>Blue Bean</span><span class="ms-burger"></span></div>
+              <div class="ms-photo">
+                <svg viewBox="0 0 120 100"><path class="ms-cup" d="M38 38h48v20a22 22 0 0 1-22 22h-4a22 22 0 0 1-22-22z"/><path class="ms-handle" d="M86 44h5a9 9 0 0 1 0 18h-6"/><ellipse class="ms-saucer" cx="62" cy="84" rx="38" ry="6"/></svg>
+              </div>
+              <p class="ms-open"><i></i>Open now</p>
+              <p class="ms-title">Fresh coffee, five minutes away.</p>
+              <div class="ms-ctas"><span class="ms-btn">Order</span><span class="ms-btn ms-ghost">Directions</span></div>
+              <div class="ms-menu"><span><b>Cappuccino</b>₹180</span><span><b>Cold brew</b>₹220</span></div>
+            </div>
           </div>
           <div class="device phone" data-device="phone" aria-hidden="true">
             <div class="phone-notch"></div>
-            <div class="phone-screen"></div>
+            <div class="phone-screen mini-site mini-phone">
+              <div class="ms-nav"><span class="ms-logo"><i></i></span><span class="ms-burger"></span></div>
+              <div class="ms-photo">
+                <svg viewBox="0 0 120 100"><path class="ms-cup" d="M38 38h48v20a22 22 0 0 1-22 22h-4a22 22 0 0 1-22-22z"/><path class="ms-handle" d="M86 44h5a9 9 0 0 1 0 18h-6"/><ellipse class="ms-saucer" cx="62" cy="84" rx="38" ry="6"/></svg>
+              </div>
+              <p class="ms-title">Fresh coffee, five minutes away.</p>
+              <span class="ms-btn">Order on WhatsApp</span>
+              <p class="ms-rating"><b>★★★★★</b> 4.8</p>
+            </div>
           </div>
         </div>
         <ul class="transform-caps">
@@ -198,75 +306,114 @@
       </div>
     </section>
 
-    <section class="industries" id="industries">
-      <div class="industries-head">
-        <p class="section-index">04 — Who it’s for</p>
-        <h2>Made for businesses like yours.</h2>
+    <section class="work" id="work">
+      <div class="work-head">
+        <p class="section-index">04 — Sample directions</p>
+        <h2>What a Webzuno site<br>can look like.</h2>
+        <p class="work-note">These are sample layouts — not client work. We have not published case studies yet.</p>
       </div>
-      <div class="spiral-pin">
-        <div class="spiral-stage" id="spiral-stage">
-          <article class="kpi-card" data-i="0"><em>01</em><h3>Restaurants</h3><p>Menus, hours, bookings</p></article>
-          <article class="kpi-card" data-i="1"><em>02</em><h3>Retail</h3><p>Catalog after closing time</p></article>
-          <article class="kpi-card" data-i="2"><em>03</em><h3>Healthcare</h3><p>Hours, stock, a clear number</p></article>
-          <article class="kpi-card" data-i="3"><em>04</em><h3>Fitness</h3><p>Classes and join flows</p></article>
-          <article class="kpi-card" data-i="4"><em>05</em><h3>Beauty</h3><p>A chair booked before arrival</p></article>
-          <article class="kpi-card" data-i="5"><em>06</em><h3>Professionals</h3><p>Practices that read as inevitable</p></article>
-          <article class="kpi-card" data-i="6"><em>07</em><h3>Education</h3><p>Courses parents can find</p></article>
-          <article class="kpi-card" data-i="7"><em>08</em><h3>Local services</h3><p>Trades that look like finished work</p></article>
+      <div class="sample-pin">
+        <div class="sample-stage" id="sample-stage">
+          <article class="sample" data-i="0">
+            <p>Hospitality</p>
+            <h3>Café or restaurant</h3>
+            <p>Menu, hours, reserve a table, a page that feels like the room.</p>
+            <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+          </article>
+          <article class="sample" data-i="1">
+            <p>Healthcare</p>
+            <h3>Clinic or pharmacy</h3>
+            <p>Services, timings, WhatsApp, directions — quiet and exact.</p>
+            <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+          </article>
+          <article class="sample" data-i="2">
+            <p>Fitness</p>
+            <h3>Gym or studio</h3>
+            <p>Classes, trainers, a join path that works at 11pm.</p>
+            <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+          </article>
+          <article class="sample" data-i="3">
+            <p>Retail</p>
+            <h3>Shop or boutique</h3>
+            <p>Catalog, sizes, collect in store or ship.</p>
+            <button class="text-link" type="button" data-open-contact data-plan="Pro">Build this type →</button>
+          </article>
+          <article class="sample" data-i="4">
+            <p>Professionals</p>
+            <h3>Studio or practice</h3>
+            <p>Work first, then the bio. A site that holds a reputation.</p>
+            <button class="text-link" type="button" data-open-contact data-plan="Starter">Build this type →</button>
+          </article>
+          <article class="sample" data-i="5">
+            <p>Trades</p>
+            <h3>Local service</h3>
+            <p>Finished jobs, a service list, a lead form that is not a PDF.</p>
+            <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="work" id="work">
-      <div class="work-head">
-        <p class="section-index">05 — Sample directions</p>
-        <h2>What a Webzuno site<br>can look like.</h2>
-        <p class="work-note">These are sample layouts — not client work. We have not published case studies yet.</p>
-      </div>
-      <div class="sample-grid">
-        <article class="sample">
-          <p>Hospitality</p>
-          <h3>Café or restaurant</h3>
-          <p>Menu, hours, reserve a table, a page that feels like the room.</p>
-          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
-        </article>
-        <article class="sample">
-          <p>Healthcare</p>
-          <h3>Clinic or pharmacy</h3>
-          <p>Services, timings, WhatsApp, directions — quiet and exact.</p>
-          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
-        </article>
-        <article class="sample">
-          <p>Fitness</p>
-          <h3>Gym or studio</h3>
-          <p>Classes, trainers, a join path that works at 11pm.</p>
-          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
-        </article>
-        <article class="sample">
-          <p>Retail</p>
-          <h3>Shop or boutique</h3>
-          <p>Catalog, sizes, collect in store or ship.</p>
-          <button class="text-link" type="button" data-open-contact data-plan="Pro">Build this type →</button>
-        </article>
-        <article class="sample">
-          <p>Professionals</p>
-          <h3>Studio or practice</h3>
-          <p>Work first, then the bio. A site that holds a reputation.</p>
-          <button class="text-link" type="button" data-open-contact data-plan="Starter">Build this type →</button>
-        </article>
-        <article class="sample">
-          <p>Trades</p>
-          <h3>Local service</h3>
-          <p>Finished jobs, a service list, a lead form that is not a PDF.</p>
-          <button class="text-link" type="button" data-open-contact data-plan="Growth">Build this type →</button>
-        </article>
-      </div>
-    </section>
-
     <section class="process" id="process">
-      <div class="process-head">
-        <p class="section-index">06 — How we work</p>
-        <h2>Simple process.<br>Serious results.</h2>
+      <div class="process-top">
+        <div class="process-head">
+          <p class="section-index">05 — How we work</p>
+          <h2>Simple process.<br>Serious results.</h2>
+        </div>
+        <figure class="process-art" aria-hidden="true">
+          <svg viewBox="0 0 640 340" role="presentation">
+            <defs>
+              <linearGradient id="pa-grad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#5ad4ff"/>
+                <stop offset="0.55" stop-color="#1a73ff"/>
+                <stop offset="1" stop-color="#4f7cff"/>
+              </linearGradient>
+              <linearGradient id="pa-bar" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#1a73ff" stop-opacity="0.35"/>
+                <stop offset="1" stop-color="#5ad4ff"/>
+              </linearGradient>
+            </defs>
+
+            <g class="pa-start">
+              <rect class="pa-sketch" x="20" y="200" width="170" height="120" rx="12"/>
+              <line class="pa-sketch" x1="20" y1="224" x2="190" y2="224"/>
+              <circle class="pa-dot" cx="34" cy="212" r="3"/>
+              <circle class="pa-dot" cx="45" cy="212" r="3"/>
+              <circle class="pa-dot" cx="56" cy="212" r="3"/>
+              <line class="pa-sketch" x1="38" y1="248" x2="128" y2="248"/>
+              <line class="pa-sketch" x1="38" y1="266" x2="160" y2="266"/>
+              <line class="pa-sketch" x1="38" y1="284" x2="104" y2="284"/>
+              <text class="pa-cap" x="20" y="338">Your idea</text>
+            </g>
+
+            <path class="pa-path" d="M190 262 C 230 262, 240 240, 262 228 S 300 200, 322 192 S 352 168, 374 160 S 405 130, 420 116 S 432 96, 440 88"/>
+
+            <g class="pa-nodes">
+              <g class="pa-node"><circle class="pa-ring" cx="214" cy="259" r="8"/><circle class="pa-core" cx="214" cy="259" r="3.2"/><text class="pa-label" x="214" y="290" text-anchor="middle">Discover</text></g>
+              <g class="pa-node"><circle class="pa-ring" cx="262" cy="228" r="8"/><circle class="pa-core" cx="262" cy="228" r="3.2"/><text class="pa-label" x="262" y="206" text-anchor="middle">Design</text></g>
+              <g class="pa-node"><circle class="pa-ring" cx="322" cy="192" r="8"/><circle class="pa-core" cx="322" cy="192" r="3.2"/><text class="pa-label" x="330" y="222" text-anchor="middle">Build</text></g>
+              <g class="pa-node"><circle class="pa-ring" cx="374" cy="160" r="8"/><circle class="pa-core" cx="374" cy="160" r="3.2"/><text class="pa-label" x="366" y="138" text-anchor="middle">Launch</text></g>
+              <g class="pa-node"><circle class="pa-ring" cx="420" cy="116" r="8"/><circle class="pa-core" cx="420" cy="116" r="3.2"/><text class="pa-label" x="408" y="100" text-anchor="end">Grow</text></g>
+            </g>
+
+            <g class="pa-end">
+              <rect class="pa-site" x="440" y="20" width="180" height="140" rx="14"/>
+              <line class="pa-frame" x1="440" y1="46" x2="620" y2="46"/>
+              <circle cx="455" cy="33" r="3.4" fill="#ff5f57"/>
+              <circle cx="467" cy="33" r="3.4" fill="#febc2e"/>
+              <circle cx="479" cy="33" r="3.4" fill="#28c840"/>
+              <rect class="pa-live" x="566" y="26" width="42" height="14" rx="7"/>
+              <text class="pa-live-text" x="587" y="36.5" text-anchor="middle">LIVE</text>
+              <rect class="pa-bars" x="462" y="118" width="22" height="26" rx="4"/>
+              <rect class="pa-bars" x="494" y="104" width="22" height="40" rx="4"/>
+              <rect class="pa-bars" x="526" y="88" width="22" height="56" rx="4"/>
+              <rect class="pa-bars" x="558" y="68" width="22" height="76" rx="4"/>
+              <path class="pa-trend" d="M466 104 L 504 90 L 536 76 L 590 56"/>
+              <path class="pa-trend-head" d="M594 50 L 596 64 L 582 58 Z"/>
+              <text class="pa-cap" x="440" y="184">Real results</text>
+            </g>
+          </svg>
+        </figure>
       </div>
       <div class="process-rail">
         <div class="process-line" aria-hidden="true"><span></span></div>
@@ -302,7 +449,7 @@
 
     <section class="about" id="about">
       <div class="about-statement">
-        <p class="section-index">07 — Why Webzuno</p>
+        <p class="section-index">06 — Why Webzuno</p>
         <h2>Good websites look good.<br><em>Great websites bring customers.</em></h2>
         <p class="about-lead">A small studio with one job: give local businesses a site that works as hard as the people behind the counter.</p>
       </div>
@@ -336,9 +483,54 @@
       </dl>
     </section>
 
+    <section class="trust" id="trust">
+      <div class="trust-copy">
+        <p class="section-index">Fast · Secured</p>
+        <h2>Fast to load.<br><span class="grad">Hard to break.</span></h2>
+        <p>Every Webzuno site is tuned for speed and locked down from day one — so customers stay, and trouble stays out.</p>
+      </div>
+      <div class="trust-grid">
+        <article class="trust-card trust-speed">
+          <svg class="trust-gauge" viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="tg-grad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#28c840"/>
+                <stop offset="1" stop-color="#5ad4ff"/>
+              </linearGradient>
+            </defs>
+            <circle class="tg-track" cx="60" cy="60" r="50"/>
+            <circle class="tg-arc" cx="60" cy="60" r="50" pathLength="100"/>
+          </svg>
+          <p class="trust-score"><span class="trust-count" data-to="98">98</span></p>
+          <h3>PageSpeed score</h3>
+          <p class="trust-note">Pages load in under 2 seconds, even on mobile data.</p>
+        </article>
+        <article class="trust-card trust-secure">
+          <svg class="trust-shield" viewBox="0 0 64 72" aria-hidden="true">
+            <path d="M32 3 58 13v20c0 17-11 30-26 36C17 63 6 50 6 33V13z"/>
+            <rect x="22" y="32" width="20" height="16" rx="3"/>
+            <path class="ts-shackle" d="M26 32v-5a6 6 0 0 1 12 0v5"/>
+          </svg>
+          <h3>Locked down</h3>
+          <ul class="trust-checks">
+            <li>SSL &amp; HTTPS on every page</li>
+            <li>Daily automatic backups</li>
+            <li>Spam-protected forms</li>
+            <li>Security updates included</li>
+          </ul>
+        </article>
+        <article class="trust-card trust-uptime">
+          <p class="trust-score"><span class="trust-count" data-to="99.9" data-decimals="1">99.9</span><small>%</small></p>
+          <h3>Uptime, monitored 24/7</h3>
+          <div class="trust-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="trust-note">Last 30 days · all systems online</p>
+        </article>
+      </div>
+    </section>
+
     <section class="pricing" id="pricing">
       <div class="pricing-head">
-        <p class="section-index">08 — Investment</p>
+        <p class="section-index">07 — Investment</p>
         <h2>Professional websites.<br>Without the agency price tag.</h2>
         <p>You’ll get a number after a short conversation — not a public rate card that pretends every shop is the same.</p>
       </div>
@@ -386,43 +578,117 @@
       </div>
     </section>
 
+    <section class="faq" id="faq">
+      <div class="faq-head">
+        <p class="section-index">08 — Questions</p>
+        <h2>Before you ask.</h2>
+        <p>The things local business owners usually want to know first.</p>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>How long does a website take?</summary>
+          <p>Most Starter sites go live in 1–2 weeks and Growth sites in 2–4 weeks, once we have your content. Pro builds depend on scope — we agree a timeline before we start.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I own the website?</summary>
+          <p>Yes. Once the project is paid, the site, its files and your domain are yours. You’re never locked in to us.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What about domain and hosting?</summary>
+          <p>We can register your domain and set up fast, secure hosting for you — or use the ones you already have. We explain every yearly cost up front.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I update the site myself?</summary>
+          <p>Yes. We can set up simple editing for things like prices, timings and photos, and show you how. Or just WhatsApp us the change and we’ll do it.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Will people find me on Google?</summary>
+          <p>Every site ships with the SEO basics — fast pages, proper titles, Google Maps and Business Profile linking. Growth and Pro plans go further with local SEO.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What do I need to get started?</summary>
+          <p>Just a short chat about your business. Logo, photos and text help, but if you don’t have them yet we’ll guide you through it.</p>
+        </details>
+      </div>
+    </section>
+
     <section class="finale" id="cta">
       <div class="finale-w" aria-hidden="true">
         <img src="assets/logo-mark.png" alt="">
       </div>
       <div class="finale-light" aria-hidden="true"></div>
-      <p class="section-index">09 — Next</p>
-      <h2>Ready to put your business<br>on the map?</h2>
-      <p class="finale-sub">Let’s build something people remember.</p>
-      <div class="finale-actions">
-        <button class="btn btn-solid magnetic" type="button" data-open-contact>Start Your Project <span aria-hidden="true">→</span></button>
-        <button class="btn btn-ghost magnetic" type="button" data-open-contact>Talk to Webzuno</button>
+      <div class="finale-grid">
+        <div class="finale-copy">
+          <p class="section-index">09 — Next</p>
+          <h2>Ready to put<br>your business<br>on the map?</h2>
+          <p class="finale-sub">Let’s build something people remember.</p>
+          <div class="finale-actions">
+            <button class="btn btn-solid magnetic" type="button" data-open-contact>Start Your Project <span aria-hidden="true">→</span></button>
+            <button class="btn btn-ghost magnetic" type="button" data-open-contact>Talk to Webzuno</button>
+          </div>
+        </div>
+        <div class="finale-card">
+          <p class="eyebrow">Quick enquiry</p>
+          <h3 class="finale-card-title">Get a free website plan</h3>
+          <p class="finale-card-lead">Tell us a little. We reply within one working day.</p>
+          <form class="quick-form" id="quick-form">
+            <label>Your name
+              <input type="text" name="name" required autocomplete="name" placeholder="Priya Sharma">
+            </label>
+            <label>Business name
+              <input type="text" name="business" required placeholder="Blue Bean Café">
+            </label>
+            <label>Email
+              <input type="email" name="email" required autocomplete="email" placeholder="you@business.in">
+            </label>
+            <label>Phone / WhatsApp
+              <input type="tel" name="phone" required autocomplete="tel" placeholder="+91 98765 43210">
+            </label>
+            <label class="quick-wide">Package
+              <select name="plan">
+                <option value="Starter">Starter — getting online</option>
+                <option value="Growth" selected>Growth — ready to grow</option>
+                <option value="Pro">Pro — custom build</option>
+                <option value="Not sure">Not sure yet</option>
+              </select>
+            </label>
+            <label class="quick-wide">What do you need?
+              <textarea name="message" rows="2" placeholder="Shop type, city, and anything we should know"></textarea>
+            </label>
+            <input class="form-trap" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn btn-solid magnetic quick-wide" type="submit">Send enquiry <span aria-hidden="true">→</span></button>
+            <p class="form-status quick-wide" role="status" aria-live="polite"></p>
+          </form>
+          <p class="form-success" id="quick-success" hidden>Thanks! Your email app should open with the details. If it didn’t, write to <a href="mailto:hello@webzuno.com">hello@webzuno.com</a>.</p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer" id="contact">
     <div class="footer-brand">
-      <p class="footer-word">WEBZUNO</p>
       <p>Websites that help local businesses grow.</p>
     </div>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="#home" data-scroll="#home">Home</a>
-      <a href="#services" data-scroll="#services">Services</a>
-      <a href="#work" data-scroll="#work">Work</a>
-      <a href="#process" data-scroll="#process">Process</a>
-      <a href="#pricing" data-scroll="#pricing">Pricing</a>
-      <a href="#about" data-scroll="#about">About</a>
-      <button type="button" data-open-contact>Contact</button>
-    </nav>
     <div class="footer-social">
-      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4.3l4.1 5.8L16.7 4H20l-6.6 8.4L20.4 20h-4.3l-4.5-6.3L7.3 20H4l7.1-8.9L4 4Z" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7.2v.2M12 17v-4.2c0-1.5.8-2.3 2.1-2.3 1.4 0 1.9.9 1.9 2.4V17" fill="none"/></svg>
+      </a>
+      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M10 9.5v5l5-2.5-5-2.5Z" fill="currentColor" stroke="none"/></svg>
+      </a>
     </div>
     <div class="footer-base">
       <p>© 2026 Webzuno. All rights reserved.</p>
-      <button class="text-link" type="button" data-scroll="#home">Back to top ↑</button>
+      <nav class="footer-legal" aria-label="Legal">
+        <button type="button" data-open-legal="privacy">Privacy Policy</button>
+        <button type="button" data-open-legal="terms">Terms &amp; Conditions</button>
+      </nav>
     </div>
   </footer>
 
@@ -456,11 +722,36 @@
         <label>Anything we should know?
           <input type="text" name="message" placeholder="Shop type, city, domain?">
         </label>
+        <input class="form-trap" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="btn btn-solid magnetic full-btn" type="submit">Send to Webzuno →</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
       </form>
       <p class="form-success" id="form-success" hidden>Received. If mail did not open, write <a href="mailto:hello@webzuno.com">hello@webzuno.com</a>.</p>
     </div>
   </div>
+
+  <div class="overlay" id="legal-overlay" hidden>
+    <div class="overlay-panel legal-panel" role="dialog" aria-modal="true" aria-labelledby="legal-title">
+      <button class="overlay-close" type="button" data-close-overlay aria-label="Close">&times;</button>
+      <div id="legal-privacy" hidden>
+        <p class="eyebrow">Legal</p>
+        <h2 id="legal-title">Privacy Policy</h2>
+        <p>Webzuno only uses the details you send through this site to reply about a project. We do not sell contact data, and we do not run hidden trackers on this page.</p>
+        <p>If you write to us, we keep that message long enough to respond. Ask <a href="mailto:hello@webzuno.com">hello@webzuno.com</a> to delete it.</p>
+      </div>
+      <div id="legal-terms" hidden>
+        <p class="eyebrow">Legal</p>
+        <h2>Terms &amp; Conditions</h2>
+        <p>A project starts after we agree scope, timeline and fee in writing. Work stays with Webzuno until that fee is paid, then the site files are yours.</p>
+        <p>We build fast, secured sites for local businesses. Hosting, domains and third-party tools follow their own terms. Questions: <a href="mailto:hello@webzuno.com">hello@webzuno.com</a>.</p>
+      </div>
+    </div>
+  </div>
+
+  <a class="wa-float" href="https://wa.me/910000000000?text=Hi%20Webzuno%2C%20I%27d%20like%20a%20website%20for%20my%20business." target="_blank" rel="noopener noreferrer" aria-label="Chat with Webzuno on WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.2A12.7 12.7 0 0 0 5.1 22.5L3.3 28.8l6.5-1.7A12.7 12.7 0 1 0 16 3.2Zm0 23.2c-2 0-3.9-.5-5.5-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.5 10.5 0 1 1 16 26.4Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.6 8.6 0 0 1-4.3-3.7c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.6 5.8 5.1 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.2-.6-.4Z"/></svg>
+    <span class="wa-label">Chat on WhatsApp</span>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
