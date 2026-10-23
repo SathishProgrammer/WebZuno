@@ -79,8 +79,8 @@
           <p class="lead">For 22 years we’ve helped salaried professionals, shop owners, startups and SMEs stay compliant, save tax legally and never miss a deadline.</p>
           <div class="creds"><span>ICAI registered firm</span><span>FRN 000000S</span><span>Since 2004</span><span>1,800+ clients</span></div>
           <div class="btns">
-            <a class="btn btn-green" href="https://wa.me/919800000005?text=Hello%2C%20I%27d%20like%20to%20book%20a%20consultation." target="_blank" rel="noopener noreferrer">Book a consultation</a>
-            <a class="btn btn-line" href="tel:+914400000005">Call 044 0000 0005</a>
+            <a class="btn btn-green" href="#" data-demo-contact="WhatsApp">Book a consultation</a>
+            <a class="btn btn-line" href="#" data-demo-contact="Calling">Call 000 0000 0000</a>
           </div>
         </div>
 
@@ -130,7 +130,7 @@
           <span class="tag">ITR checklist</span>
           <h2>Filing your income tax return? Keep these ready.</h2>
           <p>Send scans on WhatsApp or email — we’ll prepare the return, explain your refund or tax due, and file only after you approve.</p>
-          <div class="btns" style="margin-top:1.4rem"><a class="btn btn-green" href="https://wa.me/919800000005?text=Hello%2C%20I%27d%20like%20to%20file%20my%20ITR." target="_blank" rel="noopener noreferrer">Start my ITR on WhatsApp</a></div>
+          <div class="btns" style="margin-top:1.4rem"><a class="btn btn-green" href="#" data-demo-contact="WhatsApp">Start my ITR on WhatsApp</a></div>
         </div>
         <div class="grid-2">
           <div class="doc-box"><h3>Everyone</h3><ul class="ticks"><li>PAN &amp; Aadhaar</li><li>Form 16 from employer</li><li>Bank statements &amp; interest certificates</li><li>Form 26AS / AIS</li></ul></div>
@@ -166,12 +166,31 @@
         <div class="cta-band">
           <h2>Talk to a Chartered Accountant.</h2>
           <p>First 20-minute consultation free. Office: 12, Thyagaraya Road, T. Nagar, Chennai 600017 · Mon–Sat, 10 am – 7 pm</p>
-          <div class="btns"><a class="btn btn-green" href="https://wa.me/919800000005?text=Hello%2C%20I%27d%20like%20to%20book%20a%20consultation." target="_blank" rel="noopener noreferrer">Book on WhatsApp</a><a class="btn btn-light" href="mailto:office@example.com">Email the office</a></div>
+          <div class="btns"><a class="btn btn-green" href="#" data-demo-contact="WhatsApp">Book on WhatsApp</a><a class="btn btn-light" href="mailto:office@example.com">Email the office</a></div>
         </div>
       </div>
     </section>
   </main>
 
   <footer><div class="wrap"><span>© 2026 R. Srinivasan &amp; Associates (fictional) · Chennai</span><span>Demo website designed by <a href="../index.html">Webzuno</a></span></div></footer>
+  <script>
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('[data-demo-contact]');
+      if (!link) return;
+      e.preventDefault();
+      var toast = document.getElementById('demo-contact-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'demo-contact-toast';
+        toast.setAttribute('role', 'status');
+        toast.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;background:#111;color:#fff;padding:10px 18px;border-radius:999px;font:500 14px/1.4 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;transition:opacity .2s;pointer-events:none';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = 'Demo only \u2014 ' + link.getAttribute('data-demo-contact') + ' is disabled on this sample site.';
+      toast.style.opacity = '1';
+      clearTimeout(toast._t);
+      toast._t = setTimeout(function () { toast.style.opacity = '0'; }, 2200);
+    });
+  </script>
 </body>
 </html>

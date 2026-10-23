@@ -132,10 +132,10 @@
       <div class="wrap">
         <div class="head"><span class="tag">Membership</span><h2>No contracts. No joining fee.</h2><p>Every plan includes the gym floor, all group classes, lockers and a body composition scan.</p></div>
         <div class="grid-4">
-          <article class="card plan"><h3>Monthly</h3><p>Try us out</p><p class="price">₹1,999 <small>/ month</small></p><ul class="ticks"><li>Gym + all classes</li><li>1 fitness assessment</li><li>Locker &amp; shower</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20the%20Monthly%20plan" target="_blank" rel="noopener noreferrer">Join monthly</a></article>
-          <article class="card plan hot"><h3>Quarterly</h3><p>Most popular</p><p class="price">₹4,999 <small>/ 3 months</small></p><ul class="ticks"><li>Everything in Monthly</li><li>Diet plan by our nutritionist</li><li>Monthly progress scan</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20the%20Quarterly%20plan" target="_blank" rel="noopener noreferrer">Join quarterly</a></article>
-          <article class="card plan"><h3>Yearly</h3><p>Best value</p><p class="price">₹14,999 <small>/ year</small></p><ul class="ticks"><li>Everything in Quarterly</li><li>2 months freeze</li><li>4 PT sessions free</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20the%20Yearly%20plan" target="_blank" rel="noopener noreferrer">Join yearly</a></article>
-          <article class="card plan"><h3>Personal training</h3><p>1-on-1 coaching</p><p class="price">₹7,999 <small>/ 12 sessions</small></p><ul class="ticks"><li>Custom workout plan</li><li>Weekly diet check-ins</li><li>Form &amp; injury guidance</li></ul><a class="btn" href="https://wa.me/919800000002?text=I%27d%20like%20personal%20training" target="_blank" rel="noopener noreferrer">Book a coach</a></article>
+          <article class="card plan"><h3>Monthly</h3><p>Try us out</p><p class="price">₹1,999 <small>/ month</small></p><ul class="ticks"><li>Gym + all classes</li><li>1 fitness assessment</li><li>Locker &amp; shower</li></ul><a class="btn" href="#" data-demo-contact="WhatsApp">Join monthly</a></article>
+          <article class="card plan hot"><h3>Quarterly</h3><p>Most popular</p><p class="price">₹4,999 <small>/ 3 months</small></p><ul class="ticks"><li>Everything in Monthly</li><li>Diet plan by our nutritionist</li><li>Monthly progress scan</li></ul><a class="btn" href="#" data-demo-contact="WhatsApp">Join quarterly</a></article>
+          <article class="card plan"><h3>Yearly</h3><p>Best value</p><p class="price">₹14,999 <small>/ year</small></p><ul class="ticks"><li>Everything in Quarterly</li><li>2 months freeze</li><li>4 PT sessions free</li></ul><a class="btn" href="#" data-demo-contact="WhatsApp">Join yearly</a></article>
+          <article class="card plan"><h3>Personal training</h3><p>1-on-1 coaching</p><p class="price">₹7,999 <small>/ 12 sessions</small></p><ul class="ticks"><li>Custom workout plan</li><li>Weekly diet check-ins</li><li>Form &amp; injury guidance</li></ul><a class="btn" href="#" data-demo-contact="WhatsApp">Book a coach</a></article>
         </div>
       </div>
     </section>
@@ -168,7 +168,7 @@
           <div>
             <h2>Your first 3 days are on us.</h2>
             <p>Try the gym, join any class and meet the coaches. Bring a towel and water — we’ll handle the rest.</p>
-            <div class="btns"><a class="btn" style="background:#0b0b0c;color:#c6ff3d" href="https://wa.me/919800000002?text=Hi%20IronPulse%2C%20I%27d%20like%20my%20free%203-day%20pass." target="_blank" rel="noopener noreferrer">Claim on WhatsApp</a><a class="btn btn-line" href="tel:+919800000002">Call the front desk</a></div>
+            <div class="btns"><a class="btn" style="background:#0b0b0c;color:#c6ff3d" href="#" data-demo-contact="WhatsApp">Claim on WhatsApp</a><a class="btn btn-line" href="#" data-demo-contact="Calling">Call the front desk</a></div>
           </div>
           <ul class="info-list">
             <li>Mon – Sat <span>5:00 am – 11:00 pm</span></li>
@@ -182,5 +182,24 @@
   </main>
 
   <footer><div class="wrap"><span>© 2026 IronPulse Fitness (fictional) · OMR, Chennai</span><span>Demo website designed by <a href="../index.html">Webzuno</a></span></div></footer>
+  <script>
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('[data-demo-contact]');
+      if (!link) return;
+      e.preventDefault();
+      var toast = document.getElementById('demo-contact-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'demo-contact-toast';
+        toast.setAttribute('role', 'status');
+        toast.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;background:#111;color:#fff;padding:10px 18px;border-radius:999px;font:500 14px/1.4 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;transition:opacity .2s;pointer-events:none';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = 'Demo only \u2014 ' + link.getAttribute('data-demo-contact') + ' is disabled on this sample site.';
+      toast.style.opacity = '1';
+      clearTimeout(toast._t);
+      toast._t = setTimeout(function () { toast.style.opacity = '0'; }, 2200);
+    });
+  </script>
 </body>
 </html>

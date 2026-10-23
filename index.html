@@ -4,14 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Webzuno builds modern, professional websites for local businesses — shops, restaurants, clinics, gyms and the teams behind them.">
-  <title>Webzuno — Your business. Built for the web.</title>
+  <title>Webzuno — Website Design &amp; Development for Local Businesses</title>
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="application-name" content="Webzuno">
+  <meta name="apple-mobile-web-app-title" content="Webzuno">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <meta name="theme-color" content="#1a73ff">
   <link rel="canonical" href="https://webzuno.com/">
+  <link rel="alternate" hreflang="en-IN" href="https://webzuno.com/">
+  <link rel="alternate" hreflang="x-default" href="https://webzuno.com/">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="author" content="Webzuno">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Webzuno">
+  <meta property="og:locale" content="en_IN">
   <meta property="og:url" content="https://webzuno.com/">
   <meta property="og:title" content="Webzuno — Websites built for local businesses">
   <meta property="og:description" content="Fast, secured, modern websites for shops, restaurants, clinics and gyms. Get a free website plan.">
@@ -19,7 +30,9 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Webzuno — Websites built for local businesses">
+  <meta property="og:image:type" content="image/png">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image:alt" content="Webzuno — Websites built for local businesses">
   <meta name="twitter:title" content="Webzuno — Websites built for local businesses">
   <meta name="twitter:description" content="Fast, secured, modern websites for shops, restaurants, clinics and gyms.">
   <meta name="twitter:image" content="https://webzuno.com/assets/og-image.png">
@@ -29,17 +42,85 @@
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebSite",
+        "@id": "https://webzuno.com/#website",
+        "name": "Webzuno",
+        "alternateName": ["WEBZUNO", "Web Zuno", "webzuno.com"],
+        "url": "https://webzuno.com/",
+        "inLanguage": "en-IN",
+        "publisher": { "@id": "https://webzuno.com/#business" }
+      },
+      {
         "@type": "ProfessionalService",
         "@id": "https://webzuno.com/#business",
         "name": "Webzuno",
+        "alternateName": ["WEBZUNO", "Web Zuno"],
         "url": "https://webzuno.com/",
-        "logo": "https://webzuno.com/assets/logo-mark-clear.png",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://webzuno.com/#logo",
+          "url": "https://webzuno.com/assets/logo-mark-clear.png",
+          "caption": "Webzuno"
+        },
         "image": "https://webzuno.com/assets/og-image.png",
         "description": "Webzuno builds modern, professional websites for local businesses — shops, restaurants, clinics, gyms and the teams behind them.",
+        "slogan": "Your business. Built for the web.",
         "email": "hello@webzuno.com",
-        "areaServed": "IN",
+        "areaServed": { "@type": "Country", "name": "India" },
         "priceRange": "₹₹",
-        "serviceType": ["Website design", "Website development", "E-commerce websites", "Local SEO"]
+        "serviceType": ["Website design", "Website development", "E-commerce websites", "Local SEO"],
+        "knowsAbout": ["Web design", "Website development", "E-commerce", "Search engine optimization", "Local SEO", "WhatsApp business integration", "Google Business Profile", "Website hosting and maintenance"],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "email": "hello@webzuno.com",
+          "areaServed": "IN",
+          "availableLanguage": ["English"]
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Webzuno website plans",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Starter website",
+                "description": "For businesses getting online: 1–5 pages, responsive design, contact form, WhatsApp integration and basic SEO.",
+                "provider": { "@id": "https://webzuno.com/#business" }
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Growth website",
+                "description": "For businesses ready to grow: up to 10 pages, advanced design, SEO, analytics, WhatsApp, Google Maps and business integrations.",
+                "provider": { "@id": "https://webzuno.com/#business" }
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Pro website",
+                "description": "For businesses that want more: custom design, advanced animations, e-commerce, custom integrations, advanced SEO and priority support.",
+                "provider": { "@id": "https://webzuno.com/#business" }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://webzuno.com/#webpage",
+        "url": "https://webzuno.com/",
+        "name": "Webzuno — Website Design & Development for Local Businesses",
+        "description": "Webzuno builds modern, professional websites for local businesses — shops, restaurants, clinics, gyms and the teams behind them.",
+        "inLanguage": "en-IN",
+        "isPartOf": { "@id": "https://webzuno.com/#website" },
+        "about": { "@id": "https://webzuno.com/#business" },
+        "primaryImageOfPage": { "@type": "ImageObject", "url": "https://webzuno.com/assets/og-image.png", "width": 1200, "height": 630 }
       },
       {
         "@type": "FAQPage",
@@ -83,7 +164,7 @@
 
   <header class="nav" id="nav">
     <a class="nav-logo" href="#home" data-scroll="#home" aria-label="Webzuno home">
-      <img src="assets/logo-mark-clear.png" alt="" width="238" height="165">
+      <img src="assets/logo-mark-clear.png" alt="Webzuno logo" width="238" height="165">
       <span aria-hidden="true">ebzuno</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
@@ -123,7 +204,7 @@
       <div class="hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">Web design for local businesses</p>
-          <h1>Your business.<br><span class="grad">Built for the web.</span></h1>
+          <h1><span class="sr-only">Webzuno: </span>Your business.<br><span class="grad">Built for the web.</span></h1>
           <p class="hero-lead">Modern websites for shops, clinics, restaurants and local teams who are ready to be found.</p>
           <div class="hero-actions">
             <button class="btn btn-solid magnetic" type="button" data-open-contact>Build My Website <span aria-hidden="true">→</span></button>
@@ -635,7 +716,7 @@
 
     <section class="finale" id="cta">
       <div class="finale-w" aria-hidden="true">
-        <img src="assets/logo-mark.png" alt="">
+        <img src="assets/logo-mark.png" alt="" width="264" height="204" loading="lazy" decoding="async">
       </div>
       <div class="finale-light" aria-hidden="true"></div>
       <div class="finale-grid">
@@ -708,7 +789,7 @@
       <p>© 2026 Webzuno. All rights reserved.</p>
       <nav class="footer-legal" aria-label="Legal">
         <button type="button" data-open-legal="privacy">Privacy Policy</button>
-        <button type="button" data-open-legal="terms">Terms &amp; Conditions</button>
+        <a href="Files/Terms_and_conditions.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>
       </nav>
     </div>
   </footer>
@@ -759,12 +840,6 @@
         <h2 id="legal-title">Privacy Policy</h2>
         <p>Webzuno only uses the details you send through this site to reply about a project. We do not sell contact data, and we do not run hidden trackers on this page.</p>
         <p>If you write to us, we keep that message long enough to respond. Ask <a href="mailto:hello@webzuno.com">hello@webzuno.com</a> to delete it.</p>
-      </div>
-      <div id="legal-terms" hidden>
-        <p class="eyebrow">Legal</p>
-        <h2>Terms &amp; Conditions</h2>
-        <p>A project starts after we agree scope, timeline and fee in writing. Work stays with Webzuno until that fee is paid, then the site files are yours.</p>
-        <p>We build fast, secured sites for local businesses. Hosting, domains and third-party tools follow their own terms. Questions: <a href="mailto:hello@webzuno.com">hello@webzuno.com</a>.</p>
       </div>
     </div>
   </div>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /script.before-3d.js
+
+Sitemap: https://webzuno.com/sitemap.xml

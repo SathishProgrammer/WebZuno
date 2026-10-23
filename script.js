@@ -43,6 +43,11 @@
       apply(root.dataset.theme === "dark" ? "light" : "dark");
       window.dispatchEvent(new CustomEvent("webzuno-theme", { detail: root.dataset.theme }));
     });
+    window.addEventListener("storage", (e) => {
+      if (e.key !== "webzuno-theme" || !e.newValue || e.newValue === root.dataset.theme) return;
+      apply(e.newValue);
+      window.dispatchEvent(new CustomEvent("webzuno-theme", { detail: root.dataset.theme }));
+    });
   }
 
   function runLoader() {
@@ -711,11 +716,13 @@
       btn.addEventListener("click", () => {
         const which = btn.dataset.openLegal;
         document.getElementById("legal-privacy").hidden = which !== "privacy";
-        document.getElementById("legal-terms").hidden = which !== "terms";
         legalOverlay.hidden = false;
         lock(true);
       });
     });
+    if (location.hash === "#privacy") {
+      document.querySelector('[data-open-legal="privacy"]')?.click();
+    }
     document.querySelectorAll("[data-close-overlay]").forEach((btn) => {
       btn.addEventListener("click", closeOverlays);
     });

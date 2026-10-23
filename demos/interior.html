@@ -192,9 +192,9 @@
       <div class="wrap">
         <div class="head"><span class="tag">Packages</span><h2>Clear starting prices.</h2><p>Includes design, materials, installation and GST. Final price after the 3D design.</p></div>
         <div class="grid-3">
-          <article class="card pack"><h3>Essential 2 BHK</h3><p>Kitchen, wardrobes, TV unit</p><p class="price">₹4.5 L <small>onwards</small></p><ul class="ticks"><li>Modular kitchen</li><li>2 wardrobes with lofts</li><li>TV unit &amp; shoe rack</li></ul><a class="btn" href="https://wa.me/919800000004?text=I%27m%20interested%20in%20the%20Essential%202%20BHK%20package" target="_blank" rel="noopener noreferrer">Enquire</a></article>
-          <article class="card pack hot"><h3>Complete 3 BHK</h3><p>Our most chosen package</p><p class="price">₹8.5 L <small>onwards</small></p><ul class="ticks"><li>Everything in Essential</li><li>False ceiling &amp; lighting</li><li>Dining, study &amp; pooja unit</li></ul><a class="btn btn-brand" href="https://wa.me/919800000004?text=I%27m%20interested%20in%20the%20Complete%203%20BHK%20package" target="_blank" rel="noopener noreferrer">Enquire</a></article>
-          <article class="card pack"><h3>Luxury villa</h3><p>Bespoke, end to end</p><p class="price">₹18 L <small>onwards</small></p><ul class="ticks"><li>Custom furniture &amp; veneers</li><li>Automation &amp; mood lighting</li><li>Dedicated project manager</li></ul><a class="btn" href="https://wa.me/919800000004?text=I%27m%20interested%20in%20the%20Luxury%20villa%20package" target="_blank" rel="noopener noreferrer">Enquire</a></article>
+          <article class="card pack"><h3>Essential 2 BHK</h3><p>Kitchen, wardrobes, TV unit</p><p class="price">₹4.5 L <small>onwards</small></p><ul class="ticks"><li>Modular kitchen</li><li>2 wardrobes with lofts</li><li>TV unit &amp; shoe rack</li></ul><a class="btn" href="#" data-demo-contact="WhatsApp">Enquire</a></article>
+          <article class="card pack hot"><h3>Complete 3 BHK</h3><p>Our most chosen package</p><p class="price">₹8.5 L <small>onwards</small></p><ul class="ticks"><li>Everything in Essential</li><li>False ceiling &amp; lighting</li><li>Dining, study &amp; pooja unit</li></ul><a class="btn btn-brand" href="#" data-demo-contact="WhatsApp">Enquire</a></article>
+          <article class="card pack"><h3>Luxury villa</h3><p>Bespoke, end to end</p><p class="price">₹18 L <small>onwards</small></p><ul class="ticks"><li>Custom furniture &amp; veneers</li><li>Automation &amp; mood lighting</li><li>Dedicated project manager</li></ul><a class="btn" href="#" data-demo-contact="WhatsApp">Enquire</a></article>
         </div>
       </div>
     </section>
@@ -215,12 +215,31 @@
         <div class="cta-band">
           <h2>Let’s design your home.</h2>
           <p>Free consultation and measurement at your home. Studio: 8, Khader Nawaz Khan Road, Nungambakkam · Mon–Sat, 10 am – 7 pm</p>
-          <div class="btns"><a class="btn btn-light" href="https://wa.me/919800000004?text=Hi%20Nest%20%26%20Form%2C%20I%27d%20like%20a%20free%20consultation." target="_blank" rel="noopener noreferrer">Book on WhatsApp</a><a class="btn btn-line" href="tel:+919800000004">Call the studio</a></div>
+          <div class="btns"><a class="btn btn-light" href="#" data-demo-contact="WhatsApp">Book on WhatsApp</a><a class="btn btn-line" href="#" data-demo-contact="Calling">Call the studio</a></div>
         </div>
       </div>
     </section>
   </main>
 
   <footer><div class="wrap"><span>© 2026 Nest &amp; Form Interiors (fictional) · Chennai</span><span>Demo website designed by <a href="../index.html">Webzuno</a></span></div></footer>
+  <script>
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('[data-demo-contact]');
+      if (!link) return;
+      e.preventDefault();
+      var toast = document.getElementById('demo-contact-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'demo-contact-toast';
+        toast.setAttribute('role', 'status');
+        toast.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;background:#111;color:#fff;padding:10px 18px;border-radius:999px;font:500 14px/1.4 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25);opacity:0;transition:opacity .2s;pointer-events:none';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = 'Demo only \u2014 ' + link.getAttribute('data-demo-contact') + ' is disabled on this sample site.';
+      toast.style.opacity = '1';
+      clearTimeout(toast._t);
+      toast._t = setTimeout(function () { toast.style.opacity = '0'; }, 2200);
+    });
+  </script>
 </body>
 </html>

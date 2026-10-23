@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found | Webzuno</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Syne:wght@700&display=swap" rel="stylesheet">
+  <script>
+    document.documentElement.dataset.theme = localStorage.getItem("webzuno-theme") || "dark";
+  </script>
+  <style>
+    :root, [data-theme="dark"] { --bg: #05060a; --ink: #f3f6fb; --soft: rgba(243, 246, 251, 0.64); --accent: #4d94ff; }
+    [data-theme="light"] { --bg: #f4f7fb; --ink: #0b1220; --soft: rgba(11, 18, 32, 0.64); --accent: #1558e0; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Manrope", system-ui, sans-serif;
+      text-align: center;
+      padding: 24px;
+    }
+    h1 { font-family: "Syne", sans-serif; font-size: clamp(3rem, 12vw, 6rem); margin: 0; letter-spacing: -0.05em; }
+    p { color: var(--soft); margin: 8px 0 24px; }
+    a { color: var(--accent); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>404</h1>
+    <p>This page doesn’t exist. The Webzuno home page has everything you need.</p>
+    <a href="/">Go to Webzuno home →</a>
+  </main>
+</body>
+</html>
