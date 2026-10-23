@@ -625,12 +625,9 @@
   }
 
   function initCounters() {
+    if (reduce || typeof gsap === "undefined" || !window.ScrollTrigger) return;
     document.querySelectorAll(".count").forEach((node) => {
       const end = Number(node.dataset.count || 0);
-      if (reduce) {
-        node.textContent = String(end);
-        return;
-      }
       const obj = { n: 0 };
       ScrollTrigger.create({
         trigger: node,
@@ -716,12 +713,16 @@
       btn.addEventListener("click", () => {
         const which = btn.dataset.openLegal;
         document.getElementById("legal-privacy").hidden = which !== "privacy";
+        document.getElementById("legal-terms").hidden = which !== "terms";
+        legalOverlay.querySelector('[role="dialog"]').setAttribute("aria-labelledby", which === "terms" ? "legal-terms-title" : "legal-title");
+        const scroller = legalOverlay.querySelector(".legal-scroll");
+        if (scroller) scroller.scrollTop = 0;
         legalOverlay.hidden = false;
         lock(true);
       });
     });
-    if (location.hash === "#privacy") {
-      document.querySelector('[data-open-legal="privacy"]')?.click();
+    if (location.hash === "#privacy" || location.hash === "#terms") {
+      document.querySelector(`.footer-legal [data-open-legal="${location.hash.slice(1)}"]`)?.click();
     }
     document.querySelectorAll("[data-close-overlay]").forEach((btn) => {
       btn.addEventListener("click", closeOverlays);
