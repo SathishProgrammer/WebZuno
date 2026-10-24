@@ -3,21 +3,21 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://webzuno.com/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://webzuno.com/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://webzuno.com/"/>
+    <loc>https://webzuno.in/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://webzuno.in/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://webzuno.in/"/>
     <lastmod>2026-10-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://webzuno.com/assets/og-image.png</image:loc>
+      <image:loc>https://webzuno.in/assets/og-image.png</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://webzuno.com/assets/logo-mark-clear.png</image:loc>
+      <image:loc>https://webzuno.in/assets/logo-mark-clear.png</image:loc>
     </image:image>
   </url>
   <url>
-    <loc>https://webzuno.com/Files/Terms_and_conditions.html</loc>
+    <loc>https://webzuno.in/Files/Terms_and_conditions.html</loc>
     <lastmod>2026-10-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
